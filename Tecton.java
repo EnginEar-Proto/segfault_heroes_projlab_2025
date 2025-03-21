@@ -118,7 +118,7 @@ public class Tecton {
      * Hamis egyébként
      */
     public boolean canMoveTo(Tecton t){
-
+        
     }
     /**
      * A paraméterül kapott rovar átszáll arra a tekntora amelyre a függvényt meghívták.
@@ -150,10 +150,10 @@ public class Tecton {
     }
     /**
      * A paraméterben átadott listában szereplő tektonok szomszédosak lesznek azzal a tektonnal,
-     * amelyre meghíták a függvényt.
+     * amelyre meghíták a függvényt. Az itt szereplő tektonok még nem feltétlenül vannak fonalakkal összekötve.
      * @param tectons - Szomszédos tektonokból álló lista.
      */
     public void setNeighbours(List<Tecton> tectons){
-        
+        neighbours.addAll(tectons);   
     }
 }
