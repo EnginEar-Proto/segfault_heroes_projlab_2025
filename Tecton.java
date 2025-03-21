@@ -53,7 +53,7 @@ public class Tecton {
      * @param s - A fonál ami elvágásra fog kerülni.
      */
     public void cutString(String s){
-
+        strings.remove(s);
     }
     /**
      * Megadja, hogy az adott tektonra felfér még egy gombafonal.
@@ -76,7 +76,7 @@ public class Tecton {
      * @param s - A spóra amit erre a tektonra szórunk.
     */
     public void scatterSpore(Spore s){
-
+        spores.add(s);
     }
     /**
      * Új gombatestet növeszt arra a tektonra, amelyen a függvényt meghívták.
@@ -89,13 +89,13 @@ public class Tecton {
      * @return Logikai érték, amely igaz, ha a tektonon helyezkedik el spóra. Hamis egyébként.
      */
     public boolean haveSpore(){
-
+        return !(spores.isEmpty());
     }
     /**
      * Az tektonról törli az összes gombafonalat.
     */
     public void removeStrings(){
-
+        strings = new ArrayList<>();
     }
     /**
      * A tekton tördelése.
@@ -109,7 +109,7 @@ public class Tecton {
      * A tekton létrehozásakor és a tekton tördelésekor kell meghívódjon.
     */
     public void setSize(){
-
+        //Honnan tudja, hogy most mekokora kell legyen, ha nem kapta meg paraméterben?
     }
     /**
      * Visszaadja, hogy egy rovar átmehet e a paraméterül kapott tektonra.
@@ -125,7 +125,9 @@ public class Tecton {
      * @param i - A rovar amely erre a tektonra repül.
      */
     public void setBugPosition(Insect i){
-
+        /*TODO:Ellenőrizzük, hogy nem-e ugyanarra tektonra száll vissza a rovar.
+         * Csak ezt követően adjuk hozzá a listához.
+        */
     }
     /**
      * A paraméterül kapott gombatestet elhelyezi azon a tektonon amelyre a függvényt meghívták.
