@@ -2,10 +2,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * <h2>Tekton</h2>
  * A tekton a játék egy pályaeleme, a játéktér tektonokból áll. 
  * Ezeken más objektumok (gombatestek, rovarok, spórák, fonalak) helyezkedhetnek el. 
- * A tekton felelőssége ezen objektumok kezelése. 
- * Két tekton között vezethet gombafonál, amelyeken keresztül a rovarok mozoghatnak. 
+ * A tekton felelőssége ezen objektumok kezelése.
+ * <h4>Összeköttetés</h4>
+ * Két tekton között vezethet gombafonál, amelyeken keresztül a rovarok mozoghatnak.
+ * <h4>Törés</h4>
  * A tektonok kettétörhetnek, ami a játék menetét befolyásolja, 
  * és ilyenkor az eddig rajta lévő fonalak megszűnnek, 
  * ellenben az esetleg rajta lévő gombatest az egyik tektonon marad.
