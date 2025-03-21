@@ -117,18 +117,39 @@ public class Tecton {
     public boolean canMoveTo(Tecton t){
 
     }
+    /**
+     * A paraméterül kapott rovar átszáll arra a tekntora amelyre a függvényt meghívták.
+     * @param i - A rovar amely erre a tektonra repül.
+     */
     public void setBugPosition(Insect i){
 
     }
+    /**
+     * A paraméterül kapott gombatestet elhelyezi azon a tektonon amelyre a függvényt meghívták.
+     * @param mb - Az elhelyezésre kerülő gombatest
+     */
     public void setMushroomBody(MushroomBody mb){
 
     }
+    /**
+     * A rovar elhelyezése a játék megkezdésekor azon a tektonon, amelyre meghívták a függvényt.
+     * @param i - A rovar amely elhelyezésre kerül.
+     */
     public void setInsect(Insect i){
 
     }
+    /**
+     * A paraméterként kapott fonal átterjed arra a tektonra amelyre a függvényt meghívták.
+     * @param s - A fonal, amely átterjed a tektonra
+     */
     public void addNewString(String s){
 
     }
+    /**
+     * A paraméterben átadott listában szereplő tektonok szomszédosak lesznek azzal a tektonnal,
+     * amelyre meghíták a függvényt.
+     * @param tectons - Szomszédos tektonokból álló lista.
+     */
     public void setNeighbours(List<Tecton> tectons){
         
     }
