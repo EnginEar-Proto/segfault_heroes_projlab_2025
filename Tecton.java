@@ -29,7 +29,7 @@ public class Tecton {
     /**
      * A Tektonon átfutó gombafonalak listája.
     */
-    private ArrayList<String> strings; /*Itt majd figyrelni, hogy a mi String osztályunk legyen!*/
+    private ArrayList<MushroomString> strings; /*Itt majd figyrelni, hogy a mi String osztályunk legyen!*/
     
     /**
      * Ezzel a tektonnal szomszédos tektonok listája.
@@ -49,7 +49,7 @@ public class Tecton {
      * A tektonon levő fonál elvágása.
      * @param s - A fonál ami elvágásra fog kerülni.
      */
-    public void cutString(String s){
+    public void cutString(MushroomString s){
 
     }
     /**
@@ -126,7 +126,7 @@ public class Tecton {
     public void setInsect(Insect i){
 
     }
-    public void addNewString(String s){
+    public void addNewString(MushroomString s){
 
     }
     public void setNeighbours(List<Tecton> tectons){
