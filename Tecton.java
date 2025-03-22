@@ -58,6 +58,8 @@ public class Tecton {
     }
     /**
      * Megadja, hogy az adott tektonra felfér még egy gombafonal.
+     * Ammenyiben a tekton mérete 2, akkor több fonal is tud áthaladni a tektonon.
+     * Ha csak 1-es méretű, akkor csak egy 
      * @return Visszatér egy logikai értékkel, amely igaz ha a tektonon elfér még egy fonal. Hamis egyébként.
      */
     public boolean canBranch(){
