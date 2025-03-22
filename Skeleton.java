@@ -16,11 +16,9 @@ public class Skeleton {
     public void GombatestbolFonal(){
         Mushroomer m1 = new Mushroomer();
         MushroomBody g1 = new MushroomBody();
-        //Gergő: Ez nem a mi string osztályunk. Javasolok egy ShroomString-re való átnevezést.
         MushroomString f1 = new MushroomString();
         Tecton t1 = new Tecton(2);
         g1.createNewString();
-        //Gergő: Ez itt eddig tud haladni, mert a további részt a MushroomBody osztályban kell megvalósítani.
     
     }
     public void FonalbolFonalNovesztes(){
@@ -29,7 +27,6 @@ public class Skeleton {
         Tecton t1 = new Tecton(2);
         Tecton t2 = new Tecton(2);
         f1.growTo(t2);
-        //Gergő: Ez itt eddig tud haladni, mert a további részt a ShroomString osztályban kell megvalósítani.
     }
     public void FonalbolFonalNovesztesSporaval(){
         Mushroomer m1 = new Mushroomer();
