@@ -1,6 +1,7 @@
 public class Insect {
     private int substance;
     private Ability ability;
+    private Tecton tecton;
     public Insect(int substance, Ability ability) {
         this.substance = substance;
         this.ability = ability;
@@ -14,6 +15,12 @@ public class Insect {
     public void setAbility(Ability ability) {
         this.ability = ability;
     }
+    public Tecton getTecton() {
+        return tecton;
+    }
+    public void setTecton(Tecton tecton) {
+        this.tecton = tecton;
+    }
 
     /**
      * A rovar elfogyasztja a spórát, amelynek hatása érvénybe lép.
@@ -21,6 +28,7 @@ public class Insect {
     public void eat(Spore spore){
         System.out.println("Insect eats spore");
         spore.getEaten(this);
+
     }
 
     /**
@@ -28,6 +36,7 @@ public class Insect {
      */
     public void moveTo(Tecton tecton){
         System.out.println("Insect moves to given tecton");
+        this.tecton = tecton;
     }
 
     /**
@@ -38,9 +47,9 @@ public class Insect {
     }
 
     /**
-     * A paraméterül kapott spóra hatása érvényesül a rovaron.
+     * A rovar pontjainak növelése
      */
-    public void applyEffect(Spore spore){
-        System.out.println("Spore applys its effects");
+    public void addSubstance(int substance){
+        this.substance += substance;
     }
 }
