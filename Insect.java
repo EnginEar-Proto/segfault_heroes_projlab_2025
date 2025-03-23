@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Insect {
     private int substance;
     private Ability ability;
@@ -36,8 +38,17 @@ public class Insect {
      * A rovar a paraméterben kapott tektonra lép, amennyiben erre lehetősége van.
      */
     public void moveTo(Tecton tecton){
-        System.out.println("Insect moves to given tecton");
-        this.tecton = tecton;
+        Scanner scanner=new Scanner(System.in);
+        System.out.println("Can insect move to given tecton? [y/n]");
+        String answer=scanner.nextLine();
+        if(answer.equals("y")) {
+            System.out.println("Insect moves to given tecton");
+            this.tecton = tecton;
+        }else if(answer.equals("n")) {
+            System.out.println("Insect cannot move to given tecton");
+        }else{
+            System.out.println("You gave incorrect character!");
+        }
     }
 
     /**
