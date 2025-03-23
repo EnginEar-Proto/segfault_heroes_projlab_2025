@@ -12,6 +12,6 @@ public class Mushroomer {
     }
 
     public MushroomBody getMushroomBody(int index) {
-        return mushroomBodies.indexOf(index) == null ? null : mushroomBodies.get(index);
+        return mushroomBodies.get(index) == null ? null : mushroomBodies.get(index);
     }
 }
