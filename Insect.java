@@ -24,6 +24,7 @@ public class Insect {
 
     /**
      * A rovar elfogyasztja a spórát, amelynek hatása érvénybe lép.
+     * Tovább hívja a spore getEaten függvényét.
      */
     public void eat(Spore spore){
         System.out.println("Insect eats spore");
@@ -50,6 +51,7 @@ public class Insect {
      * A rovar pontjainak növelése
      */
     public void addSubstance(int substance){
+        System.out.println("Substance level added to insect");
         this.substance += substance;
     }
 }
