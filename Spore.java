@@ -15,6 +15,9 @@ public class Spore {
     public void setTecton(Tecton tecton) {
         this.tecton = tecton;
     }
+    public Tecton getTecton() {
+        return tecton;
+    }
 
     /**
      * A spóra elfogyasztásra kerül.
