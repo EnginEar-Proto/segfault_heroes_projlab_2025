@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -19,6 +20,15 @@ public class MushroomString {
         this.mushroomBodies = mushroomBodies;
         this.tectons = tectons;
         this.branches = branches;
+    }
+
+    public MushroomString(MushroomBody mushroomBody, Tecton tecton) {
+        length = 1;
+        this.mushroomBodies = new ArrayList<MushroomBody>();
+        this.tectons = new ArrayList<Tecton>();
+        this.branches = new ArrayList<Map<Tecton, Tecton>>();
+        this.mushroomBodies.add(mushroomBody);
+        this.tectons.add(tecton);
     }
 
     /**
