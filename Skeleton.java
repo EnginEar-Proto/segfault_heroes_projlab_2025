@@ -67,7 +67,38 @@ public class Skeleton {
     }
 
     public void SporaEves(){
-        
+        Insecter i1 = new Insecter();
+        Insect r1 = new Insect(0, Ability.NORMAL);
+        i1.setInsect(r1);
+        Tecton t1 = new Tecton(2);
+        Spore s1 = new Spore(1, Ability.NORMAL);
+        t1.scatterSpore(s1);
+        r1.eat(s1);
+    }
+
+    public void FonalonMozgas(){
+        Insecter i1 = new Insecter();
+        Insect r1 = new Insect(0, Ability.NORMAL);
+        i1.setInsect(r1);
+        Tecton t1 = new Tecton(2);
+        t1.setInsect(r1);
+        Tecton t2 = new Tecton(2);
+        t1.setNeighbours(List.of(t2));
+        t2.setNeighbours(List.of(t1));
+        r1.moveTo(t2);
+    }
+
+    public void FonalVagas(){
+        Insecter i1 = new Insecter();
+        Insect r1 = new Insect(0, Ability.NORMAL);
+        i1.setInsect(r1);
+        Tecton t1 = new Tecton(2);
+        t1.setInsect(r1);
+        Tecton t2 = new Tecton(2);
+        t1.setNeighbours(List.of(t2));
+        t2.setNeighbours(List.of(t1));
+        MushroomString f1 = new MushroomString(0, null, List.of(t1,t2), null);
+        r1.sabotageString(f1);
     }
 }
 
