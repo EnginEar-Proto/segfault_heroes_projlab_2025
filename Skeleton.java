@@ -100,6 +100,26 @@ public class Skeleton {
         MushroomString f1 = new MushroomString(0, null, List.of(t1,t2), null);
         r1.sabotageString(f1);
     }
+
+    public void LehetsegesTektonTores(){
+        Tecton t1 = new Tecton(2);
+        t1.Break(1);
+    }
+
+    public void SikertelenTektonTores(){
+        Tecton t1 = new Tecton(1);
+        t1.Break(1);
+    }
+
+    public void UjKorInditasa(){
+        Mushroomer m1 = new Mushroomer();
+        Insecter i1 = new Insecter();
+        Tecton t1 = new Tecton(2);
+        Tecton t2 = new Tecton(2);
+        Team tm1 = new Team();
+        tm1.setPlayers(m1, i1);
+        tm1.setPositions(t1, t2);
+    }
 }
 
 /*
