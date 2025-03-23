@@ -1,3 +1,6 @@
+import java.util.List;
+import java.util.Map;
+
 /**
  * Skeleton osztály, amely a test use case-eket inicializálja.
 */
@@ -37,6 +40,35 @@ public class Skeleton {
         f1.growTo(t2);
     }
     //#endregion
+
+    public void FonalAgaztatas(){
+        Mushroomer m1 = new Mushroomer();
+        Tecton t1 = new Tecton(2);
+        Tecton t2 = new Tecton(2);
+        MushroomString f1 = new MushroomString(0, null, List.of(t1), null);
+        f1.branchOut(t2, t1);
+    }
+
+    public void SporaSzoras(){
+        Mushroomer m1 = new Mushroomer();
+        MushroomBody g1 = new MushroomBody();
+        Tecton t1 = new Tecton(2);
+        t1.setMushroomBody(g1);
+        Tecton t2 = new Tecton(2);
+        Spore s1 = new Spore(2, Ability.NORMAL);
+        g1.scatter(t2);
+    }
+
+    public void GombatestNovesztes(){
+        Mushroomer m1 = new Mushroomer();
+        Tecton t1 = new Tecton(2);
+        MushroomString f1 = new MushroomString(1, null, List.of(t1), null);
+        t1.growBody();
+    }
+
+    public void SporaEves(){
+        
+    }
 }
 
 /*
