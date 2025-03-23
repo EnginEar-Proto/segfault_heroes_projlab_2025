@@ -13,6 +13,12 @@ public class Spore {
         return ability;
     }
 
+    public void setTecton(Tecton tecton) {
+        this.tecton = tecton;
+    }
+    public Tecton getTecton() {
+        return tecton;
+    }
     /**
      * A spóra elfogyasztásra kerül.
      * A spórát elfogyasztó rovaron a spóra hatása érvényesül.

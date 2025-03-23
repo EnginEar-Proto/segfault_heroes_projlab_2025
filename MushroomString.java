@@ -66,9 +66,9 @@ public class MushroomString {
             }
             List<Tecton> newTectons = tectons.subList(leftIndex + 1, tectons.size()-1);
             tectons = tectons.subList(0, leftIndex);
-            MushroomString newString = new MushroomString(rightIndex, mushroomBodies, newTectons);
+            MushroomString newString = new MushroomString(rightIndex, mushroomBodies, newTectons, branches);
             newTectons.forEach(t -> t.addNewString(newString));
-            newTectons.forEach(t -> t.removeStrin(this));
+            newTectons.forEach(t -> t.removeString(this));
             System.out.println("MushroomString cut in half");
 
         } else {
@@ -95,7 +95,7 @@ public class MushroomString {
         if(input.equals("y") && mushroomBodies.size() >= 2) {
             List<Tecton> newTectons = tectons.subList(index + 1, tectons.size()-1);
             tectons = tectons.subList(0, index);
-            MushroomString newString = new MushroomString(length - index, mushroomBodies, newTectons);
+            MushroomString newString = new MushroomString(length - index, mushroomBodies, newTectons, branches);
             newTectons.forEach(t -> t.addNewString(newString));
             newTectons.forEach(t -> t.removeString(this));
             tecton.removeString(this);
