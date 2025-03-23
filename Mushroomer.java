@@ -29,6 +29,10 @@ public class Mushroomer {
      * @return A megfelelő MushroomBody objektum, vagy null, ha nincs ilyen index.
      */
     public MushroomBody getMushroomBody(int index) {
-        return mushroomBodies.get(index) == null ? null : mushroomBodies.get(index);
+        try {
+            return mushroomBodies.get(index);
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

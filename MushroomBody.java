@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -5,6 +6,12 @@ public class MushroomBody {
     private List<MushroomString> strings;
     private List<Spore> spores;
     private Tecton tecton;
+
+    public MushroomBody(Tecton t){
+        strings = new ArrayList<>();
+        spores = new ArrayList<>();
+        tecton = t;
+    }
 
     /**
      * A gombatestben található spórák számának csökkentése.
@@ -39,7 +46,7 @@ public class MushroomBody {
      * Fonal növesztése a gombatestből.
      */
     public void createNewString() {
-        MushroomString newString = new MushroomString(1, List.of(this), List.of(tecton), List.of(Map.of()));
+        MushroomString newString = new MushroomString(this, tecton);
         strings.add(newString);
         tecton.addNewString(newString);
         System.out.println("MushroomBody createNewString");

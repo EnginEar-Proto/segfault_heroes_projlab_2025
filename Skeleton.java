@@ -18,8 +18,8 @@ public class Skeleton {
     //#region Gombafonal növesztés
     public void GombatestbolFonal(){
         Mushroomer m1 = new Mushroomer();
-        MushroomBody g1 = new MushroomBody();
         Tecton t1 = new Tecton(2);
+        MushroomBody g1 = new MushroomBody(t1);
         MushroomString f1 = new MushroomString(g1, t1);
         g1.createNewString();
 
@@ -28,13 +28,13 @@ public class Skeleton {
         Mushroomer m1 = new Mushroomer();
         Tecton t1 = new Tecton(2);
         Tecton t2 = new Tecton(2);
-        MushroomString f1 = new MushroomString(0, null, List.of(t1), null);
+        MushroomString f1 = new MushroomString(null, t1);
         f1.growTo(t2, t1);
     }
     public void FonalbolFonalNovesztesSporaval(){
         Mushroomer m1 = new Mushroomer();
         Tecton t1 = new Tecton(2);
-        MushroomString f1 = new MushroomString(0, null, List.of(t1), null);
+        MushroomString f1 = new MushroomString(null, t1);
         Tecton t2 = new Tecton(2);
         Tecton t3 = new Tecton(2);
         f1.growTo(t2, t1);
@@ -45,14 +45,14 @@ public class Skeleton {
         Mushroomer m1 = new Mushroomer();
         Tecton t1 = new Tecton(2);
         Tecton t2 = new Tecton(2);
-        MushroomString f1 = new MushroomString(0, null, List.of(t1), null);
+        MushroomString f1 = new MushroomString(null, t1);
         f1.branchOut(t2, t1);
     }
 
     public void SporaSzoras(){
         Mushroomer m1 = new Mushroomer();
-        MushroomBody g1 = new MushroomBody();
         Tecton t1 = new Tecton(2);
+        MushroomBody g1 = new MushroomBody(t1);
         t1.setMushroomBody(g1);
         Tecton t2 = new Tecton(2);
         Spore s1 = new Spore(2, Ability.NORMAL);
@@ -62,7 +62,7 @@ public class Skeleton {
     public void GombatestNovesztes(){
         Mushroomer m1 = new Mushroomer();
         Tecton t1 = new Tecton(2);
-        MushroomString f1 = new MushroomString(1, null, List.of(t1), null);
+        MushroomString f1 = new MushroomString(null, t1);
         t1.growBody();
     }
 
@@ -97,7 +97,8 @@ public class Skeleton {
         Tecton t2 = new Tecton(2);
         t1.setNeighbours(List.of(t2));
         t2.setNeighbours(List.of(t1));
-        MushroomString f1 = new MushroomString(0, null, List.of(t1,t2), null);
+        MushroomBody g1 = new MushroomBody(t1);
+        MushroomString f1 = new MushroomString(g1, t1);
         r1.sabotageString(f1, t1, t2);
     }
 

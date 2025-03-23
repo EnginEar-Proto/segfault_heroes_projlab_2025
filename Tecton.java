@@ -33,7 +33,7 @@ public class Tecton {
     /**
      * A Tektonon átfutó gombafonalak listája.
     */
-    private ArrayList<MushroomString> strings; /*Itt majd figyrelni, hogy a mi String osztályunk legyen!*/
+    private ArrayList<MushroomString> strings; 
     
     /**
      * Ezzel a tektonnal szomszédos tektonok listája.
@@ -46,6 +46,10 @@ public class Tecton {
     private int size;
 
     public Tecton(int size){
+        insects = new ArrayList<>();
+        spores = new ArrayList<>();
+        strings = new ArrayList<>();
+        neighbours = new ArrayList<>();
         this.size = size;
     }
 
@@ -116,7 +120,7 @@ public class Tecton {
      */
     public void growBody(){
         if(this.mushroomBody != null){
-            MushroomBody newBody = new MushroomBody();
+            MushroomBody newBody = new MushroomBody(this);
             this.mushroomBody = newBody;
             System.out.print("New mushroom body in this tecton");
         }else{
