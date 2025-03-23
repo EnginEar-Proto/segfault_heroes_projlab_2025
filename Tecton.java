@@ -74,6 +74,17 @@ public class Tecton {
             System.out.println("Given char is not valid");
         return false;
     }
+
+
+    public void removeString(MushroomString f){
+        try {
+            strings.remove(f);
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Sikertelen törlés");
+        }
+    }
+
     /**
      * Meghatározza a paraméterként kapott tekton távolságát attól a tektontól, amelyen mmeghívtuk a
      * függvényt.
