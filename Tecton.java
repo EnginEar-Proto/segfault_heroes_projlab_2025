@@ -66,11 +66,13 @@ public class Tecton {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Can string branch?[y/n]: ");
         String input = scanner.nextLine();
-        if(input.equals("y"))
+        if(input.equals("y")) {
+            System.out.println("String can branch");
             return true;
-        else if(input.equals("n"))
+        }else if(input.equals("n")) {
+            System.out.println("String can't branch");
             return false;
-        else
+        }else
             System.out.println("Given char is not valid");
         return false;
     }
@@ -93,38 +95,23 @@ public class Tecton {
      */
     public int neighbourDistance(Tecton t){
         //Bálint: Itt lehet jobb lenne csak bekérni hogy hanyadik szomszéd, mert igy szar lesz a tesztesetet megcsinálni
-        boolean founded = false;
+        Scanner scanner = new Scanner(System.in);
 
-        for(int i = 0; i < neighbours.size(); i++){
-            if(neighbours.get(i).equals(t)) {
-                founded = true;
-                return 1;
-            }
+        // Szám bekérése a felhasználótól
+        System.out.print("Adj meg egy számot: ");
+        int szam = scanner.nextInt();
+        if(szam ==1){
+            System.out.print("Distance is 1");
+            return 1;
+        }else if(szam ==2){
+            System.out.print("Distance is 2");
+            return 2;
+        }else if(szam ==3){
+            System.out.print("Distance is 3");
+            return 3;
+        }else{
+            System.out.print("Distance is bigger than 3 or smaller than 0");
         }
-        if(!founded){
-            for(int i = 0; i < neighbours.size(); i++){
-                for(int j = 0; j < neighbours.get(i).neighbours.size(); j++){
-                    if(neighbours.get(i).neighbours.get(j).equals(t)){
-                        founded = true;
-                        return 2;
-                    }
-                }
-            }
-        }
-
-        if(!founded){
-            for(int i = 0; i < neighbours.size(); i++){
-                for(int j = 0; j < neighbours.get(i).neighbours.size(); j++){
-                    for(int k = 0; k < neighbours.get(i).neighbours.get(j).neighbours.size(); k++){
-                        if(neighbours.get(i).neighbours.get(j).neighbours.get(k).equals(t)){
-                            founded = true;
-                            return 3;
-                        }
-                    }
-                }
-            }
-        }
-
         return 4;   //ha 3-nál messzebb van, akkor úgyis mindegy
     }
     /**
@@ -133,13 +120,20 @@ public class Tecton {
     */
     public void scatterSpore(Spore s){
         spores.add(s);
+        System.out.print("Spore added to the tecton");
     }
     /**
      * Új gombatestet növeszt arra a tektonra, amelyen a függvényt meghívták.
      */
     public void growBody(){
-        MushroomBody newBody = new MushroomBody();
-        this.mushroomBody = newBody;
+        if(this.mushroomBody != null){
+            MushroomBody newBody = new MushroomBody();
+            this.mushroomBody = newBody;
+            System.out.print("New mushroom body in this tecton");
+        }else{
+            System.out.print("There is something on this tecton");
+        }
+
 
     }
     /**
@@ -154,20 +148,25 @@ public class Tecton {
     */
     public void removeStrings(){
         strings = new ArrayList<>();
+        System.out.print("All strings removed");
     }
     /**
      * A tekton tördelése.
      * @param size - A tekton új mérete 
      */
     public void Break(int size){
-        removeStrings();
-        int oldSize = strings.size();
-        setSize(size);
-        Tecton newTecton = new Tecton(oldSize - this.size); //Bálint: Szerintem itt így logikus
-        //Bálint: Itt honnan tudjuk, hogy kik lesznek a szomszédai?
-        //Bálint: Ez átmeneti de ezt tényleg nem tudom, majd beszéljük meg
-        ArrayList<Tecton> newNeighbours = new ArrayList<>();
-        newTecton.setNeighbours(neighbours);
+        if((this.size - size) > 0) {
+            removeStrings();
+            int oldSize = strings.size();
+            setSize(size);
+            Tecton newTecton = new Tecton(oldSize - this.size); //Bálint: Szerintem itt így logikus
+            //Bálint: Itt honnan tudjuk, hogy kik lesznek a szomszédai?
+            //Bálint: Ez átmeneti de ezt tényleg nem tudom, majd beszéljük meg
+            ArrayList<Tecton> newNeighbours = new ArrayList<>();
+            newTecton.setNeighbours(neighbours);
+            System.out.print("The tectonic plate broke");
+        }else
+            System.out.print("The tectonic plate can't break");
 
     }
     /**
