@@ -1,22 +1,47 @@
+/**
+ * A Team osztály egy csapatot reprezentál, amely egy gombászból és egy rovarászból áll.
+ */
 public class Team {
     private Insecter insecter;
     private Mushroomer mushroomer;
     private int score;
     private String name;
 
+    /**
+     * Beállítja a csapat játékosait.
+     *
+     * @param mushroomer A csapathoz tartozó Mushroomer objektum.
+     * @param insecter A csapathoz tartozó Insecter objektum.
+     */
     public void setPlayers(Mushroomer mushroomer, Insecter insecter) {
         this.mushroomer = mushroomer;
         this.insecter = insecter;
     }
 
+    /**
+     * Visszaadja a csapat gombászát.
+     *
+     * @return A csapathoz tartozó Mushroomer objektum.
+     */
     public Mushroomer getMushroomer() {
         return mushroomer;
     }
 
+    /**
+     * Visszaadja a csapat rovarászát.
+     *
+     * @return A csapathoz tartozó Insecter objektum.
+     */
     public Insecter getInsecter() {
         return insecter;
     }
 
+    /**
+     * Beállítja a csapat játékosainak pozícióit.
+     *
+     * @param t1 Az első Tecton objektum, amelyre a rovar kerül elhelyezésre.
+     * @param t2 A második Tecton objektum, amelyre a gombatest kerül elhelyezésre.
+     */
     public void setPositions(Tecton t1, Tecton t2) {
         t1.setBugPosition(insecter.getInsect());
         t2.setMushroomBody(mushroomer.getMushroomBody(0));
