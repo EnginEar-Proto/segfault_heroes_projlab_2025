@@ -125,6 +125,9 @@ public class Tecton {
 
 
     }
+    public void removeString(MushroomString f){
+        strings.remove(f);
+    }
     /**
      * Megadja, hogy van spóra azon a tektonon, amelyre a függvényt meghívták.
      * @return Logikai érték, amely igaz, ha a tektonon helyezkedik el spóra. Hamis egyébként.
