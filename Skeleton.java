@@ -22,7 +22,7 @@ public class Skeleton {
         Tecton t1 = new Tecton(2);
         MushroomString f1 = new MushroomString(g1, t1);
         g1.createNewString();
-    
+
     }
     public void FonalbolFonalNovesztes(){
         Mushroomer m1 = new Mushroomer();
@@ -98,7 +98,7 @@ public class Skeleton {
         t1.setNeighbours(List.of(t2));
         t2.setNeighbours(List.of(t1));
         MushroomString f1 = new MushroomString(0, null, List.of(t1,t2), null);
-        r1.sabotageString(f1);
+        r1.sabotageString(f1, t1, t2);
     }
 
     public void LehetsegesTektonTores(){

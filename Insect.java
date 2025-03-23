@@ -1,65 +1,106 @@
 import java.util.Scanner;
 
+/**
+ * Az Insect osztály egy rovart reprezentál, amely különböző műveleteket hajthat végre,
+ * például mozgást, spórák elfogyasztását és fonalak elvágását.
+ */
 public class Insect {
-    private int substance;
-    private Ability ability;
-    private Tecton tecton;
+    private int substance; // A rovar által birtokolt anyagok mennyisége
+    private Ability ability; // A rovar képessége
+    private Tecton tecton; // A rovar aktuális helyzete
+
+    /**
+     * Konstruktor, amely beállítja a rovar anyagmennyiségét és képességét.
+     * @param substance A rovar kezdeti anyagmennyisége.
+     * @param ability A rovar kezdeti képessége.
+     */
     public Insect(int substance, Ability ability) {
         this.substance = substance;
         this.ability = ability;
     }
+
+    /**
+     * Visszaadja a rovar anyagmennyiségét.
+     * @return A rovar aktuális anyagmennyisége.
+     */
     public int getSubstance() {
         return substance;
     }
+
+    /**
+     * Visszaadja a rovar képességét.
+     * @return A rovar aktuális képessége.
+     */
     public Ability getAbility() {
         return ability;
     }
+
+    /**
+     * Beállítja a rovar új képességét.
+     * @param ability Az új képesség.
+     */
     public void setAbility(Ability ability) {
         this.ability = ability;
     }
+
+    /**
+     * Visszaadja a rovar aktuális helyzetét.
+     * @return A rovar által elfoglalt Tecton objektum.
+     */
     public Tecton getTecton() {
         return tecton;
     }
+
+    /**
+     * Beállítja a rovar új helyzetét.
+     * @param tecton Az új Tecton objektum, amelyre a rovar kerül.
+     */
     public void setTecton(Tecton tecton) {
         this.tecton = tecton;
     }
 
     /**
      * A rovar elfogyasztja a spórát, amelynek hatása érvénybe lép.
-     * Tovább hívja a spore getEaten függvényét.
+     * Továbbhívja a spore getEaten függvényét.
+     * @param spore A spóra, amelyet a rovar elfogyaszt.
      */
     public void eat(Spore spore){
         System.out.println("Insect eats spore");
         spore.getEaten(this);
-
     }
 
     /**
-     * A rovar a paraméterben kapott tektonra lép, amennyiben erre lehetősége van.
+     * A rovar megpróbál a paraméterként kapott tektonra lépni.
+     * A mozgás csak akkor történik meg, ha a felhasználó engedélyezi azt.
+     * @param tecton A cél Tecton objektum, ahova a rovar lépni szeretne.
      */
     public void moveTo(Tecton tecton){
-        Scanner scanner=new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         System.out.println("Can insect move to given tecton? [y/n]");
-        String answer=scanner.nextLine();
+        String answer = scanner.nextLine();
+
         if(answer.equals("y")) {
             System.out.println("Insect moves to given tecton");
             this.tecton = tecton;
-        }else if(answer.equals("n")) {
+        } else if(answer.equals("n")) {
             System.out.println("Insect cannot move to given tecton");
-        }else{
+        } else {
             System.out.println("You gave incorrect character!");
         }
     }
 
     /**
-     * A rovar elvágja a paraméterül kapott fonalat.
+     * A rovar elvágja a paraméterként kapott fonalat.
+     * @param string A MushroomString objektum, amelyet el kell vágni.
      */
-    public void sabotageString(MushroomString string){
+    public void sabotageString(MushroomString string, Tecton t1, Tecton t2){
         System.out.println("Insect cuts string");
+        string.cut(t1, t2);
     }
 
     /**
-     * A rovar pontjainak növelése
+     * Növeli a rovar anyagmennyiségét a paraméterként megadott értékkel.
+     * @param substance A hozzáadandó anyagmennyiség.
      */
     public void addSubstance(int substance){
         System.out.println("Substance level added to insect");
