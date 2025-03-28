@@ -20,6 +20,8 @@ public class Tecton {
     */
     private ArrayList<Insect> insects;
 
+    private boolean saveMushroomString;
+
     /**
      * Amennyiben a tektonon van gombatest, akkor az ebben a tagváltozóban van eltárolva.
     */
@@ -45,12 +47,13 @@ public class Tecton {
     */
     private int size;
 
-    public Tecton(int size){
+    public Tecton(int size, boolean saveMushroomString) {
         insects = new ArrayList<>();
         spores = new ArrayList<>();
         strings = new ArrayList<>();
         neighbours = new ArrayList<>();
         this.size = size;
+        this.saveMushroomString = saveMushroomString;
     }
 
     /**
@@ -155,7 +158,7 @@ public class Tecton {
             removeStrings();
             int oldSize = strings.size();
             setSize(size);
-            Tecton newTecton = new Tecton(oldSize - this.size); //Bálint: Szerintem itt így logikus
+            Tecton newTecton = new Tecton(oldSize - this.size, false); //Bálint: Szerintem itt így logikus
             //Bálint: Itt honnan tudjuk, hogy kik lesznek a szomszédai?
             //Bálint: Ez átmeneti de ezt tényleg nem tudom, majd beszéljük meg
             ArrayList<Tecton> newNeighbours = new ArrayList<>();
@@ -201,7 +204,7 @@ public class Tecton {
         if(insects.contains(i)){
             return;
         }
-        else {
+        else if(i != null){
             insects.add(i);
         }
         /*TODO:Ellenőrizzük, hogy nem-e ugyanarra tektonra száll vissza a rovar.

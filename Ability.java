@@ -1,3 +1,3 @@
 public enum Ability {
-    SWIFT, NORMAL, PARALYZING;
+    SWIFT, NORMAL, PARALYZING, DIVIDER;
 }

@@ -28,5 +28,8 @@ public class Spore {
         System.out.println("Spore gets eaten");
         insect.addSubstance(substance);
         insect.setAbility(ability);
+        if(insect.getAbility().equals(Ability.DIVIDER)){
+            insect.getInsecter().addInsect(new Insect(0, Ability.NORMAL, insect.getInsecter()));
+        }
     }
 }

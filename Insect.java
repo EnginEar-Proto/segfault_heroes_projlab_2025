@@ -8,15 +8,17 @@ public class Insect {
     private int substance; // A rovar által birtokolt anyagok mennyisége
     private Ability ability; // A rovar képessége
     private Tecton tecton; // A rovar aktuális helyzete
+    private Insecter insecter; //A rovart irányító rovarász
 
     /**
      * Konstruktor, amely beállítja a rovar anyagmennyiségét és képességét.
      * @param substance A rovar kezdeti anyagmennyisége.
      * @param ability A rovar kezdeti képessége.
      */
-    public Insect(int substance, Ability ability) {
+    public Insect(int substance, Ability ability, Insecter insecter) {
         this.substance = substance;
         this.ability = ability;
+        this.insecter = insecter;
     }
 
     /**
@@ -33,6 +35,14 @@ public class Insect {
      */
     public Ability getAbility() {
         return ability;
+    }
+
+    /**
+     * Visszaadja a rovart irányító rovarászt
+     * @return rovarász
+     */
+    public Insecter getInsecter() {
+        return insecter;
     }
 
     /**

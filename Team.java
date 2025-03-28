@@ -43,7 +43,9 @@ public class Team {
      * @param t2 A második Tecton objektum, amelyre a gombatest kerül elhelyezésre.
      */
     public void setPositions(Tecton t1, Tecton t2) {
-        t1.setBugPosition(insecter.getInsect());
+        if(insecter.getInsects().size()>0) {
+            t1.setBugPosition(insecter.getInsects().getFirst());
+        }
         t2.setMushroomBody(mushroomer.getMushroomBody(0));
     }
 }
