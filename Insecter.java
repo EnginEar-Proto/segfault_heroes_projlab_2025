@@ -4,13 +4,16 @@ import java.util.List;
 /**
  * Az Insecter osztály a rovarász rovarának kezelésére szolgál.
  */
-public class Insecter {
-    private List<Insect> insects = new ArrayList<Insect>();
+public class Insecter extends Player{
+    private List<Insect> insects;
 
     /**
      * Létrehoz egy új Insecter példányt.
      */
-    public Insecter() {}
+    public Insecter(String name) {
+        super(name);
+        insects = new ArrayList<Insect>();
+    }
 
     /**
      * Visszaadja a tárolt rovar objektumot.

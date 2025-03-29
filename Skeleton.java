@@ -6,8 +6,8 @@ import java.util.Map;
 */
 public class Skeleton {
     public void JatekInditas(){
-        Mushroomer m1 = new Mushroomer();
-        Insecter i1 = new Insecter();
+        Mushroomer m1 = new Mushroomer("mushroomer");
+        Insecter i1 = new Insecter("insecter");
         Tecton t1 = new Tecton(2, false);
         Tecton t2 = new Tecton(2, false);
         Team tm1 = new Team();
@@ -17,7 +17,7 @@ public class Skeleton {
     
     //#region Gombafonal növesztés
     public void GombatestbolFonal(){
-        Mushroomer m1 = new Mushroomer();
+        Mushroomer m1 = new Mushroomer("mushroomer");
         Tecton t1 = new Tecton(2, false);
         MushroomBody g1 = new MushroomBody(t1);
         MushroomString f1 = new MushroomString(g1, t1);
@@ -25,14 +25,14 @@ public class Skeleton {
 
     }
     public void FonalbolFonalNovesztes(){
-        Mushroomer m1 = new Mushroomer();
+        Mushroomer m1 = new Mushroomer("mushroomer");
         Tecton t1 = new Tecton(2, false);
         Tecton t2 = new Tecton(2, false);
         MushroomString f1 = new MushroomString(null, t1);
         f1.growTo(t2, t1);
     }
     public void FonalbolFonalNovesztesSporaval(){
-        Mushroomer m1 = new Mushroomer();
+        Mushroomer m1 = new Mushroomer("mushroomer");
         Tecton t1 = new Tecton(2, false);
         MushroomString f1 = new MushroomString(null, t1);
         Tecton t2 = new Tecton(2, false);
@@ -42,7 +42,7 @@ public class Skeleton {
     //#endregion
 
     public void FonalAgaztatas(){
-        Mushroomer m1 = new Mushroomer();
+        Mushroomer m1 = new Mushroomer("mushroomer");
         Tecton t1 = new Tecton(2, false);
         Tecton t2 = new Tecton(2, false);
         MushroomString f1 = new MushroomString(null, t1);
@@ -50,7 +50,7 @@ public class Skeleton {
     }
 
     public void SporaSzoras(){
-        Mushroomer m1 = new Mushroomer();
+        Mushroomer m1 = new Mushroomer("mushroomer");
         Tecton t1 = new Tecton(2, false);
         MushroomBody g1 = new MushroomBody(t1);
         t1.setMushroomBody(g1);
@@ -60,14 +60,14 @@ public class Skeleton {
     }
 
     public void GombatestNovesztes(){
-        Mushroomer m1 = new Mushroomer();
+        Mushroomer m1 = new Mushroomer("mushroomer");
         Tecton t1 = new Tecton(2, false);
         MushroomString f1 = new MushroomString(null, t1);
         t1.growBody();
     }
 
     public void SporaEves(){
-        Insecter i1 = new Insecter();
+        Insecter i1 = new Insecter("insecter");
         Insect r1 = new Insect(0, Ability.NORMAL, i1);
         i1.addInsect(r1);
         Tecton t1 = new Tecton(2, false);
@@ -77,7 +77,7 @@ public class Skeleton {
     }
 
     public void FonalonMozgas(){
-        Insecter i1 = new Insecter();
+        Insecter i1 = new Insecter("insecter");
         Insect r1 = new Insect(0, Ability.NORMAL, i1);
         i1.addInsect(r1);
         Tecton t1 = new Tecton(2, false);
@@ -89,7 +89,7 @@ public class Skeleton {
     }
 
     public void FonalVagas(){
-        Insecter i1 = new Insecter();
+        Insecter i1 = new Insecter("insecter");
         Insect r1 = new Insect(0, Ability.NORMAL, i1);
         i1.addInsect(r1);
         Tecton t1 = new Tecton(2, false);
@@ -113,8 +113,8 @@ public class Skeleton {
     }
 
     public void UjKorInditasa(){
-        Mushroomer m1 = new Mushroomer();
-        Insecter i1 = new Insecter();
+        Mushroomer m1 = new Mushroomer("mushroomer");
+        Insecter i1 = new Insecter("insecter");
         Tecton t1 = new Tecton(2, false);
         Tecton t2 = new Tecton(2, false);
         Team tm1 = new Team();

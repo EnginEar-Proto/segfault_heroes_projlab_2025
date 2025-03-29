@@ -3,13 +3,14 @@ import java.util.ArrayList;
 /**
  * A Mushroomer osztály a gombász gombatestjeinek kezelésére szolgál.
  */
-public class Mushroomer {
+public class Mushroomer extends Player{
     private ArrayList<MushroomBody> mushroomBodies;
 
     /**
      * Létrehoz egy új Mushroomer példányt, amely üres gombatestek listájával rendelkezik.
      */
-    public Mushroomer() {
+    public Mushroomer(String name) {
+        super(name);
         mushroomBodies = new ArrayList<MushroomBody>();
     }
 
