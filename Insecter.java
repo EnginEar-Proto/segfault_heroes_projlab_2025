@@ -33,7 +33,11 @@ public class Insecter extends Player{
         insects.add(i);
     }
 
-
+    /**
+     * a paraméterül kapott rovart megette egy fonál, ezért a rovarász rovar tömbjéből kiveszi az adott rovart.
+     *
+     * @param insect A megevett Insect objektum.
+     */
     public void insectEatenByString(Insect insect) {
         if(insect.getAbility().equals(Ability.PARALYZING)){
             System.out.println("Insect was eaten by a string!");
