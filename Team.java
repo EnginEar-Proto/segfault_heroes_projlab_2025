@@ -7,6 +7,13 @@ public class Team {
     private int score;
     private String name;
 
+    public Team() {}
+
+    public Team(String name, Insecter insecter, Mushroomer mushroomer) {
+        this.name = name;
+        this.insecter = insecter;
+        this.mushroomer = mushroomer;
+    }
     /**
      * Beállítja a csapat játékosait.
      *
@@ -34,6 +41,14 @@ public class Team {
      */
     public Insecter getInsecter() {
         return insecter;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getScore() {
+        return score;
     }
 
     /**
