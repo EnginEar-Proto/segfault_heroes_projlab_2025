@@ -50,11 +50,15 @@ public class Tecton {
     */
     private int size;
 
-    public Tecton(int size, boolean saveMushroomString) {
+    private int[] position = new int[2];
+
+    public Tecton(int size, boolean saveMushroomString, int x, int y) {
         insects = new ArrayList<>();
         spores = new ArrayList<>();
         strings = new ArrayList<>();
         neighbours = new ArrayList<>();
+        position[0] = x;
+        position[1] = y;
         this.size = size;
         this.saveMushroomString = saveMushroomString;
     }
@@ -173,7 +177,12 @@ public class Tecton {
             removeStrings();
             int oldSize = strings.size();
             setSize(size);
-            Tecton newTecton = new Tecton(oldSize - this.size, false); //Bálint: Szerintem itt így logikus
+            int x = 0, y = 0;
+            if(oldSize == 3){
+                x = position[0];
+                y = position[1] - 1;
+            }
+            Tecton newTecton = new Tecton(oldSize - this.size, false, x, y); //Bálint: Szerintem itt így logikus
             //Bálint: Itt honnan tudjuk, hogy kik lesznek a szomszédai?
             //Bálint: Ez átmeneti de ezt tényleg nem tudom, majd beszéljük meg
             ArrayList<Tecton> newNeighbours = new ArrayList<>();
@@ -198,16 +207,16 @@ public class Tecton {
      * Hamis egyébként
      */
     public boolean canMoveTo(Tecton t){
-        //Bálint: Itt is controller nélkül vizsgálgatni mindent nagyon szar lenne, úgyhogy én így csinálnám
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Can insect move to t2?[y/n]: ");
-        String input = scanner.nextLine();
-        if(input.equals("y"))
-            return true;
-        else if(input.equals("n"))
-            return false;
-        else
-            System.out.println("Given char is not valid");
+        //Meg kell nézni, hogy szomszédos-e a két tekton
+        if(neighbours.contains(t)) {
+            //Meg kell nézni, hogy van-e ugyan az a fonal a két tektonon, mivel ha van,akkor át tud  menni a rovar
+            for (int i = 0; i < strings.size(); i++) {
+                for (int j = 0; j < t.strings.size(); j++) {
+                    if (strings.get(i) == t.strings.get(j))
+                        return true;
+                }
+            }
+        }
         return false;
     }
     /**
@@ -254,6 +263,13 @@ public class Tecton {
      * @param tectons - Szomszédos tektonokból álló lista.
      */
     public void setNeighbours(List<Tecton> tectons){
-        neighbours.addAll(tectons);
+        for(int i = 0; i < tectons.size(); i++){
+            if(size == 2 && (tectons.get(i).position[1] != position[1] + 2 || tectons.get(i).position[1] != position[1] + 3)){
+                neighbours.add(tectons.get(i));
+            }
+            if(size == 1 && (tectons.get(i).position[0] != position[0] + 2 || tectons.get(i).position[0] != position[0] + 3)){
+                neighbours.add(tectons.get(i));
+            }
+        }
     }
 }

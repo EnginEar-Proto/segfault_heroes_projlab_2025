@@ -67,8 +67,8 @@ public class GameManager {
      * Inicializálja a tektonokat előre definiált módon.
      */
     public void initializeMap() {
-        tectons.add(new Tecton(1, true));
-        // Itt még kéne a pozíció
+        tectons.add(new Tecton(1, true, 1, 1));
+        // Itt még kéne pár tekton
     }
 
     /**
