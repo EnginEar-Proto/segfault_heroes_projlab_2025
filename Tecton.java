@@ -20,6 +20,9 @@ public class Tecton {
     */
     private ArrayList<Insect> insects;
 
+    private ArrayList<Tecton> secondNeighbours;
+    private ArrayList<Tecton> thirdNeighbours;
+
     private boolean saveMushroomString;
 
     /**
@@ -70,17 +73,8 @@ public class Tecton {
      * @return Visszatér egy logikai értékkel, amely igaz ha a tektonon elfér még egy fonal. Hamis egyébként.
      */
     public boolean canBranch(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Can string branch?[y/n]: ");
-        String input = scanner.nextLine();
-        if(input.equals("y")) {
-            System.out.println("String can branch");
+        if(size > 1)
             return true;
-        }else if(input.equals("n")) {
-            System.out.println("String can't branch");
-            return false;
-        }else
-            System.out.println("Given char is not valid");
         return false;
     }
     /**
@@ -91,24 +85,46 @@ public class Tecton {
      */
     public int neighbourDistance(Tecton t){
         //Bálint: Itt lehet jobb lenne csak bekérni hogy hanyadik szomszéd, mert igy szar lesz a tesztesetet megcsinálni
-        Scanner scanner = new Scanner(System.in);
 
-        // Szám bekérése a felhasználótól
-        System.out.print("Adj meg egy számot: ");
-        int szam = scanner.nextInt();
-        if(szam ==1){
-            System.out.print("Distance is 1");
-            return 1;
-        }else if(szam ==2){
-            System.out.print("Distance is 2");
-            return 2;
-        }else if(szam ==3){
-            System.out.print("Distance is 3");
-            return 3;
-        }else{
-            System.out.print("Distance is bigger than 3 or smaller than 0");
+        for(int i = 0; i < neighbours.size(); i++){
+            if(neighbours.get(i).equals(t))
+                return 1;
         }
-        return 4;   //ha 3-nál messzebb van, akkor úgyis mindegy
+
+        if(!secondNeighbours.isEmpty()){
+            for(int i = 0; i < secondNeighbours.size(); i++){
+                if(secondNeighbours.get(i).equals(t))
+                    return 2;
+            }
+        }else{
+            for(int i = 0; i < neighbours.size(); i++){
+                for(int j = 0; j < neighbours.get(i).neighbours.size(); j++){
+                    secondNeighbours.add(neighbours.get(i).neighbours.get(j));
+                    if(neighbours.get(i).neighbours.get(j).equals(t))
+                        return 2;
+                }
+            }
+        }
+
+        if(!thirdNeighbours.isEmpty()){
+            for(int i = 0; i < thirdNeighbours.size(); i++){
+                if(thirdNeighbours.get(i).equals(t))
+                    return 3;
+            }
+        }else{
+            for(int i = 0; i < neighbours.size(); i++){
+                for(int j = 0; j < neighbours.get(i).neighbours.size(); j++){
+                    for(int a = 0; a < neighbours.get(i).neighbours.get(j).neighbours.size(); a++){
+                        thirdNeighbours.add(neighbours.get(i).neighbours.get(j).neighbours.get(a));
+                        if(neighbours.get(i).neighbours.get(j).neighbours.get(a).equals(t))
+                            return 3;
+                    }
+                }
+            }
+        }
+
+        return 4;
+
     }
     /**
      * A paraméterként kapott spórát elhelyezi azon a tektonon, amelyen a függvényt meghívták.
@@ -116,7 +132,6 @@ public class Tecton {
     */
     public void scatterSpore(Spore s){
         spores.add(s);
-        System.out.print("Spore added to the tecton");
     }
     /**
      * Új gombatestet növeszt arra a tektonra, amelyen a függvényt meghívták.
@@ -163,7 +178,6 @@ public class Tecton {
             //Bálint: Ez átmeneti de ezt tényleg nem tudom, majd beszéljük meg
             ArrayList<Tecton> newNeighbours = new ArrayList<>();
             newTecton.setNeighbours(neighbours);
-            System.out.print("The tectonic plate broke");
         }else
             System.out.print("The tectonic plate can't break");
 
