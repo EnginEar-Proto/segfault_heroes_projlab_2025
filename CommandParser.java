@@ -169,6 +169,7 @@ public class CommandParser {
     public void handlePosAlloc(String[] parameters) throws IOException {
         if (parameters.length == 0) { // random kiosztás
             gm.setStartingPosition();
+            gm.listTeams();
         }
         else if (parameters[0].equals("-m") && parameters.length == 3) { // manuális kiosztás, egy parancs egy csapathoz rendel egy tektont
             Team team = null;
@@ -195,9 +196,11 @@ public class CommandParser {
             else {
                 team.setPositions(tecton, tecton);
             }
+            gm.listTeams();
         }
         else {
             ioHandler.writeLine("HIBA: ismeretlen pos-alloc paraméter");
+            return;
         }
     }
 

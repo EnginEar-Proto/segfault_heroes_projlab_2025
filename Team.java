@@ -6,6 +6,7 @@ public class Team {
     private Mushroomer mushroomer;
     private int score;
     private String name;
+    private Tecton startTecton;
 
     public Team() {}
 
@@ -14,6 +15,15 @@ public class Team {
         this.insecter = insecter;
         this.mushroomer = mushroomer;
     }
+
+    /**
+     * Visszaadja a csapat kezdő tektonját.
+     * @return a csapat kezdő tektonja.
+     */
+    public Tecton getStartTecton() {
+        return startTecton;
+    }
+
     /**
      * Beállítja a csapat játékosait.
      *
@@ -62,5 +72,6 @@ public class Team {
             t1.setBugPosition(insecter.getInsects().getFirst());
         }
         t2.setMushroomBody(mushroomer.getMushroomBody(0));
+        startTecton = t1;
     }
 }

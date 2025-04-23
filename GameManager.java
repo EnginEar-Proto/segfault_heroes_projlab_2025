@@ -117,6 +117,16 @@ public class GameManager {
     }
 
     /**
+     * Kilistázza a jelenlegi csapatokat és a hozzájuk tartozó tektont.
+     */
+    public void listTeams() throws IOException {
+        ioHandler.writeLine("Teams:");
+        for (Team team : teams) {
+            ioHandler.writeLine(team.getName() + " (" + team.getMushroomer().getName() + " + " + team.getInsecter().getName() + ") tecton: " + team.getStartTecton().getId());
+        }
+    }
+
+    /**
      * A játék fő ciklusa.
      * A parancsokat az inputHandler-ből olvassa, és a commandParser dolgozza fel.
      */

@@ -189,7 +189,7 @@ public class Tecton {
                 x = position[0];
                 y = position[1] - 1;
             }
-            Tecton newTecton = new Tecton(oldSize - this.size, false, x, y); //Bálint: Szerintem itt így logikus
+            Tecton newTecton = new Tecton(this.id + " broken", oldSize - this.size, false, x, y); //Bálint: Szerintem itt így logikus
             //Bálint: Itt honnan tudjuk, hogy kik lesznek a szomszédai?
             //Bálint: Ez átmeneti de ezt tényleg nem tudom, majd beszéljük meg
             ArrayList<Tecton> newNeighbours = new ArrayList<>();
