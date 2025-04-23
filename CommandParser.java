@@ -149,41 +149,51 @@ public class CommandParser {
         }
     }
 
+    /**
+     * Kezeli a 'pos-alloc' parancsot, amely a csapatok kezdőpozíciójának kiosztását végzi.
+     *
+     * Ha nem adnak meg paramétert, akkor a {@code GameManager.setStartingPosition()} metódus
+     * segítségével véletlenszerűen kiosztja a kezdőpozíciókat minden csapatnak.
+     *
+     * Manuális kiosztás esetén, ha a paraméterek a következő formában szerepelnek:
+     * {@code -m <csapatnév> <tektonID>}, akkor a megadott csapatnak beállítja a kezdőpozícióját
+     * a megadott tektonra. A {@code Team.setPositions()} metódus mindkét paraméterként kapott
+     * tektonra ugyanazt a tekton példányt állítja be.
+     *
+     * - Ha a csapat nem található a nevek alapján, hibaüzenetet ír ki.
+     * - Ha a megadott tekton ID nem szerepel a játéktérben, szintén hibaüzenetet ír ki.
+     *
+     * @param parameters A parancs argumentumai, lehetnek üresek (random kiosztás) vagy manuális formátumúak.
+     * @throws IOException Ha a be- vagy kimenet során hiba történik.
+     */
     public void handlePosAlloc(String[] parameters) throws IOException {
         if (parameters.length == 0) { // random kiosztás
             gm.setStartingPosition();
         }
-        else if (parameters[0].equals("-m") && parameters.length == 3) { // manuális kiosztás, egy parancs egy játékoshoz rendel egy tektont
-            Mushroomer m = null;
-            Insecter i = null;
-            Tecton t = null;
+        else if (parameters[0].equals("-m") && parameters.length == 3) { // manuális kiosztás, egy parancs egy csapathoz rendel egy tektont
+            Team team = null;
+            Tecton tecton = null;
 
-            for (Team team : gm.getTeams()) {
-                if (team.getMushroomer().getName().equals(parameters[1])) {
-                    m = team.getMushroomer();
-                }
-                else if (team.getInsecter().getName().equals(parameters[1])) {
-                    i = team.getInsecter();
+            for (Team t : gm.getTeams()) {
+                if (t.getName().equals(parameters[1])) {
+                    team = t;
                 }
             }
-            if (m == null && i == null) {
-                ioHandler.writeLine("HIBA: ismeretlen játékosnév.");
+            if (team == null) {
+                ioHandler.writeLine("HIBA: ismeretlen csapatnév.");
                 return;
             }
 
-            for (Tecton tecton : gm.getTectons()) {
-                if (tecton.getId().equals(parameters[2])) {
-                    t = tecton;
+            for (Tecton t : gm.getTectons()) {
+                if (t.getId().equals(parameters[2])) {
+                    tecton = t;
                 }
             }
-            if (t == null) {
+            if (tecton == null) {
                 ioHandler.writeLine("HIBA: ismeretlen tekton ID.");
             }
-            else if (m != null){
-                t.setMushroomBody(m.getMushroomBody(0));
-            }
-            else if (!i.getInsects().isEmpty()) {
-                t.setBugPosition(i.getInsects().getFirst());
+            else {
+                team.setPositions(tecton, tecton);
             }
         }
         else {

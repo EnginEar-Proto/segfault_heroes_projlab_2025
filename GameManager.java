@@ -107,17 +107,12 @@ public class GameManager {
         Random rand = new Random();
         ArrayList<Tecton> usedTectons = new ArrayList<>();
         for (Team team : teams) {
-            Tecton rtecton1 = tectons.get(rand.nextInt(tectons.size()));
-            while (usedTectons.contains(rtecton1)) {
-                rtecton1 = tectons.get(rand.nextInt(tectons.size()));
+            Tecton rtecton = tectons.get(rand.nextInt(tectons.size()));
+            while (usedTectons.contains(rtecton)) {
+                rtecton = tectons.get(rand.nextInt(tectons.size()));
             }
-            Tecton rtecton2 = tectons.get(rand.nextInt(tectons.size()));
-            while (usedTectons.contains(rtecton2)) {
-                rtecton2 = tectons.get(rand.nextInt(tectons.size()));
-            }
-            team.setPositions(rtecton1, rtecton2);
-            usedTectons.add(rtecton1);
-            usedTectons.add(rtecton2);
+            team.setPositions(rtecton, rtecton);
+            usedTectons.add(rtecton);
         }
     }
 
