@@ -210,10 +210,28 @@ public class CommandParser {
         gm.setLaps(1);
     }
 
+    /**
+     * Kezeli a growstring parancsot, amely segítségével tektonok között fonál növeszthető.
+     * 
+     * <p>
+     * A parancs felparaméterezve a következőkép néz ki:
+     * </p>
+     * {@code growstring <fonál> <induló-tekton> <cél-tekton>}
+     * <p>
+     * Ahol a fonál az a létező gombafonál, amelyet növeszteni szeretnénk.
+     * A induló-tekton az a tekton, amelyen már a gombafonál jelen van, és amelyről indítjuk a fonal növesztést.
+     * A cél-tekton az a tekton, amelyre a növesztett fonalat rávezetjük.
+     * </p>
+     * @param parameters A parancsnak itt kerül átadásra a fonál, a kiinduló és cél tektonok.
+     * @throws IllegalArgumentException Ha a paraméterként várt entitások valamelyike nem létezik, vagy a tektonok távolsága túl nagy.
+    */
     public void handleGrowString(String[] parameters) {
         // Implementáció később
     }
 
+    /**
+     * 
+    */
     public void handleMove(String[] parameters) {
         // Implementáció később
     }
