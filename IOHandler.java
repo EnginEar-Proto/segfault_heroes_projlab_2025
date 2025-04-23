@@ -64,6 +64,22 @@ public class IOHandler {
     }
 
     /**
+     * Kiír egy sort a kimeneti célra.
+     *
+     * @param line A kiírandó szöveg.
+     * @throws IOException ha az írás során hiba történik.
+     */
+    public void write(String line) throws IOException {
+        try {
+            writer.write(line);
+            writer.flush();
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    /**
      * Lezárja a bemeneti és kimeneti olvasót/írót, felszabadítva az erőforrásokat.
      *
      * @throws IOException ha a lezárás során hiba történik.
