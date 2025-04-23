@@ -153,7 +153,8 @@ public class CommandParser {
     }
 
     public void handleStart(String[] parameters) {
-        // Implementáció később
+        gm.setGameStarted(true);
+        gm.setLaps(1);
     }
 
     public void handleGrowString(String[] parameters) {

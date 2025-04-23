@@ -8,20 +8,32 @@ import java.io.IOException;
 public class Main{
     public static void main(String[] args){
         try {
+            boolean testMode;
             IOHandler ioHandler;
             if (args.length == 2) {
                 ioHandler = new IOHandler(args[0], args[1]);
+                testMode = true;
             }
             else {
                 ioHandler = new IOHandler("console", "console");
+                testMode = false;
             }
+
             CommandParser commandParser = new CommandParser();
             GameManager gameManager = new GameManager(ioHandler, commandParser);
             commandParser.setGameManager(gameManager);
+
             boolean running = true;
+            boolean gameStarted;
             while (running) {
-                String command = ioHandler.readLine();
-                running = commandParser.executeCommand(command);
+                gameStarted = gameManager.getGameStarted();
+                if (!gameStarted || testMode) { // Normál játékmódban a játék előtti dolgokhoz, illetve a teszteléshez
+                    String command = ioHandler.readLine();
+                    running = commandParser.executeCommand(command);
+                }
+                else {
+                    gameManager.play(); // A játék saját főciklusa.
+                }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -13,6 +13,7 @@ public class GameManager {
     private IOHandler ioHandler;
     private CommandParser commandParser;
     private Team currentTeam;
+    private boolean gameStarted;
 
     /**
      * Létrehozza a GameManager példányát a szükséges handler és parser példányokkal.
@@ -26,6 +27,20 @@ public class GameManager {
         this.commandParser.setGameManager(this);
         this.tectons = new ArrayList<>();
         this.teams = new ArrayList<>();
+
+        gameStarted = false;
+    }
+
+    public boolean getGameStarted() {
+        return gameStarted;
+    }
+
+    public void setGameStarted(boolean gameStarted) {
+        this.gameStarted = gameStarted;
+    }
+
+    public void setLaps(int laps) {
+        this.laps = laps;
     }
 
     /**
@@ -103,7 +118,7 @@ public class GameManager {
     }
 
     /**
-     * A játék fő ciklusa. Végigiterál a csapatokon, és lehetővé teszi számukra a lépést.
+     * A játék fő ciklusa.
      * A parancsokat az inputHandler-ből olvassa, és a commandParser dolgozza fel.
      */
     public void play() throws IOException {
@@ -112,13 +127,18 @@ public class GameManager {
                 currentTeam = teams.get(i);
                 try {
                     String command = ioHandler.readLine();
-                    commandParser.executeCommand(command);
+                    boolean exit = commandParser.executeCommand(command);
+                    if (!exit) {
+                        gameStarted = false;
+                        return;
+                    }
                 } catch (IOException e) {
                     ioHandler.writeLine("Hiba a parancs beolvasása közben: " + e.getMessage());
                 }
             }
             incrementLap();
         }
+        gameStarted = false;
         showResults();
     }
 
