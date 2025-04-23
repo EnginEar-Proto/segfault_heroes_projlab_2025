@@ -4,6 +4,7 @@ import java.util.Map;
 /**
  * Skeleton osztály, amely a test use case-eket inicializálja.
 */
+/*
 public class Skeleton {
     public void JatekInditas(){
         Mushroomer m1 = new Mushroomer("mushroomer");
@@ -122,7 +123,7 @@ public class Skeleton {
         tm1.setPositions(t1, t2);
     }
 }
-
+*/
 /*
  * Test use case-ek esestén mindig az utolsó sor az ami elindítja a folyamatot.
  * Az előtt csak a szükséges objektumok inicializáslása történik.

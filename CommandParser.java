@@ -22,15 +22,15 @@ public class CommandParser {
      *
      * @param command A beolvasott parancs szövege.
      */
-    public void executeCommand(String command) throws IOException {
+    public boolean executeCommand(String command) throws IOException {
         if (gm == null) {
             System.out.println("GameManager nem lett beállítva.");
-            return;
+            return false;
         }
 
         if (command == null || command.isEmpty()) {
             gm.getIOHandler().writeLine("Üres parancs.");
-            return;
+            return false;
         }
 
         String[] parts = command.split(" ", 2);
@@ -40,46 +40,48 @@ public class CommandParser {
         switch (action) {
             case "newgame":
                 handleNewGame(parameters);
-                break;
+                return true;
             case "pos-alloc":
                 handlePosAlloc(parameters);
-                break;
+                return true;
             case "start":
                 handleStart(parameters);
-                break;
+                return true;
             case "growstring":
                 handleGrowString(parameters);
-                break;
+                return true;
             case "move":
                 handleMove(parameters);
-                break;
+                return true;
             case "branch":
                 handleBranch(parameters);
-                break;
+                return true;
             case "scatterspores":
                 handleGrowMushroomBody(parameters);
-                break;
+                return true;
             case "eatspore":
                 handleEatSpore(parameters);
-                break;
+                return true;
             case "sum":
                 handleSum(parameters);
-                break;
+                return true;
             case "eatinsect":
                 handleEatInsect(parameters);
-                break;
+                return true;
             case "cut":
                 handleCut(parameters);
-                break;
+                return true;
             case "breaktecton":
                 handleBreakTecton(parameters);
-                break;
+                return true;
             case "time":
                 handleTime(parameters);
-                break;
+                return true;
+            case "exit":
+                return false;
             default:
                 gm.getIOHandler().writeLine("Ismeretlen parancs: " + action);
-                break;
+                return true;
         }
     }
 

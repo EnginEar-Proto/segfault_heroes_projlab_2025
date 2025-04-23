@@ -28,6 +28,9 @@ public class GameManager {
         this.teams = new ArrayList<>();
     }
 
+    public void setTeams() {
+
+    }
     /**
      * Visszaadja az aktuálisan soron lévő csapatot.
      *
