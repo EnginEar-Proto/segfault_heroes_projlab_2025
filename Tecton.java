@@ -52,7 +52,10 @@ public class Tecton {
 
     private int[] position = new int[2];
 
-    public Tecton(int size, boolean saveMushroomString, int x, int y) {
+    private String id;
+
+    public Tecton(String id, int size, boolean saveMushroomString, int x, int y) {
+        this.id = id;
         insects = new ArrayList<>();
         spores = new ArrayList<>();
         strings = new ArrayList<>();
@@ -61,6 +64,10 @@ public class Tecton {
         position[1] = y;
         this.size = size;
         this.saveMushroomString = saveMushroomString;
+    }
+
+    public String getId() {
+        return id;
     }
 
     /**

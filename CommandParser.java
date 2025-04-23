@@ -109,6 +109,7 @@ public class CommandParser {
      */
     public void handleNewGame(String[] parameters) throws IOException {
         gm.resetTeams();
+        gm.initializeMap();
 
         String teamName;
         String player1;
@@ -148,11 +149,50 @@ public class CommandParser {
         }
     }
 
-    public void handlePosAlloc(String[] parameters) {
-        // Implementáció később
+    public void handlePosAlloc(String[] parameters) throws IOException {
+        if (parameters.length == 0) { // random kiosztás
+            gm.setStartingPosition();
+        }
+        else if (parameters[0].equals("-m") && parameters.length == 3) { // manuális kiosztás, egy parancs egy játékoshoz rendel egy tektont
+            Mushroomer m = null;
+            Insecter i = null;
+            Tecton t = null;
+
+            for (Team team : gm.getTeams()) {
+                if (team.getMushroomer().getName().equals(parameters[1])) {
+                    m = team.getMushroomer();
+                }
+                else if (team.getInsecter().getName().equals(parameters[1])) {
+                    i = team.getInsecter();
+                }
+            }
+            if (m == null && i == null) {
+                ioHandler.writeLine("HIBA: ismeretlen játékosnév.");
+                return;
+            }
+
+            for (Tecton tecton : gm.getTectons()) {
+                if (tecton.getId().equals(parameters[2])) {
+                    t = tecton;
+                }
+            }
+            if (t == null) {
+                ioHandler.writeLine("HIBA: ismeretlen tekton ID.");
+            }
+            else if (m != null){
+                t.setMushroomBody(m.getMushroomBody(0));
+            }
+            else if (!i.getInsects().isEmpty()) {
+                t.setBugPosition(i.getInsects().getFirst());
+            }
+        }
+        else {
+            ioHandler.writeLine("HIBA: ismeretlen pos-alloc paraméter");
+        }
     }
 
     public void handleStart(String[] parameters) {
+
         gm.setGameStarted(true);
         gm.setLaps(1);
     }

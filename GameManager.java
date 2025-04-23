@@ -43,6 +43,10 @@ public class GameManager {
         this.laps = laps;
     }
 
+    public Team[] getTeams() {
+        return teams.toArray(new Team[teams.size()]);
+    }
+
     /**
      * Törli az aktuálisan játszó csapatokat.
      */
@@ -88,8 +92,8 @@ public class GameManager {
      * Inicializálja a tektonokat előre definiált módon.
      */
     public void initializeMap() {
-        tectons.add(new Tecton(1, true, 1, 1));
-        // Itt még kéne pár tekton
+        tectons.add(new Tecton("tekton1", 1, true, 1, 1));
+        // Itt még kéne pár tekton, illetve a szomszédságokat is be kéne állítani
     }
 
     /**
