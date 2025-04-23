@@ -1,4 +1,7 @@
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * A CommandParser osztály felelős a string alapú parancsok értelmezéséért és
@@ -7,6 +10,7 @@ import java.io.IOException;
 public class CommandParser {
 
     private GameManager gm;
+    private IOHandler ioHandler;
 
     /**
      * Beállítja a GameManager példányt, amit később a parancsok feldolgozásánál használ.
@@ -15,6 +19,7 @@ public class CommandParser {
      */
     public void setGameManager(GameManager gm) {
         this.gm = gm;
+        this.ioHandler = gm.getIOHandler();
     }
 
     /**
@@ -33,9 +38,11 @@ public class CommandParser {
             return false;
         }
 
-        String[] parts = command.split(" ", 2);
+        String[] parts = command.split(" ");
         String action = parts[0].toLowerCase();
-        String parameters = parts.length > 1 ? parts[1] : "";
+        List<String> paramsAsList = new ArrayList<>(Arrays.asList(parts));
+        paramsAsList.removeFirst();
+        String[] parameters = paramsAsList.toArray(new String[paramsAsList.size()]);
 
         switch (action) {
             case "newgame":
@@ -85,55 +92,107 @@ public class CommandParser {
         }
     }
 
-    public void handleNewGame(String parameters) {
+    /**
+     * Kezeli a 'newgame' parancsot, amely új csapat(ok) létrehozását és hozzáadását végzi a játékhoz.
+     *
+     * Ha nem adnak meg paramétert, akkor interaktív módon olvas be csapatokat addig,
+     * amíg a felhasználó be nem írja az "xxx" szót csapatnévként. Minden csapathoz
+     * be kell kérni a gombász és a rovarász nevét is.
+     *
+     * Ha a "-t" paraméterrel hívják meg, akkor a paraméter utáni szám meghatározza, hány csapatot kell létrehozni.
+     * Ebben az esetben az adott számú csapat kerül bekérésre.
+     *
+     * Hibás paraméter esetén hibaüzenetet ír ki.
+     *
+     * @param parameters A parancs argumentumai, pl. {"-t", "3"} több csapat létrehozásához.
+     * @throws IOException Ha a bemenet/kiírás során hiba történik.
+     */
+    public void handleNewGame(String[] parameters) throws IOException {
+        gm.resetTeams();
+
+        String teamName;
+        String player1;
+        String player2;
+
+        if (parameters.length == 0) {
+            while (true) {
+                ioHandler.write("Csapatnév: ");
+                teamName = ioHandler.readLine();
+                if (teamName.equalsIgnoreCase("xxx"))
+                    return;
+                ioHandler.write("Gombász: ");
+                player1 = ioHandler.readLine();
+                ioHandler.write("Rovarász: ");
+                player2 = ioHandler.readLine();
+
+                Team team = new Team(teamName, new Insecter(player2), new Mushroomer(player1));
+                gm.addTeam(team);
+            }
+        }
+        else if (parameters[0].equals("-t") && parameters.length == 2) {
+            int count = Integer.parseInt(parameters[1]);
+            while (count-- > 0) {
+                ioHandler.write("Csapatnév: ");
+                teamName = ioHandler.readLine();
+                ioHandler.write("Gombász: ");
+                player1 = ioHandler.readLine();
+                ioHandler.write("Rovarász: ");
+                player2 = ioHandler.readLine();
+
+                Team team = new Team(teamName, new Insecter(player2), new Mushroomer(player1));
+                gm.addTeam(team);
+            }
+        }
+        else {
+            ioHandler.writeLine("HIBA: ismeretlen newgame paraméter");
+        }
+    }
+
+    public void handlePosAlloc(String[] parameters) {
         // Implementáció később
     }
 
-    public void handlePosAlloc(String parameters) {
+    public void handleStart(String[] parameters) {
         // Implementáció később
     }
 
-    public void handleStart(String parameters) {
+    public void handleGrowString(String[] parameters) {
         // Implementáció később
     }
 
-    public void handleGrowString(String parameters) {
+    public void handleMove(String[] parameters) {
         // Implementáció később
     }
 
-    public void handleMove(String parameters) {
+    public void handleBranch(String[] parameters) {
         // Implementáció később
     }
 
-    public void handleBranch(String parameters) {
+    public void handleGrowMushroomBody(String[] parameters) {
         // Implementáció később
     }
 
-    public void handleGrowMushroomBody(String parameters) {
+    public void handleEatSpore(String[] parameters) {
         // Implementáció később
     }
 
-    public void handleEatSpore(String parameters) {
+    public void handleSum(String[] parameters) {
         // Implementáció később
     }
 
-    public void handleSum(String parameters) {
+    public void handleEatInsect(String[] parameters) {
         // Implementáció később
     }
 
-    public void handleEatInsect(String parameters) {
+    public void handleCut(String[] parameters) {
         // Implementáció később
     }
 
-    public void handleCut(String parameters) {
+    public void handleBreakTecton(String[] parameters) {
         // Implementáció később
     }
 
-    public void handleBreakTecton(String parameters) {
-        // Implementáció később
-    }
-
-    public void handleTime(String parameters) {
+    public void handleTime(String[] parameters) {
         // Implementáció később
     }
 }

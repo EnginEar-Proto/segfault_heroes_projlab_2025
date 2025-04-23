@@ -28,8 +28,11 @@ public class GameManager {
         this.teams = new ArrayList<>();
     }
 
-    public void setTeams() {
-
+    /**
+     * Törli az aktuálisan játszó csapatokat.
+     */
+    public void resetTeams() {
+        teams.clear();
     }
     /**
      * Visszaadja az aktuálisan soron lévő csapatot.
