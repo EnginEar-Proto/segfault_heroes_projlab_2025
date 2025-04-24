@@ -159,24 +159,27 @@ public class MushroomString {
      * A gombaszál eltűnik a tektonról. A fonál kettészakad, ha csak a egyik oldalon van gombatest, akkor a másik eltűnik.
      * @param tecton, amiről eltűnik a gombaszál.
      */
-    public void stringDisappear(Tecton tecton) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Is there mushroomBody on both end?[y/n]: ");
-        String input = scanner.nextLine();
+    public int stringDisappear(Tecton tecton) {
+        if(!tectons.contains(tecton)) return -1;
         int index = tectons.indexOf(tecton);
-        if(input.equals("y") && mushroomBodies.size() >= 2) {
-            List<Tecton> newTectons = tectons.subList(index + 1, tectons.size()-1);
-            tectons = tectons.subList(0, index);
-            MushroomString newString = new MushroomString(length - index, mushroomBodies, newTectons, branches);
-            newTectons.forEach(t -> t.addNewString(newString));
-            newTectons.forEach(t -> t.removeString(this));
-            tecton.removeString(this);
-            System.out.println("MushroomString disappear");
-        } else {
-            tectons.subList(index + 1, tectons.size()-1).forEach(t -> t.removeString(this));
-            tecton.removeString(this);
-            System.out.println("MushroomString disappear");
+        Tecton before = index == 0 ? null : tectons.get(index - 1);
+        Tecton after = index == tectons.size() - 1 ? null : tectons.get(index + 1);
+
+        if(before != null) {
+            this.cut(tecton, before);
         }
+        if(after != null) {
+            this.cut(tecton, after);
+        }
+
+        tecton.removeString(this);
+        for(MushroomBody body : mushroomBodies) {
+            body.removeString(this);
+        }
+        mushroomBodies.clear();
+        tectons.clear();
+        childrenStrings.clear();
+        return 0;
     }
 
     /**
