@@ -20,7 +20,13 @@ public class Tecton {
     */
     private ArrayList<Insect> insects;
 
+    /**
+     * A Tekton második szomszédainak listája
+     */
     private ArrayList<Tecton> secondNeighbours;
+    /**
+     * A Tekton harmadik szomszédainak listája
+     */
     private ArrayList<Tecton> thirdNeighbours;
 
     private boolean saveMushroomString;
@@ -90,7 +96,8 @@ public class Tecton {
     }
     /**
      * Meghatározza a paraméterként kapott tekton távolságát attól a tektontól, amelyen mmeghívtuk a
-     * függvényt.
+     * függvényt. Megnézi, hogy az előre definiált listák, amelyek a második és harmadik szomszédokat tárolják üresek-e,
+     * hiszen ha nem, akkor nem kell végigkeresni a szomszédok szomszédait is.
      * @param t - Az a tekton amelynek a távolságát mérjük ettpl a tektontól.
      * @return A paraméterként kapott tekton távolsága ettől a tektontól.
      */
