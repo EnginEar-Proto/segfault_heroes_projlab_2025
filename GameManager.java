@@ -92,8 +92,30 @@ public class GameManager {
      * Inicializálja a tektonokat előre definiált módon.
      */
     public void initializeMap() {
-        tectons.add(new Tecton("tekton1", 1, true, 1, 1));
-        // Itt még kéne pár tekton, illetve a szomszédságokat is be kéne állítani
+        tectons.add(new Tecton("tekton1", 3, true, 1, 1));
+        tectons.add(new Tecton("tekton2", 2, true, 3, 2));
+        tectons.add(new Tecton("tekton3", 1, true, 2, 3));
+        tectons.add(new Tecton("tekton4", 3, true, 2, 4));
+        tectons.add(new Tecton("tekton5", 2, true, 3, 5));
+        tectons.add(new Tecton("tekton6", 3, true, 6, 5));
+        tectons.add(new Tecton("tekton7", 1, true, 8, 8));
+        tectons.add(new Tecton("tekton8", 2, true, 9, 8));
+        tectons.add(new Tecton("tekton9", 1, true, 11, 7));
+        tectons.add(new Tecton("tekton10", 1, true, 12, 7));
+        tectons.add(new Tecton("tekton11", 3, true, 12, 5));
+        tectons.add(new Tecton("tekton12", 3, true, 12, 3));
+        tectons.add(new Tecton("tekton13", 3, true, 12, 1));
+        tectons.add(new Tecton("tekton14", 2, true, 5, 9));
+        tectons.add(new Tecton("tekton15", 3, true, 3, 9));
+        tectons.add(new Tecton("tekton16", 1, true, 5, 11));
+        tectons.add(new Tecton("tekton17", 2, true, 4, 12));
+        tectons.add(new Tecton("tekton18", 2, true, 3, 13));
+        tectons.add(new Tecton("tekton19", 2, true, 5, 13));
+        tectons.add(new Tecton("tekton20", 3, true, 7, 13));
+        tectons.add(new Tecton("tekton21", 2, true, 9, 12));
+        tectons.add(new Tecton("tekton22", 3, true, 11, 11));
+        tectons.add(new Tecton("tekton23", 1, true, 11, 10));
+        tectons.add(new Tecton("tekton24", 1, true, 11, 9));
     }
 
     /**
