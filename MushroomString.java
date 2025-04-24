@@ -125,7 +125,7 @@ public class MushroomString {
             newString.addTecton(tecton);
             tecton.removeString(this);
 
-            MushroomBody bodyOnTecton = tecton.getMuhsroomBody();
+            MushroomBody bodyOnTecton = tecton.getMushroomBody();
             if(bodyOnTecton != null) {
                 if(mushroomBodies.contains(bodyOnTecton)) {
                     newString.addMushroomBody(bodyOnTecton);
@@ -213,6 +213,27 @@ public class MushroomString {
     public void branchOut(Tecton tecton) {
         MushroomString newString = new MushroomString(null, tectons, this);
         tecton.addNewString(newString);
+    }
+
+    public void eatParalyzedInsects(Tecton tecton) {
+        if(tectons.contains(tecton)) {
+            for(Insect insect : tecton.getInsects()) {
+                if(insect.getAbility() == Ability.PARALYZING) {
+                    Insecter insecter = insect.getInsecter();
+                    insecter.insectEatenByString(insect);
+
+                    //mi legyen a rovarral? hogyan remove stb..?
+
+                    if(tecton.getMushroomBody() == null) {
+                        MushroomBody body = new MushroomBody(tecton);
+                        tecton.setMushroomBody(body);
+                    }
+                }
+            }
+        } else {
+            System.out.println("MushroomString doesn't contain the tecton");
+            return;
+        }
     }
 
 }

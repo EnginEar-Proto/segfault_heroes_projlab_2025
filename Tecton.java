@@ -254,11 +254,25 @@ public class Tecton {
         mushroomBody = mb;
     }
     /**
+     * Visszaadja a tektonon lévő gombatestet.
+     * @return A tektonon lévő gombatest.
+     */
+    public MushroomBody getMushroomBody(){
+        return mushroomBody;
+    }
+    /**
      * A rovar elhelyezése a játék megkezdésekor azon a tektonon, amelyre meghívták a függvényt.
      * @param i - A rovar amely elhelyezésre kerül.
      */
     public void setInsect(Insect i){
         insects.add(i);
+    }
+    /**
+     * A tektonon lévő rovarok listáját adja vissza.
+     * @return A tektonon lévő rovarok listája.
+     */
+    public List<Insect> getInsects(){
+        return insects;
     }
     /**
      * A paraméterként kapott fonal átterjed arra a tektonra amelyre a függvényt meghívták.
