@@ -29,14 +29,14 @@ public class MushroomString {
 
     }
 
-    public MushroomString(MushroomBody mushroomBody, Tecton tecton, MushroomString parentString) {
+    public MushroomString(MushroomBody mushroomBody, List<Tecton> tectons, MushroomString parentString) {
         length = 1;
         this.mushroomBodies = new ArrayList<MushroomBody>();
         this.tectons = new ArrayList<Tecton>();
         this.childrenStrings = new ArrayList<MushroomString>();
         this.parentString = parentString;
         this.mushroomBodies.add(mushroomBody);
-        this.tectons.add(tecton);
+        this.tectons.addAll(tectons);
     }
     /**
      * Tecton felvétele a gombafonal utjára.
@@ -188,44 +188,31 @@ public class MushroomString {
      * @param from - A tekton, ahonnan a gombaszál nőni fog.
      *             A két tektonnak szomszédosnak kell lennie.
      */
-    public void growTo(Tecton toGrow, Tecton from) {
+    public int growTo(Tecton toGrow, Tecton from) {
         if(from.neighbourDistance(toGrow) != 1) {
-            System.out.println("Can't grow MushroomString, tectons are not neighbours");
-            return;
+            return -1;
         }
+        if(tectons.indexOf(from) != 0 && tectons.indexOf(from) != tectons.size() - 1) {
+            return -1;
+        }
+
         toGrow.addNewString(this);
         tectons.add(toGrow);
         length++;
 
-        if(toGrow.haveSpore()) {
-            System.out.println("Can grow more");
-        } else {
-            System.out.println("Can't grow more");
-        }
+        return toGrow.hashCode();
     }
 
     /**
      * A gombaszál elágazik, ha a tecton, amire ágazik elég nagy.
-     * @param toBranch - A tekton, amire a gombaszál ágazni fog.
-     * @param from - A tekton, ahonnan a gombaszál ágazni fog.
+     * @param tecton - A tekton, ahonnan a gombaszál ágazni fog.
      *                 A két tektonnak szomszédosnak kell lennie.
      *                 A toBranch tecton méretének legalább 2-nek kell lennie.
      *
      */
-    public void branchOut(Tecton toBranch, Tecton from) {
-        if(from.neighbourDistance(toBranch) != 1) {
-            System.out.println("Can't branch MushroomString, tectons are not neighbours");
-            return;
-        }
-        if(toBranch.canBranch()) {
-            MushroomString newString = new MushroomString(length++, mushroomBodies, List.of(toBranch), List.of(Map.of(toBranch, from)));
-            toBranch.addNewString(newString);
-            tectons.add(toBranch);
-            System.out.println("MushroomString branched out");
-        } else {
-            System.out.println("Can't branch MushroomString, tecton is not big enough");
-        }
-
+    public void branchOut(Tecton tecton) {
+        MushroomString newString = new MushroomString(null, tectons, this);
+        tecton.addNewString(newString);
     }
 
 }
