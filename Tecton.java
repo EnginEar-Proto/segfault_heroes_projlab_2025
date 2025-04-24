@@ -196,10 +196,8 @@ public class Tecton {
                 x = position[0];
                 y = position[1] - 1;
             }
-            Tecton newTecton = new Tecton(this.id + " broken", oldSize - this.size, false, x, y); //Bálint: Szerintem itt így logikus
-            //Bálint: Itt honnan tudjuk, hogy kik lesznek a szomszédai?
-            //Bálint: Ez átmeneti de ezt tényleg nem tudom, majd beszéljük meg
-            ArrayList<Tecton> newNeighbours = new ArrayList<>();
+            Tecton newTecton = new Tecton(this.id + " broken", oldSize - this.size, false, x, y);
+            this.setNeighbours(neighbours); //Itt ugy változik az is, hogy kik a saját szomszédai
             newTecton.setNeighbours(neighbours);
         }else
             System.out.print("The tectonic plate can't break");
