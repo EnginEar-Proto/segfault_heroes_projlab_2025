@@ -10,7 +10,7 @@ public class MushroomString {
     private List<Tecton> tectons;
     private MushroomString parentString;
     private List<MushroomString> childrenStrings;
-    private int timeLeft;
+    private int timeLeft = -1;
 
     public MushroomString(MushroomBody mushroomBody, Tecton tecton) {
         length = 1;
@@ -66,6 +66,7 @@ public class MushroomString {
     public void addMushroomBody(MushroomBody mushroomBody) {
         mushroomBodies.add(mushroomBody);
         mushroomBody.addString(this);
+        timeLeft = -1;
     }
     /**
      * Gombatest eltávolítása a gombaszálról.
@@ -75,6 +76,10 @@ public class MushroomString {
     public void removeMushroomBody(MushroomBody mushroomBody) {
         mushroomBodies.remove(mushroomBody);
         mushroomBody.removeString(this);
+        if(mushroomBodies.isEmpty()) {
+            if(tectons.stream().anyMatch(Tecton::getSaveMushroomString)) return;
+            timeLeft = 2;
+        }
     }
 
     /**
@@ -183,6 +188,30 @@ public class MushroomString {
     }
 
     /**
+     * A gombafonal elhal, ha lejár az ideje.
+     * @return -1, ha a gombafonal nem haldoklik.
+     * @return 0, ha a gombafonal elhal.
+     * @return a gombafonal hátralévő ideje, ha még nem halt el.
+     */
+    public int stringDisappear() {
+        if(timeLeft == -1) return -1;
+        if(timeLeft > 0) {
+            timeLeft--;
+            return timeLeft;
+        }
+        for(Tecton tecton : tectons) {
+            tecton.removeString(this);
+        }
+        for(MushroomBody body : mushroomBodies) {
+            body.removeString(this);
+        }
+        mushroomBodies.clear();
+        tectons.clear();
+        childrenStrings.clear();
+        return 0;
+    }
+
+    /**
      * A gombaszál nő a paraméterként kapott tektonra.
      * @param toGrow - A tekton, amire a gombaszál nőni fog.
      * @param from - A tekton, ahonnan a gombaszál nőni fog.
@@ -215,6 +244,11 @@ public class MushroomString {
         tecton.addNewString(newString);
     }
 
+    /**
+     * A fonal megeszi a parméterül kapott tekton rovarait.
+     * Ha még nincs gombatest a tektonon, akkor létrehoz egyet.
+     * @param tecton
+     */
     public void eatParalyzedInsects(Tecton tecton) {
         if(tectons.contains(tecton)) {
             for(Insect insect : tecton.getInsects()) {
@@ -235,5 +269,6 @@ public class MushroomString {
             return;
         }
     }
+
 
 }

@@ -29,6 +29,9 @@ public class Tecton {
      */
     private ArrayList<Tecton> thirdNeighbours;
 
+    /**
+     * Igaz érték esetén a tektonon lévő gombafonalak megmaradnak, akkor is, ha nem tartozik hozzájuk gombatest.
+     */
     private boolean saveMushroomString;
 
     /**
@@ -74,6 +77,10 @@ public class Tecton {
 
     public String getId() {
         return id;
+    }
+
+    public boolean getSaveMushroomString() {
+        return saveMushroomString;
     }
 
     /**
