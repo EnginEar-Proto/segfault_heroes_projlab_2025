@@ -26,20 +26,28 @@ public class MushroomBody {
      * A gombatestben található spórák elszórása a környező tektonokra.
      * A spórák számától függően szórja el a spórákat a környező tektonokra.
      * @param toScatter - A tekton, amelyre a spórákat el kell szórni.
-     *
+     * @return -1, ha a spórák száma nem elegendő az elszóráshoz, vagy ha a tekton túl messze van.
+     * @return a spórák száma, ha a szórás sikeres.
      */
-    public void scatter(Tecton toScatter) {
+    public int scatter(Tecton toScatter) {
         int distance = tecton.neighbourDistance(toScatter);
-        if(distance > 3) {
+        if(distance >= 4 || distance == -1) {
             System.out.println("Can't scatter spores, tectons are too far");
-            return;
+            return -1;
+        }
+        if(distance > spores.size()) {
+            System.out.println("Not enough spores to scatter");
+            return -1;
         }
         System.out.println("MushroomBody scatter");
-        for(int i = 0; i < distance; i++) {
-            Spore sp = spores.getFirst();
-            toScatter.scatterSpore(sp);
+        Spore sp;
+        for(int i = 0; i < distance-1; i++) {
+            sp = spores.getFirst();
             reduceSpore(sp);
         }
+        sp = spores.getFirst();
+        toScatter.scatterSpore(sp);
+        return spores.size();
     }
 
     /**
@@ -50,7 +58,13 @@ public class MushroomBody {
         strings.add(newString);
         tecton.addNewString(newString);
         System.out.println("MushroomBody createNewString");
-        //melyik teknon van a gombatest? kene tárolni ez nagyon elbaszott így
+    }
 
+    /**
+     * Fonal hozzáadása a fonal listához.
+     */
+    public void addString(MushroomString string) {
+        strings.add(string);
+        System.out.println("MushroomBody addString");
     }
 }
