@@ -67,4 +67,12 @@ public class MushroomBody {
         strings.add(string);
         System.out.println("MushroomBody addString");
     }
+
+    /**
+     * Fonal eltávolítása a fonal listából.
+     */
+    public void removeString(MushroomString string) {
+        strings.remove(string);
+        System.out.println("MushroomBody removeString");
+    }
 }
