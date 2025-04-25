@@ -347,8 +347,60 @@ public class CommandParser {
         t.growBody();
     }
 
-    public void handleEatSpore(String[] parameters) {
-        // Implementáció később
+    /**
+     * Kezeli az eatspore parancsot, amellyel a rovar elfogyasztja a paraméterként átadott spórát, és
+     * annak a tápértéke a rovarhoz adódik. Valamint a rovar megkapja a spóra effektjét, ha annak volt bármilyen.
+     * <p>
+     * A parancs felparaméterezve a következőkép néz ki:
+     * </p>
+     * {@code eatspore <rovar> <spóra>}
+     * <p>
+     * Ahol az első paraméter az a rovar, amely el fogja fogyasztani a spórát.
+     * A második paraméter az a spóra, amely elfogyasztásra kerül.
+     * </p>
+     * @param paramters A parancsnak átadott paraméterek tömbje, amelynek tartalmaznia kell a rovar és a spóra azonosítóját.
+     * @throws IOException Ha a be- vagy kimenet során hiba történik 
+    */
+    public void handleEatSpore(String[] parameters) throws IOException {
+        if(parameters.length != 2 || List.of(parameters).contains(null)){
+            ioHandler.writeLine("HIBA: Rossz felparaméterezés\nbranch <rovar> <spóra>");
+            return;
+        }
+
+        Spore sp = null;
+        Insect insect = null;
+
+        for(int i = 0; i < gm.getTeams().length; i++){
+            List<Insect> teamInsects = gm.getTeams()[i].getInsecter().getInsects();
+            for(int j = 0; j < teamInsects.size(); j++){
+                List<Insect> options = teamInsects.stream().
+                filter(ins ->ins.getid()
+                .equals(parameters[0])).toList();
+
+                if(!(options.isEmpty())){
+                    insect = options.get(0);
+                    break;
+                }
+            }
+        }
+
+        for(int i = 0; i < gm.getTectons().size(); i++){
+            List<Spore> spores = gm.getTectons().get(i).getSpores();
+
+            for (Spore spore : spores) {
+                if(spore.getId().equals(parameters[1])){
+                    sp = spore;
+                    break;
+                }
+            }
+        }
+
+        if(sp == null || insect == null){
+            ioHandler.writeLine("HIBA: a paraméterként átadott entitások valamelyike nem létezik ilyen azonosítóval.");
+            return;
+        }
+
+        insect.eat(sp);
     }
 
     public void handleSum(String[] parameters) {

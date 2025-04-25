@@ -1,4 +1,5 @@
 public class Spore {
+    private String id;
     private int substance;
     private Ability ability;
     private Tecton tecton;
@@ -11,6 +12,14 @@ public class Spore {
     }
     public Ability getAbility() {
         return ability;
+    }
+
+    /**
+     * Visszaadja a spóra azonosítóját.
+     * @return A spóra azonosítója.
+    */
+    public String getId(){
+        return this.id;
     }
 
     public void setTecton(Tecton tecton) {

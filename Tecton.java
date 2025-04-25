@@ -75,8 +75,20 @@ public class Tecton {
         this.saveMushroomString = saveMushroomString;
     }
 
+    /**
+     * Visszatér a tekton azonosítójával.
+     * @returns A tekton azonosítója.
+    */
     public String getId() {
-        return id;
+        return this.id;
+    }
+
+    /**
+     * Visszaadja a tektonon elhelyezkedő spórákat egy listában.
+     * @returns A tektonon elhelyezkedő spórák listája.
+    */
+    public List<Spore> getSpores() {
+        return this.spores;
     }
 
     public boolean getSaveMushroomString() {
