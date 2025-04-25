@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * A CommandParser osztály felelős a string alapú parancsok értelmezéséért és
@@ -228,19 +229,19 @@ public class CommandParser {
     public void handleGrowString(String[] parameters) throws IOException {
         if(parameters.length != 3 || List.of(parameters).contains(null)){
             ioHandler.writeLine("HIBA: Hiányzó paraméterek.\ngrowstring <fonál> <tekton1> <tekton2>");
-        }else{
-            Tecton startTecton = gm.getTectons().stream()
-            .findFirst().filter(t -> t.getId().equals(parameters[1])).get();
-
-            Tecton destTecton = 
-                gm.getTectons().stream()
-                .findFirst().filter(t -> t.getId().equals(parameters[2])).get();
-
-            MushroomString s = startTecton.getStrings().stream()
-            .findFirst().filter(st -> st.getId().equals(parameters[0])).get();
-
-            s.growTo(startTecton, destTecton);
+            return;
         }
+        Tecton startTecton = gm.getTectons().stream()
+        .findFirst().filter(t -> t.getId().equals(parameters[1])).get();
+
+        Tecton destTecton = 
+            gm.getTectons().stream()
+            .findFirst().filter(t -> t.getId().equals(parameters[2])).get();
+
+        MushroomString s = startTecton.getStrings().stream()
+        .findFirst().filter(st -> st.getId().equals(parameters[0])).get();
+
+        s.growTo(startTecton, destTecton);
     }
 
     /**
@@ -251,42 +252,73 @@ public class CommandParser {
      * </p> 
      * {@code move <rovar> <cél-tekton>}
      * <p>
-     * Ahol az első paraméter az a rovar amelyet mozatni szeretnénk.
+     * Ahol az első paraméter az a rovar amelyet mozgatni szeretnénk.
      * A második paraméter pedig a tekton ahova a rovart irányítjuk.
      * </p>
      * @param paramters A parancsnak átadott paraméterek tömbje, amelynek tartalmaznia kell a rovar és a tekton azonosítóját.
+     * @throws IOException Ha a be- vagy kimenet során hiba történik 
     */
     public void handleMove(String[] parameters) throws IOException {
         if(parameters.length != 2 || List.of(parameters).contains(null)){
             ioHandler.writeLine("HIBA: Rossz felparaméterezés.\nmove <rovar> <tekton>");
-        }else{
-            Tecton dest = gm.getTectons().stream().findFirst().filter(t -> t.getId().equals(parameters[1])).get();
-            Insect insect = null;
+            return;
+        }
+        Tecton dest = gm.getTectons().stream().findFirst().filter(t -> t.getId().equals(parameters[1])).get();
+        Insect insect = null;
 
-            for(int i = 0; i < gm.getTeams().length; i++){
-                List<Insect> teamInsects = gm.getTeams()[i].getInsecter().getInsects();
-                for(int j = 0; j < teamInsects.size(); j++){
-                    List<Insect> options = teamInsects.stream().
-                    filter(ins ->ins.getid()
-                    .equals(parameters[0])).toList();
+        for(int i = 0; i < gm.getTeams().length; i++){
+            List<Insect> teamInsects = gm.getTeams()[i].getInsecter().getInsects();
+            for(int j = 0; j < teamInsects.size(); j++){
+                List<Insect> options = teamInsects.stream().
+                filter(ins ->ins.getid()
+                .equals(parameters[0])).toList();
 
-                    if(!(options.isEmpty())){
-                        insect = options.get(0);
-                        break;
-                    }
+                if(!(options.isEmpty())){
+                    insect = options.get(0);
+                    break;
                 }
             }
-
-            if(insect == null){
-                ioHandler.writeLine("HIBA: Nem létezik rovar, ezzel az azonosítóval: " + parameters[0]);
-                return;
-            }
-            insect.moveTo(dest);
         }
+
+        if(insect == null){
+            ioHandler.writeLine("HIBA: Nem létezik rovar, ezzel az azonosítóval: " + parameters[0]);
+            return;
+        }
+
+        insect.moveTo(dest);
     }
 
-    public void handleBranch(String[] parameters) {
-        // Implementáció később
+    /**
+     * Kezeli a branch parancsot, amellyel a tektonokon húzodó gombafonalat lehet egy másik tektonra ágaztatni.
+     * Ez a parancs abban tér a grow parancstól, hogy a meglévő gombafonál meghosszabbítása helyett egy új fonalat hoz létre az adott tektonon.
+     * <p>
+     * A parancs felparaméterezve a következőkép néz ki:
+     * </p>
+     * {@code branch <fonal> <cél-tekton>}
+     * <p>
+     * Ahol az első paraméter az a fonal amelyet ágaztatni szeretnénk.
+     * A második paraméter pedig a tekton amin az új fonalat ágaztatjuk.
+     * </p>
+     * @throws IOException Ha a be- vagy kimenet során hiba történik 
+    */
+    public void handleBranch(String[] parameters) throws IOException {
+        if(parameters.length != 2 || List.of(parameters).contains(null)){
+            ioHandler.writeLine("HIBA: Rossz felparaméterezés\nbranch <fonal> <tekton>");
+            return;
+        }
+
+        try {
+            Tecton t = 
+            gm.getTectons().stream()
+            .findFirst().filter(tec -> tec.getId().equals(parameters[1])).get();
+
+            MushroomString s = t.getStrings().stream().findFirst().filter(st-> st.getId().equals(parameters[0])).get();
+
+            s.branchOut(t);
+        } catch (NoSuchElementException e) {
+            ioHandler.writeLine("HIBA: A paraméterként átadott entitások valamelyike nem létezik.");
+        }
+
     }
 
     public void handleGrowMushroomBody(String[] parameters) {
