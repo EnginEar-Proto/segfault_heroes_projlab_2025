@@ -282,6 +282,13 @@ public class Tecton {
         return insects;
     }
     /**
+     * A tektonon lévő fonalak listáját adja vissza.
+     * @return A tektonon lévő fonalak listája.
+     */
+    public List<MushroomString> getStrings(){
+        return strings;
+    }
+    /**
      * A paraméterként kapott fonal átterjed arra a tektonra amelyre a függvényt meghívták.
      * @param s - A fonal, amely átterjed a tektonra
      */

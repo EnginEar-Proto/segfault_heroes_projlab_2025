@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 
 public class MushroomString {
+    private String id;
     private int length;
     private List<MushroomBody> mushroomBodies;
     private List<Tecton> tectons;
@@ -19,6 +20,10 @@ public class MushroomString {
         this.childrenStrings = new ArrayList<MushroomString>();
         this.mushroomBodies.add(mushroomBody);
         this.tectons.add(tecton);
+    }
+
+    public String getId(){
+        return this.id;
     }
 
     public MushroomString() {

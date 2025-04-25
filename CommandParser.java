@@ -223,10 +223,24 @@ public class CommandParser {
      * A cél-tekton az a tekton, amelyre a növesztett fonalat rávezetjük.
      * </p>
      * @param parameters A parancsnak itt kerül átadásra a fonál, a kiinduló és cél tektonok.
-     * @throws IllegalArgumentException Ha a paraméterként várt entitások valamelyike nem létezik, vagy a tektonok távolsága túl nagy.
+     * @throws IOException Ha a be- vagy kimenet során hiba történik 
     */
-    public void handleGrowString(String[] parameters) {
-        // Implementáció később
+    public void handleGrowString(String[] parameters) throws IOException {
+        if(parameters.length != 3 || List.of(parameters).contains(null)){
+            ioHandler.writeLine("HIBA: Hiányzó paraméterek.\ngrowstring <fonál> <tekton1> <tekton2>");
+        }else{
+            Tecton startTecton = gm.getTectons().stream()
+            .findFirst().filter(t -> t.getId().equals(parameters[1])).get();
+
+            Tecton destTecton = 
+                gm.getTectons().stream()
+                .findFirst().filter(t -> t.getId().equals(parameters[2])).get();
+
+            MushroomString s = startTecton.getStrings().stream()
+            .findFirst().filter(st -> st.getId().equals(parameters[0])).get();
+
+            s.growTo(startTecton, destTecton);
+        }
     }
 
     /**
