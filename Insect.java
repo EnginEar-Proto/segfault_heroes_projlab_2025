@@ -5,6 +5,7 @@ import java.util.Scanner;
  * például mozgást, spórák elfogyasztását és fonalak elvágását.
  */
 public class Insect {
+    private String id;
     private int substance; // A rovar által birtokolt anyagok mennyisége
     private Ability ability; // A rovar képessége
     private Tecton tecton; // A rovar aktuális helyzete
@@ -27,6 +28,14 @@ public class Insect {
      */
     public int getSubstance() {
         return substance;
+    }
+
+    /**
+     * Visszaadja a rovar azonosítóját.
+     * @return A rovar azonosítója.
+    */
+    public String getid(){
+        return this.id;
     }
 
     /**

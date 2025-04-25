@@ -244,10 +244,45 @@ public class CommandParser {
     }
 
     /**
+     * Kezeli a move parancsot, amellyel a gombafonalakkal összekötött tektonokon mozgathatók a rovarok.
      * 
+     * <p>
+     * A parancs felparaméterezve a következőkép néz ki:
+     * </p> 
+     * {@code move <rovar> <cél-tekton>}
+     * <p>
+     * Ahol az első paraméter az a rovar amelyet mozatni szeretnénk.
+     * A második paraméter pedig a tekton ahova a rovart irányítjuk.
+     * </p>
+     * @param paramters A parancsnak átadott paraméterek tömbje, amelynek tartalmaznia kell a rovar és a tekton azonosítóját.
     */
-    public void handleMove(String[] parameters) {
-        // Implementáció később
+    public void handleMove(String[] parameters) throws IOException {
+        if(parameters.length != 2 || List.of(parameters).contains(null)){
+            ioHandler.writeLine("HIBA: Rossz felparaméterezés.\nmove <rovar> <tekton>");
+        }else{
+            Tecton dest = gm.getTectons().stream().findFirst().filter(t -> t.getId().equals(parameters[1])).get();
+            Insect insect = null;
+
+            for(int i = 0; i < gm.getTeams().length; i++){
+                List<Insect> teamInsects = gm.getTeams()[i].getInsecter().getInsects();
+                for(int j = 0; j < teamInsects.size(); j++){
+                    List<Insect> options = teamInsects.stream().
+                    filter(ins ->ins.getid()
+                    .equals(parameters[0])).toList();
+
+                    if(!(options.isEmpty())){
+                        insect = options.get(0);
+                        break;
+                    }
+                }
+            }
+
+            if(insect == null){
+                ioHandler.writeLine("HIBA: Nem létezik rovar, ezzel az azonosítóval: " + parameters[0]);
+                return;
+            }
+            insect.moveTo(dest);
+        }
     }
 
     public void handleBranch(String[] parameters) {
