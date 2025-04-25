@@ -299,6 +299,7 @@ public class CommandParser {
      * Ahol az első paraméter az a fonal amelyet ágaztatni szeretnénk.
      * A második paraméter pedig a tekton amin az új fonalat ágaztatjuk.
      * </p>
+     * @param paramters A parancsnak átadott paraméterek tömbje, amelynek tartalmaznia kell a fonal és a tekton azonosítóját.
      * @throws IOException Ha a be- vagy kimenet során hiba történik 
     */
     public void handleBranch(String[] parameters) throws IOException {
@@ -321,8 +322,29 @@ public class CommandParser {
 
     }
 
-    public void handleGrowMushroomBody(String[] parameters) {
-        // Implementáció később
+    /**
+     * Kezeli a growmushroombody parancsot, amellyel új gombatest növeszthető a paraméterként átadott tektonon.
+     * 
+     * <p>
+     * A parancs felparaméterezve a következőkép néz ki:
+     * </p>
+     * {@code growushroombody <tekton>}
+     * <p>
+     * Ahol az első paraméter az a tekton, amelyre az új gombatestet növeszteni akarjuk.
+     * </p>
+     * @param paramters A parancsnak átadott paraméterek tömbje, amelynek tartalmaznia kell a tekton azonosítóját.
+     * @throws IOException Ha a be- vagy kimenet során hiba történik 
+    */
+    public void handleGrowMushroomBody(String[] parameters) throws IOException {
+        if(parameters.length != 1 || List.of(parameters).contains(null)){
+            ioHandler.writeLine("HIBA: Rossz felparaméterezés\nbranch <fonal> <tekton>");
+            return;
+        }
+
+        Tecton t = gm.getTectons().stream()
+        .findFirst().filter(tec -> tec.getId().equals(parameters[0])).get();
+
+        t.growBody();
     }
 
     public void handleEatSpore(String[] parameters) {
