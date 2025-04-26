@@ -117,7 +117,6 @@ public class MushroomString {
      */
     public int cut(Tecton t1, Tecton t2) {
         if(t1.neighbourDistance(t2) != 1) {
-            System.out.println("Can't cut MushroomString, tectons are not neighbours");
             return -1;
         }
         int index1 = tectons.indexOf(t1);

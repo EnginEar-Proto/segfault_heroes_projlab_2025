@@ -14,7 +14,7 @@ public class MushroomBody {
         tecton = t;
     }
 
-    public void getID() {
+    public String getID() {
         return id;
     }
 
@@ -24,7 +24,6 @@ public class MushroomBody {
      */
     public void reduceSpore(Spore spore) {
         spores.remove(spore);
-        System.out.println("MushroomBody reduceSpore");
     }
 
     /**
@@ -37,14 +36,11 @@ public class MushroomBody {
     public int scatter(Tecton toScatter) {
         int distance = tecton.neighbourDistance(toScatter);
         if(distance >= 4 || distance == -1) {
-            System.out.println("Can't scatter spores, tectons are too far");
             return -1;
         }
         if(distance > spores.size()) {
-            System.out.println("Not enough spores to scatter");
             return -1;
         }
-        System.out.println("MushroomBody scatter");
         Spore sp;
         for(int i = 0; i < distance-1; i++) {
             sp = spores.getFirst();
@@ -62,7 +58,6 @@ public class MushroomBody {
         MushroomString newString = new MushroomString(this, tecton);
         strings.add(newString);
         tecton.addNewString(newString);
-        System.out.println("MushroomBody createNewString");
     }
 
     /**
@@ -70,7 +65,6 @@ public class MushroomBody {
      */
     public void addString(MushroomString string) {
         strings.add(string);
-        System.out.println("MushroomBody addString");
     }
 
     /**
@@ -78,6 +72,5 @@ public class MushroomBody {
      */
     public void removeString(MushroomString string) {
         strings.remove(string);
-        System.out.println("MushroomBody removeString");
     }
 }
