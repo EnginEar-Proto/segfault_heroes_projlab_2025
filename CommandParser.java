@@ -195,7 +195,20 @@ public class CommandParser {
                 ioHandler.writeLine("HIBA: ismeretlen tekton ID.");
             }
             else {
-                team.setPositions(tecton, tecton);
+                boolean occupied = false;
+                for (Team t : gm.getTeams()) {
+                    if (t.getStartTecton().getId().equals(tecton.getId())) {
+                        occupied = true;
+                        break;
+                    }
+                }
+                if (occupied) {
+                    ioHandler.writeLine("HIBA: A tekton már foglalt.");
+                    return;
+                }
+                else {
+                    team.setPositions(tecton, tecton);
+                }
             }
             gm.listTeams();
         }
