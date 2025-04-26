@@ -403,8 +403,39 @@ public class CommandParser {
         insect.eat(sp);
     }
 
+    /**
+     * Kezeli a sum parancsot, ammellyel a paraméterként átadott entitás adatai kérdezhetőek le.
+     * <p>
+     * 
+     * </p>
+     * {@code sum <entitás>}
+     * <p>
+     * Ahol az első paraméter az az entitás amelynek, az adatait lekérdezzük.
+     * </p>
+     * @param parameters A parancsnak átadott paraméterek tömbje, amelynek tartalmaznia kell az entitás azonosítóját.
+     * @throws IOException Ha a be- vagy kimenet során hiba történik 
+    */
     public void handleSum(String[] parameters) {
-        // Implementáció később
+        switch (parameters[0].substring(0,3)) {
+            case "tek":
+                
+                break;
+            case "spo":
+
+                break;
+            case "ins":
+                break;
+            case "inr":
+                break;
+            case "msr":
+                break;
+            case "mbd":
+                break;
+            case "str":
+                break;
+            default:
+                break;
+        }        
     }
 
     public void handleEatInsect(String[] parameters) {
