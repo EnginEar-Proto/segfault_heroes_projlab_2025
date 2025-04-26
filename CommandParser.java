@@ -207,6 +207,8 @@ public class CommandParser {
                     return;
                 }
                 else {
+                    team.getMushroomer().addMushroomBody(new MushroomBody(team.getMushroomer().getName() + " body1", tecton));
+                    team.getInsecter().addInsect(new Insect(team.getInsecter().getName() + " insect1", 0, Ability.NORMAL, team.getInsecter()));
                     team.setPositions(tecton, tecton);
                 }
             }

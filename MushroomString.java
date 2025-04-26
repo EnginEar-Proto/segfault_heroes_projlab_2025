@@ -264,7 +264,7 @@ public class MushroomString {
                     //mi legyen a rovarral? hogyan remove stb..?
 
                     if(tecton.getMushroomBody() == null) {
-                        MushroomBody body = new MushroomBody(tecton);
+                        MushroomBody body = new MushroomBody(id + "body", tecton);
                         tecton.setMushroomBody(body);
                     }
                 }

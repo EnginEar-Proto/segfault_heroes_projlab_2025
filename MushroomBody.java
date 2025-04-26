@@ -3,14 +3,19 @@ import java.util.List;
 import java.util.Map;
 
 public class MushroomBody {
+    private String id;
     private List<MushroomString> strings;
     private List<Spore> spores;
     private Tecton tecton;
 
-    public MushroomBody(Tecton t){
+    public MushroomBody(String id, Tecton t){
         strings = new ArrayList<>();
         spores = new ArrayList<>();
         tecton = t;
+    }
+
+    public void getID() {
+        return id;
     }
 
     /**

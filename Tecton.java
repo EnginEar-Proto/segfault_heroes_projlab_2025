@@ -175,7 +175,7 @@ public class Tecton {
      */
     public void growBody(){
         if(this.mushroomBody != null){
-            MushroomBody newBody = new MushroomBody(this);
+            MushroomBody newBody = new MushroomBody(id + "body", this);
             this.mushroomBody = newBody;
             System.out.print("New mushroom body in this tecton");
         }else{
