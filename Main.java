@@ -23,16 +23,20 @@ public class Main{
             GameManager gameManager = new GameManager(ioHandler, commandParser);
             commandParser.setGameManager(gameManager);
 
-            boolean running = true;
-            boolean gameStarted;
-            while (running) {
-                gameStarted = gameManager.getGameStarted();
-                if (!gameStarted || testMode) { // Normál játékmódban a játék előtti dolgokhoz, illetve a teszteléshez
-                    String command = ioHandler.readLine();
-                    running = commandParser.executeCommand(command);
-                }
-                else {
-                    gameManager.play(); // A játék saját főciklusa.
+            if (testMode) {
+                gameManager.test(); // Tesztelés esetén a fájlból végigolvassa a sorokat
+            }
+            else {
+                boolean running = true;
+                boolean gameStarted;
+                while (running) {
+                    gameStarted = gameManager.getGameStarted();
+                    if (!gameStarted) { // Normál játékmódban a játék előtti dolgokhoz
+                        String command = ioHandler.readLine();
+                        running = commandParser.executeCommand(command);
+                    } else {
+                        gameManager.play(); // Indítás után a játék saját főciklusa.
+                    }
                 }
             }
         } catch (IOException e) {
