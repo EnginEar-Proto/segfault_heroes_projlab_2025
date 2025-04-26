@@ -38,7 +38,7 @@ public class Spore {
         insect.addSubstance(substance);
         insect.setAbility(ability);
         if(insect.getAbility().equals(Ability.DIVIDER)){
-            insect.getInsecter().addInsect(new Insect(0, Ability.NORMAL, insect.getInsecter()));
+            insect.getInsecter().addInsect(new Insect(insect.getId() + " divided", 0, Ability.NORMAL, insect.getInsecter()));
         }
     }
 }

@@ -493,8 +493,72 @@ public class CommandParser {
         // Implementáció később
     }
 
-    public void handleCut(String[] parameters) {
-        // Implementáció később
+    /**
+     * Kezeli a 'cut' parancsot, amely egy rovarral való fonál elvágását valósítja meg két tekton között.
+     * <p>
+     * A parancs négy paramétert vár:
+     * <ul>
+     *     <li>Az első paraméter a rovar azonosítója (Insect ID).</li>
+     *     <li>A második paraméter a fonál azonosítója (MushroomString ID).</li>
+     *     <li>A harmadik paraméter az egyik tekton azonosítója (Tecton ID) amelyik között az elvágás történik.</li>
+     *     <li>A negyedik paraméter a másik tekton azonosítója (Tecton ID) amelyik között az elvágás történik.</li>
+     * </ul>
+     *
+     * Működés:
+     * <ul>
+     *     <li>Megkeresi a megfelelő rovart, fonalat és tektonokat az ID-k alapján.</li>
+     *     <li>Ha bármelyik entitás nem található, megfelelő hibaüzenetet ír ki.</li>
+     *     <li>Ha mindegyik megtalálható, meghívja a rovar {@code sabotageString} metódusát a megadott paraméterekkel.</li>
+     *     <li>Ha a két tekton nem szomszédos, hibaüzenetet ír ki.</li>
+     * </ul>
+     *
+     * @param parameters A parancs argumentumai: rovar ID, fonál ID, kezdő tekton ID, cél tekton ID.
+     * @throws IOException Ha bemeneti/kimeneti hiba történik.
+     */
+    public void handleCut(String[] parameters) throws IOException {
+        if (parameters.length == 4) {
+            Insect insect = null;
+            MushroomString mushroomString = null;
+            Tecton tecton1 = null;
+            Tecton tecton2 = null;
+            for (Tecton t : gm.getTectons()) {
+                for (Insect i : t.getInsects()) {
+                    if (i.getId().equals(parameters[0])) {
+                        insect = i;
+                        for (MushroomString ms : t.getStrings()) {
+                            if (ms.getId().equals(parameters[1])) {
+                                mushroomString = ms;
+                            }
+                        }
+                    }
+                }
+                if (t.getId().equals(parameters[2])) {
+                    tecton1 = t;
+                }
+                if (t.getId().equals(parameters[3])) {
+                    tecton2 = t;
+                }
+            }
+            if (insect == null) {
+                ioHandler.writeLine("HIBA: Nem található rovar ilyen id-val.");
+            }
+            if (mushroomString == null) {
+                ioHandler.writeLine("HIBA: Nem található fonál ilyen id-val.");
+            }
+            if (tecton1 == null) {
+                ioHandler.writeLine("HIBA: Nem található kezdő tekton ilyen id-val.");
+            }
+            if (tecton2 == null) {
+                ioHandler.writeLine("HIBA: Nem található végső tekton ilyen id-val.");
+            }
+            if (insect != null && mushroomString != null && tecton1 != null && tecton2 != null) {
+                int res = insect.sabotageString(mushroomString, tecton1, tecton2);
+                if (res == -1) ioHandler.writeLine("HIBA: A tektonok nem szomszédosak.");
+            }
+        }
+        else {
+            ioHandler.writeLine("HIBA: Rossz paraméterezés.");
+        }
     }
 
     /**

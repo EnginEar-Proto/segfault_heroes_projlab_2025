@@ -16,10 +16,15 @@ public class Insect {
      * @param substance A rovar kezdeti anyagmennyisége.
      * @param ability A rovar kezdeti képessége.
      */
-    public Insect(int substance, Ability ability, Insecter insecter) {
+    public Insect(String id, int substance, Ability ability, Insecter insecter) {
+        this.id = id;
         this.substance = substance;
         this.ability = ability;
         this.insecter = insecter;
+    }
+
+    public String getId() {
+        return id;
     }
 
     /**
@@ -112,9 +117,9 @@ public class Insect {
      * A rovar elvágja a paraméterként kapott fonalat.
      * @param string A MushroomString objektum, amelyet el kell vágni.
      */
-    public void sabotageString(MushroomString string, Tecton t1, Tecton t2){
+    public int sabotageString(MushroomString string, Tecton t1, Tecton t2){
         System.out.println("Insect cuts string");
-        string.cut(t1, t2);
+        return string.cut(t1, t2);
     }
 
     /**
