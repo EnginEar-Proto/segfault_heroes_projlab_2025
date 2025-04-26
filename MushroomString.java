@@ -254,7 +254,8 @@ public class MushroomString {
      * Ha még nincs gombatest a tektonon, akkor létrehoz egyet.
      * @param tecton
      */
-    public void eatParalyzedInsects(Tecton tecton) {
+    public boolean eatParalyzedInsects(Tecton tecton) {
+        boolean foundParalyzedInsect = false;
         if(tectons.contains(tecton)) {
             for(Insect insect : tecton.getInsects()) {
                 if(insect.getAbility() == Ability.PARALYZING) {
@@ -267,12 +268,11 @@ public class MushroomString {
                         MushroomBody body = new MushroomBody(id + "body", tecton);
                         tecton.setMushroomBody(body);
                     }
+                    foundParalyzedInsect = true;
                 }
             }
-        } else {
-            System.out.println("MushroomString doesn't contain the tecton");
-            return;
         }
+        return foundParalyzedInsect;
     }
 
 

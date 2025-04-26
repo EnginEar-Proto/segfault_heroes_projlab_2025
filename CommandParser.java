@@ -491,8 +491,63 @@ public class CommandParser {
         }        
     }
 
-    public void handleEatInsect(String[] parameters) {
-        // Implementáció később
+    /**
+     * Kezeli az 'eatInsect' parancsot, amely a bénított rovarok elfogyasztását hajtja végre egy adott tektonon.
+     * <p>
+     * A parancs két paramétert vár:
+     * <ul>
+     *     <li>Az első paraméter a fonál azonosítója (MushroomString ID).</li>
+     *     <li>A második paraméter a tekton azonosítója (Tecton ID).</li>
+     * </ul>
+     *
+     * Működés:
+     * <ul>
+     *     <li>Megkeresi a megadott tektont és a tektonon belül a megfelelő fonalat.</li>
+     *     <li>Ha a fonál vagy a tekton egyike nem található, hibaüzenetet ír ki .</li>
+     *     <li>Ha megtalálta, meghívja a fonál {@code eatParalyzedInsects} metódusát az adott tektonra.</li>
+     *     <li>Ha nincs bénított rovar a tektonon, szintén figyelmeztető üzenetet ír ki.</li>
+     * </ul>
+     *
+     * @param parameters A parancs argumentumai: fonál ID és tekton ID.
+     * @throws IOException Ha bemeneti/kimeneti hiba történik.
+     */
+    public void handleEatInsect(String[] parameters) throws IOException {
+        if (parameters.length == 2) {
+
+            MushroomString mushroomString = null;
+            Tecton tecton = null;
+
+            for (Tecton t : gm.getTectons()) {
+                if (t.getId().equals(parameters[1])) {
+                    tecton = t;
+                    break;
+                }
+            }
+
+            if (tecton == null) {
+                ioHandler.writeLine("HIBA: A megadott tekton nem található.");
+                return;
+            }
+
+            // Fonál keresése tektonon belül
+            for (MushroomString ms : tecton.getStrings()) {
+                if (ms.getId().equals(parameters[0])) {
+                    mushroomString = ms;
+                    break;
+                }
+            }
+
+            if (mushroomString == null) {
+                ioHandler.writeLine("HIBA: A megadott fonál nem található a tektonon.");
+                return;
+            }
+
+            boolean foundParalyzedInsect = mushroomString.eatParalyzedInsects(tecton);
+            if (!foundParalyzedInsect) ioHandler.writeLine("A megadott tektonon nincs bénított rovar.");
+        }
+        else {
+            ioHandler.writeLine("HIBA: Rossz paraméterezés.");
+        }
     }
 
     /**
