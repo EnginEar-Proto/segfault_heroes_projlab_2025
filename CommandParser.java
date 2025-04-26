@@ -415,15 +415,53 @@ public class CommandParser {
      * @param parameters A parancsnak átadott paraméterek tömbje, amelynek tartalmaznia kell az entitás azonosítóját.
      * @throws IOException Ha a be- vagy kimenet során hiba történik 
     */
-    public void handleSum(String[] parameters) {
+    public void handleSum(String[] parameters) throws IOException {
         switch (parameters[0].substring(0,3)) {
             case "tek":
-                
+                Tecton searched = gm.getTectons().stream().findFirst().filter(t -> t.getId().equals(parameters[0])).get();
+                ioHandler.writeLine("id:\nSpores:\nInsects:\n");
                 break;
             case "spo":
+                Spore sp = null;
+                for(int i = 0; i < gm.getTectons().size(); i++){
+                    List<Spore> spores = gm.getTectons().get(i).getSpores();
 
+                    for (Spore spore : spores) {
+                        if(spore.getId().equals(parameters[1])){
+                            sp = spore;
+                            break;
+                        }
+                    }
+                }
+
+                if(sp == null){
+                    ioHandler.writeLine("HIBA: A megadott azonosítóval nem létezik ilyen entitás.");
+                    return;
+                }
+
+                ioHandler.writeLine("");
                 break;
             case "ins":
+                Insect insect = null;
+
+                for(int i = 0; i < gm.getTeams().length; i++){
+                    List<Insect> teamInsects = gm.getTeams()[i].getInsecter().getInsects();
+                    for(int j = 0; j < teamInsects.size(); j++){
+                        List<Insect> options = teamInsects.stream().
+                        filter(ins ->ins.getid()
+                        .equals(parameters[0])).toList();
+        
+                        if(!(options.isEmpty())){
+                            insect = options.get(0);
+                            break;
+                        }
+                    }
+                }
+
+                if(insect == null){
+                    ioHandler.writeLine("HIBA: A megadott azonosítóval nem lézeik ilyen entitás.");
+                    return;
+                }
                 break;
             case "inr":
                 break;
@@ -453,4 +491,5 @@ public class CommandParser {
     public void handleTime(String[] parameters) {
         // Implementáció később
     }
+
 }
