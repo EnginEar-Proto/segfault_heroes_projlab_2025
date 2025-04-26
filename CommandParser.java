@@ -268,7 +268,7 @@ public class CommandParser {
      * Ahol az első paraméter az a rovar amelyet mozgatni szeretnénk.
      * A második paraméter pedig a tekton ahova a rovart irányítjuk.
      * </p>
-     * @param paramters A parancsnak átadott paraméterek tömbje, amelynek tartalmaznia kell a rovar és a tekton azonosítóját.
+     * @param parameters A parancsnak átadott paraméterek tömbje, amelynek tartalmaznia kell a rovar és a tekton azonosítóját.
      * @throws IOException Ha a be- vagy kimenet során hiba történik 
     */
     public void handleMove(String[] parameters) throws IOException {
@@ -312,7 +312,7 @@ public class CommandParser {
      * Ahol az első paraméter az a fonal amelyet ágaztatni szeretnénk.
      * A második paraméter pedig a tekton amin az új fonalat ágaztatjuk.
      * </p>
-     * @param paramters A parancsnak átadott paraméterek tömbje, amelynek tartalmaznia kell a fonal és a tekton azonosítóját.
+     * @param parameters A parancsnak átadott paraméterek tömbje, amelynek tartalmaznia kell a fonal és a tekton azonosítóját.
      * @throws IOException Ha a be- vagy kimenet során hiba történik 
     */
     public void handleBranch(String[] parameters) throws IOException {
@@ -345,7 +345,7 @@ public class CommandParser {
      * <p>
      * Ahol az első paraméter az a tekton, amelyre az új gombatestet növeszteni akarjuk.
      * </p>
-     * @param paramters A parancsnak átadott paraméterek tömbje, amelynek tartalmaznia kell a tekton azonosítóját.
+     * @param parameters A parancsnak átadott paraméterek tömbje, amelynek tartalmaznia kell a tekton azonosítóját.
      * @throws IOException Ha a be- vagy kimenet során hiba történik 
     */
     public void handleGrowMushroomBody(String[] parameters) throws IOException {
@@ -371,7 +371,7 @@ public class CommandParser {
      * Ahol az első paraméter az a rovar, amely el fogja fogyasztani a spórát.
      * A második paraméter az a spóra, amely elfogyasztásra kerül.
      * </p>
-     * @param paramters A parancsnak átadott paraméterek tömbje, amelynek tartalmaznia kell a rovar és a spóra azonosítóját.
+     * @param parameters A parancsnak átadott paraméterek tömbje, amelynek tartalmaznia kell a rovar és a spóra azonosítóját.
      * @throws IOException Ha a be- vagy kimenet során hiba történik 
     */
     public void handleEatSpore(String[] parameters) throws IOException {
@@ -501,8 +501,22 @@ public class CommandParser {
         // Implementáció később
     }
 
-    public void handleTime(String[] parameters) {
-        // Implementáció később
+    public void handleTime(String[] parameters) throws IOException {
+        if (parameters.length == 0) {
+            if (gm.getTeams()[gm.getTeams().length - 1].getName().equals(gm.getCurrentTeam().getName())) {
+                gm.incrementLap();
+                ioHandler.writeLine("Lap: " + gm.getLaps());
+            }
+            else {
+                ioHandler.writeLine("HIBA: Még nem lépett minden csapat.");
+            }
+        }
+        else if (parameters.length == 1 && parameters[0].equals("-t")) {
+            gm.incrementLap();
+        }
+        else {
+            ioHandler.writeLine("HIBA: Rossz time paraméterezés.");
+        }
     }
 
 }

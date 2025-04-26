@@ -87,6 +87,10 @@ public class GameManager {
         laps++;
     }
 
+    public int getLaps() {
+        return laps;
+    }
+
     /**
      * Létrehozza a játék kezdőpályáját.
      * Inicializálja a tektonokat előre definiált módon.
