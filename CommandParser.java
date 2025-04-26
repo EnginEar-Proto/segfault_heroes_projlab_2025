@@ -95,14 +95,14 @@ public class CommandParser {
 
     /**
      * Kezeli a 'newgame' parancsot, amely új csapat(ok) létrehozását és hozzáadását végzi a játékhoz.
-     *
+     * <p>
      * Ha nem adnak meg paramétert, akkor interaktív módon olvas be csapatokat addig,
      * amíg a felhasználó be nem írja az "xxx" szót csapatnévként. Minden csapathoz
      * be kell kérni a gombász és a rovarász nevét is.
-     *
+     * <p>
      * Ha a "-t" paraméterrel hívják meg, akkor a paraméter utáni szám meghatározza, hány csapatot kell létrehozni.
      * Ebben az esetben az adott számú csapat kerül bekérésre.
-     *
+     * <p>
      * Hibás paraméter esetén hibaüzenetet ír ki.
      *
      * @param parameters A parancs argumentumai, pl. {"-t", "3"} több csapat létrehozásához.
@@ -152,15 +152,15 @@ public class CommandParser {
 
     /**
      * Kezeli a 'pos-alloc' parancsot, amely a csapatok kezdőpozíciójának kiosztását végzi.
-     *
+     * <p>
      * Ha nem adnak meg paramétert, akkor a {@code GameManager.setStartingPosition()} metódus
      * segítségével véletlenszerűen kiosztja a kezdőpozíciókat minden csapatnak.
-     *
+     * <p>
      * Manuális kiosztás esetén, ha a paraméterek a következő formában szerepelnek:
      * {@code -m <csapatnév> <tektonID>}, akkor a megadott csapatnak beállítja a kezdőpozícióját
      * a megadott tektonra. A {@code Team.setPositions()} metódus mindkét paraméterként kapott
      * tektonra ugyanazt a tekton példányt állítja be.
-     *
+     * <p>
      * - Ha a csapat nem található a nevek alapján, hibaüzenetet ír ki.
      * - Ha a megadott tekton ID nem szerepel a játéktérben, szintén hibaüzenetet ír ki.
      *
@@ -497,8 +497,50 @@ public class CommandParser {
         // Implementáció később
     }
 
-    public void handleBreakTecton(String[] parameters) {
-        // Implementáció később
+    /**
+     * Kezeli a 'breakTecton' parancsot, amely egy megadott tekton törését hajtja végre.
+     * <p>
+     * A parancs két paramétert vár:
+     * <ul>
+     *   <li>Az első paraméter a törendő tekton azonosítója (ID).</li>
+     *   <li>A második paraméter egy egész szám, amely meghatározza a tekton új méretét.</li>
+     * </ul>
+     * </p>
+     * Működés:
+     * <ul>
+     *   <li>Megkeresi az ID alapján a megfelelő tektont.</li>
+     *   <li>Ha megtalálja, meghívja a {@code Break(int)} metódust a megadott paraméterrel.</li>
+     *   <li>Ha a második paraméter nem egész szám, vagy ha a tekton nem található, hibaüzenetet ír ki.</li>
+     *   <li>Hibás paraméterszám esetén is hibaüzenetet ad.</li>
+     * </ul>
+     *
+     * @param parameters A parancs argumentumai: tekton azonosító és törési méret.
+     * @throws IOException Ha bemeneti/kimeneti hiba történik.
+     */
+    public void handleBreakTecton(String[] parameters) throws IOException {
+        if (parameters.length == 2) {
+            int breakInt;
+            try {
+                breakInt = Integer.parseInt(parameters[1]); // 2. paraméter átalakítás int-re
+            } catch (NumberFormatException e) {
+                ioHandler.writeLine("HIBA: A második paraméter nem egész szám.");
+                return;
+            }
+
+            boolean found = false;
+            for (Tecton t : gm.getTectons()) {
+                if (t.getId().equals(parameters[0])) {
+                    found = true;
+                    t.Break(breakInt);
+                }
+            }
+            if (!found) {
+                ioHandler.writeLine("HIBA: A tekton nem található.");
+            }
+        }
+        else {
+            ioHandler.writeLine("HIBA: Rossz paraméterezés.");
+        }
     }
 
     public void handleTime(String[] parameters) throws IOException {
