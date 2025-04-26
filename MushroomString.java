@@ -262,6 +262,7 @@ public class MushroomString {
                     Insecter insecter = insect.getInsecter();
                     insecter.insectEatenByString(insect);
 
+                    insect.setTecton(null);
                     //mi legyen a rovarral? hogyan remove stb..?
 
                     if(tecton.getMushroomBody() == null) {
