@@ -148,7 +148,7 @@ public class GameManager {
     public void listTeams() throws IOException {
         ioHandler.writeLine("Teams:");
         for (Team team : teams) {
-            ioHandler.writeLine(team.getName() + " (" + team.getMushroomer().getName() + " + " + team.getInsecter().getName() + ") tecton: " + team.getStartTecton().getId());
+            if (team.getStartTecton() != null) ioHandler.writeLine(team.getName() + " (" + team.getMushroomer().getName() + " + " + team.getInsecter().getName() + ") tecton: " + team.getStartTecton().getId());
         }
     }
 
