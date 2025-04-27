@@ -13,6 +13,14 @@ public class CommandParser {
     private GameManager gm;
     private IOHandler ioHandler;
 
+    private int currentTeamIndex = 0;
+    private int currentTectonIndex = 0;
+    private int currentInsectIndex = 0;
+    private int currentMushroomBodyIndex = 0;
+    private int currentMushroomStringIndex = 0;
+    private int currentSporeIndex = 0;
+
+
     /**
      * Beállítja a GameManager példányt, amit később a parancsok feldolgozásánál használ.
      *
@@ -207,8 +215,8 @@ public class CommandParser {
                     return;
                 }
                 else {
-                    team.getMushroomer().addMushroomBody(new MushroomBody(team.getMushroomer().getName() + " body1", tecton));
-                    team.getInsecter().addInsect(new Insect(team.getInsecter().getName() + " insect1", 0, Ability.NORMAL, team.getInsecter()));
+                    team.getMushroomer().addMushroomBody(new MushroomBody("gmb_" + currentMushroomBodyIndex++, tecton));
+                    team.getInsecter().addInsect(new Insect("ins_" + currentInsectIndex++, 0, Ability.NORMAL, team.getInsecter()));
                     team.setPositions(tecton, tecton);
                 }
             }
@@ -242,19 +250,29 @@ public class CommandParser {
      * @throws IOException Ha a be- vagy kimenet során hiba történik 
     */
     public void handleGrowString(String[] parameters) throws IOException {
-        if(parameters.length != 3 || List.of(parameters).contains(null)){
+        if(parameters.length != 3 /*|| List.of(parameters).contains(null)*/){
             ioHandler.writeLine("HIBA: Hiányzó paraméterek.\ngrowstring <fonál> <tekton1> <tekton2>");
             return;
         }
+
+
         Tecton startTecton = gm.getTectons().stream()
-        .findFirst().filter(t -> t.getId().equals(parameters[1])).get();
+        .filter(t -> t.getId().equals(parameters[1])).findFirst().get();
 
-        Tecton destTecton = 
+        Tecton destTecton =
             gm.getTectons().stream()
-            .findFirst().filter(t -> t.getId().equals(parameters[2])).get();
+            .filter(t -> t.getId().equals(parameters[2])).findFirst().get();
 
-        MushroomString s = startTecton.getStrings().stream()
-        .findFirst().filter(st -> st.getId().equals(parameters[0])).get();
+
+        MushroomString s = null;
+        try {
+             s = startTecton.getStrings().stream()
+            .filter(st -> st.getId().equals(parameters[0])).findFirst().get();
+        } catch (Exception e) {
+            if(parameters[1].equals(parameters[2])){
+                s = new MushroomString(parameters[0], startTecton.getMushroomBody(), List.of(startTecton), null);
+            }
+        }
 
         s.growTo(startTecton, destTecton);
     }

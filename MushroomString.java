@@ -13,13 +13,14 @@ public class MushroomString {
     private List<MushroomString> childrenStrings;
     private int timeLeft = -1;
 
-    public MushroomString(MushroomBody mushroomBody, Tecton tecton) {
+    public MushroomString(String id, MushroomBody mushroomBody, Tecton tecton) {
         length = 1;
         this.mushroomBodies = new ArrayList<MushroomBody>();
         this.tectons = new ArrayList<Tecton>();
         this.childrenStrings = new ArrayList<MushroomString>();
         this.mushroomBodies.add(mushroomBody);
         this.tectons.add(tecton);
+        this.id = id;
     }
 
     public String getId(){
@@ -34,7 +35,7 @@ public class MushroomString {
 
     }
 
-    public MushroomString(MushroomBody mushroomBody, List<Tecton> tectons, MushroomString parentString) {
+    public MushroomString(String id, MushroomBody mushroomBody, List<Tecton> tectons, MushroomString parentString) {
         length = 1;
         this.mushroomBodies = new ArrayList<MushroomBody>();
         this.tectons = new ArrayList<Tecton>();
@@ -42,6 +43,7 @@ public class MushroomString {
         this.parentString = parentString;
         this.mushroomBodies.add(mushroomBody);
         this.tectons.addAll(tectons);
+        this.id = id;
     }
     /**
      * Tecton felvétele a gombafonal utjára.
@@ -222,12 +224,14 @@ public class MushroomString {
      *             A két tektonnak szomszédosnak kell lennie.
      */
     public int growTo(Tecton toGrow, Tecton from) {
-        if(from.neighbourDistance(toGrow) != 1) {
+
+        //TODO: grow on same tekton
+        /*if(from.neighbourDistance(toGrow) != 1) {
             return -1;
         }
         if(tectons.indexOf(from) != 0 && tectons.indexOf(from) != tectons.size() - 1) {
             return -1;
-        }
+        }*/
 
         toGrow.addNewString(this);
         tectons.add(toGrow);
@@ -244,7 +248,7 @@ public class MushroomString {
      *
      */
     public void branchOut(Tecton tecton) {
-        MushroomString newString = new MushroomString(null, tectons, this);
+        MushroomString newString = new MushroomString(this.id + "_b", null, tectons, this);
         tecton.addNewString(newString);
     }
 

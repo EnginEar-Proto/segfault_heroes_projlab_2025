@@ -23,11 +23,11 @@ public class Tecton {
     /**
      * A Tekton második szomszédainak listája
      */
-    private ArrayList<Tecton> secondNeighbours;
+    private ArrayList<Tecton> secondNeighbours = new ArrayList<>();
     /**
      * A Tekton harmadik szomszédainak listája
      */
-    private ArrayList<Tecton> thirdNeighbours;
+    private ArrayList<Tecton> thirdNeighbours = new ArrayList<>();
 
     /**
      * Igaz érték esetén a tektonon lévő gombafonalak megmaradnak, akkor is, ha nem tartozik hozzájuk gombatest.
@@ -219,7 +219,7 @@ public class Tecton {
             this.setNeighbours(neighbours); //Itt ugy változik az is, hogy kik a saját szomszédai
             newTecton.setNeighbours(neighbours);
             newTecton.neighbours.add(this);
-            neightbours.add(newTecton);
+            neighbours.add(newTecton);
         }else
             System.out.print("The tectonic plate can't break");
 

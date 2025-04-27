@@ -55,7 +55,7 @@ public class MushroomBody {
      * Fonal növesztése a gombatestből.
      */
     public void createNewString() {
-        MushroomString newString = new MushroomString(this, tecton);
+        MushroomString newString = new MushroomString("str_" + id, this, tecton);
         strings.add(newString);
         tecton.addNewString(newString);
     }
