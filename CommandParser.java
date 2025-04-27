@@ -215,8 +215,8 @@ public class CommandParser {
                     return;
                 }
                 else {
-                    team.getMushroomer().addMushroomBody(new MushroomBody("gmb_" + currentMushroomBodyIndex++, tecton));
-                    team.getInsecter().addInsect(new Insect("ins_" + currentInsectIndex++, 0, Ability.NORMAL, team.getInsecter()));
+                    team.getMushroomer().addMushroomBody(new MushroomBody(team.getMushroomer().getName() + " body1", tecton));
+                    team.getInsecter().addInsect(new Insect(team.getInsecter().getName() + " insect1", 0, Ability.NORMAL, team.getInsecter()));
                     team.setPositions(tecton, tecton);
                 }
             }
@@ -365,11 +365,11 @@ public class CommandParser {
      * <p>
      * Ahol az első paraméter az a tekton, amelyre az új gombatestet növeszteni akarjuk.
      * </p>
-     * @param parameters A parancsnak átadott paraméterek tömbje, amelynek tartalmaznia kell a tekton azonosítóját.
+     * @param paramters A parancsnak átadott paraméterek tömbje, amelynek tartalmaznia kell a tekton azonosítóját.
      * @throws IOException Ha a be- vagy kimenet során hiba történik 
     */
     public void handleGrowMushroomBody(String[] parameters) throws IOException {
-        if(parameters.length != 1 || List.of(parameters).contains(null)){
+        if(parameters.length != 1 ){
             ioHandler.writeLine("HIBA: Rossz felparaméterezés\nbranch <fonal> <tekton>");
             return;
         }
@@ -395,7 +395,7 @@ public class CommandParser {
      * @throws IOException Ha a be- vagy kimenet során hiba történik 
     */
     public void handleEatSpore(String[] parameters) throws IOException {
-        if(parameters.length != 2 || List.of(parameters).contains(null)){
+        if(parameters.length != 2 ){
             ioHandler.writeLine("HIBA: Rossz felparaméterezés\nbranch <rovar> <spóra>");
             return;
         }
