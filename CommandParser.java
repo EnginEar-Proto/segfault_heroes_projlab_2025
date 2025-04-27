@@ -95,14 +95,14 @@ public class CommandParser {
 
     /**
      * Kezeli a 'newgame' parancsot, amely új csapat(ok) létrehozását és hozzáadását végzi a játékhoz.
-     * <p>
+     *
      * Ha nem adnak meg paramétert, akkor interaktív módon olvas be csapatokat addig,
      * amíg a felhasználó be nem írja az "xxx" szót csapatnévként. Minden csapathoz
      * be kell kérni a gombász és a rovarász nevét is.
-     * <p>
+     *
      * Ha a "-t" paraméterrel hívják meg, akkor a paraméter utáni szám meghatározza, hány csapatot kell létrehozni.
      * Ebben az esetben az adott számú csapat kerül bekérésre.
-     * <p>
+     *
      * Hibás paraméter esetén hibaüzenetet ír ki.
      *
      * @param parameters A parancs argumentumai, pl. {"-t", "3"} több csapat létrehozásához.
@@ -152,15 +152,15 @@ public class CommandParser {
 
     /**
      * Kezeli a 'pos-alloc' parancsot, amely a csapatok kezdőpozíciójának kiosztását végzi.
-     * <p>
+     *
      * Ha nem adnak meg paramétert, akkor a {@code GameManager.setStartingPosition()} metódus
      * segítségével véletlenszerűen kiosztja a kezdőpozíciókat minden csapatnak.
-     * <p>
+     *
      * Manuális kiosztás esetén, ha a paraméterek a következő formában szerepelnek:
      * {@code -m <csapatnév> <tektonID>}, akkor a megadott csapatnak beállítja a kezdőpozícióját
      * a megadott tektonra. A {@code Team.setPositions()} metódus mindkét paraméterként kapott
      * tektonra ugyanazt a tekton példányt állítja be.
-     * <p>
+     *
      * - Ha a csapat nem található a nevek alapján, hibaüzenetet ír ki.
      * - Ha a megadott tekton ID nem szerepel a játéktérben, szintén hibaüzenetet ír ki.
      *
@@ -195,22 +195,7 @@ public class CommandParser {
                 ioHandler.writeLine("HIBA: ismeretlen tekton ID.");
             }
             else {
-                boolean occupied = false;
-                for (Team t : gm.getTeams()) {
-                    if (t.getStartTecton().getId().equals(tecton.getId())) {
-                        occupied = true;
-                        break;
-                    }
-                }
-                if (occupied) {
-                    ioHandler.writeLine("HIBA: A tekton már foglalt.");
-                    return;
-                }
-                else {
-                    team.getMushroomer().addMushroomBody(new MushroomBody(team.getMushroomer().getName() + " body1", tecton));
-                    team.getInsecter().addInsect(new Insect(team.getInsecter().getName() + " insect1", 0, Ability.NORMAL, team.getInsecter()));
-                    team.setPositions(tecton, tecton);
-                }
+                team.setPositions(tecton, tecton);
             }
             gm.listTeams();
         }
@@ -242,7 +227,7 @@ public class CommandParser {
      * @throws IOException Ha a be- vagy kimenet során hiba történik 
     */
     public void handleGrowString(String[] parameters) throws IOException {
-        if(parameters.length != 3 || List.of(parameters).contains(null)){
+        if(parameters.length != 3 ){
             ioHandler.writeLine("HIBA: Hiányzó paraméterek.\ngrowstring <fonál> <tekton1> <tekton2>");
             return;
         }
@@ -270,11 +255,11 @@ public class CommandParser {
      * Ahol az első paraméter az a rovar amelyet mozgatni szeretnénk.
      * A második paraméter pedig a tekton ahova a rovart irányítjuk.
      * </p>
-     * @param parameters A parancsnak átadott paraméterek tömbje, amelynek tartalmaznia kell a rovar és a tekton azonosítóját.
+     * @param paramters A parancsnak átadott paraméterek tömbje, amelynek tartalmaznia kell a rovar és a tekton azonosítóját.
      * @throws IOException Ha a be- vagy kimenet során hiba történik 
     */
     public void handleMove(String[] parameters) throws IOException {
-        if(parameters.length != 2 || List.of(parameters).contains(null)){
+        if(parameters.length != 2 ){
             ioHandler.writeLine("HIBA: Rossz felparaméterezés.\nmove <rovar> <tekton>");
             return;
         }
@@ -314,11 +299,11 @@ public class CommandParser {
      * Ahol az első paraméter az a fonal amelyet ágaztatni szeretnénk.
      * A második paraméter pedig a tekton amin az új fonalat ágaztatjuk.
      * </p>
-     * @param parameters A parancsnak átadott paraméterek tömbje, amelynek tartalmaznia kell a fonal és a tekton azonosítóját.
+     * @param paramters A parancsnak átadott paraméterek tömbje, amelynek tartalmaznia kell a fonal és a tekton azonosítóját.
      * @throws IOException Ha a be- vagy kimenet során hiba történik 
     */
     public void handleBranch(String[] parameters) throws IOException {
-        if(parameters.length != 2 || List.of(parameters).contains(null)){
+        if(parameters.length != 2 ){
             ioHandler.writeLine("HIBA: Rossz felparaméterezés\nbranch <fonal> <tekton>");
             return;
         }
@@ -347,11 +332,11 @@ public class CommandParser {
      * <p>
      * Ahol az első paraméter az a tekton, amelyre az új gombatestet növeszteni akarjuk.
      * </p>
-     * @param parameters A parancsnak átadott paraméterek tömbje, amelynek tartalmaznia kell a tekton azonosítóját.
+     * @param paramters A parancsnak átadott paraméterek tömbje, amelynek tartalmaznia kell a tekton azonosítóját.
      * @throws IOException Ha a be- vagy kimenet során hiba történik 
     */
     public void handleGrowMushroomBody(String[] parameters) throws IOException {
-        if(parameters.length != 1 || List.of(parameters).contains(null)){
+        if(parameters.length != 1 ){
             ioHandler.writeLine("HIBA: Rossz felparaméterezés\nbranch <fonal> <tekton>");
             return;
         }
@@ -373,11 +358,11 @@ public class CommandParser {
      * Ahol az első paraméter az a rovar, amely el fogja fogyasztani a spórát.
      * A második paraméter az a spóra, amely elfogyasztásra kerül.
      * </p>
-     * @param parameters A parancsnak átadott paraméterek tömbje, amelynek tartalmaznia kell a rovar és a spóra azonosítóját.
+     * @param paramters A parancsnak átadott paraméterek tömbje, amelynek tartalmaznia kell a rovar és a spóra azonosítóját.
      * @throws IOException Ha a be- vagy kimenet során hiba történik 
     */
     public void handleEatSpore(String[] parameters) throws IOException {
-        if(parameters.length != 2 || List.of(parameters).contains(null)){
+        if(parameters.length != 2 ){
             ioHandler.writeLine("HIBA: Rossz felparaméterezés\nbranch <rovar> <spóra>");
             return;
         }
@@ -491,195 +476,20 @@ public class CommandParser {
         }        
     }
 
-    /**
-     * Kezeli az 'eatInsect' parancsot, amely a bénított rovarok elfogyasztását hajtja végre egy adott tektonon.
-     * <p>
-     * A parancs két paramétert vár:
-     * <ul>
-     *     <li>Az első paraméter a fonál azonosítója (MushroomString ID).</li>
-     *     <li>A második paraméter a tekton azonosítója (Tecton ID).</li>
-     * </ul>
-     *
-     * Működés:
-     * <ul>
-     *     <li>Megkeresi a megadott tektont és a tektonon belül a megfelelő fonalat.</li>
-     *     <li>Ha a fonál vagy a tekton egyike nem található, hibaüzenetet ír ki .</li>
-     *     <li>Ha megtalálta, meghívja a fonál {@code eatParalyzedInsects} metódusát az adott tektonra.</li>
-     *     <li>Ha nincs bénított rovar a tektonon, szintén figyelmeztető üzenetet ír ki.</li>
-     * </ul>
-     *
-     * @param parameters A parancs argumentumai: fonál ID és tekton ID.
-     * @throws IOException Ha bemeneti/kimeneti hiba történik.
-     */
-    public void handleEatInsect(String[] parameters) throws IOException {
-        if (parameters.length == 2) {
-
-            MushroomString mushroomString = null;
-            Tecton tecton = null;
-
-            for (Tecton t : gm.getTectons()) {
-                if (t.getId().equals(parameters[1])) {
-                    tecton = t;
-                    break;
-                }
-            }
-
-            if (tecton == null) {
-                ioHandler.writeLine("HIBA: A megadott tekton nem található.");
-                return;
-            }
-
-            // Fonál keresése tektonon belül
-            for (MushroomString ms : tecton.getStrings()) {
-                if (ms.getId().equals(parameters[0])) {
-                    mushroomString = ms;
-                    break;
-                }
-            }
-
-            if (mushroomString == null) {
-                ioHandler.writeLine("HIBA: A megadott fonál nem található a tektonon.");
-                return;
-            }
-
-            boolean foundParalyzedInsect = mushroomString.eatParalyzedInsects(tecton);
-            if (!foundParalyzedInsect) ioHandler.writeLine("A megadott tektonon nincs bénított rovar.");
-        }
-        else {
-            ioHandler.writeLine("HIBA: Rossz paraméterezés.");
-        }
+    public void handleEatInsect(String[] parameters) {
+        // Implementáció később
     }
 
-    /**
-     * Kezeli a 'cut' parancsot, amely egy rovarral való fonál elvágását valósítja meg két tekton között.
-     * <p>
-     * A parancs négy paramétert vár:
-     * <ul>
-     *     <li>Az első paraméter a rovar azonosítója (Insect ID).</li>
-     *     <li>A második paraméter a fonál azonosítója (MushroomString ID).</li>
-     *     <li>A harmadik paraméter az egyik tekton azonosítója (Tecton ID) amelyik között az elvágás történik.</li>
-     *     <li>A negyedik paraméter a másik tekton azonosítója (Tecton ID) amelyik között az elvágás történik.</li>
-     * </ul>
-     *
-     * Működés:
-     * <ul>
-     *     <li>Megkeresi a megfelelő rovart, fonalat és tektonokat az ID-k alapján.</li>
-     *     <li>Ha bármelyik entitás nem található, megfelelő hibaüzenetet ír ki.</li>
-     *     <li>Ha mindegyik megtalálható, meghívja a rovar {@code sabotageString} metódusát a megadott paraméterekkel.</li>
-     *     <li>Ha a két tekton nem szomszédos, hibaüzenetet ír ki.</li>
-     * </ul>
-     *
-     * @param parameters A parancs argumentumai: rovar ID, fonál ID, kezdő tekton ID, cél tekton ID.
-     * @throws IOException Ha bemeneti/kimeneti hiba történik.
-     */
-    public void handleCut(String[] parameters) throws IOException {
-        if (parameters.length == 4) {
-            Insect insect = null;
-            MushroomString mushroomString = null;
-            Tecton tecton1 = null;
-            Tecton tecton2 = null;
-            for (Tecton t : gm.getTectons()) {
-                for (Insect i : t.getInsects()) {
-                    if (i.getId().equals(parameters[0])) {
-                        insect = i;
-                        for (MushroomString ms : t.getStrings()) {
-                            if (ms.getId().equals(parameters[1])) {
-                                mushroomString = ms;
-                            }
-                        }
-                    }
-                }
-                if (t.getId().equals(parameters[2])) {
-                    tecton1 = t;
-                }
-                if (t.getId().equals(parameters[3])) {
-                    tecton2 = t;
-                }
-            }
-            if (insect == null) {
-                ioHandler.writeLine("HIBA: Nem található rovar ilyen id-val.");
-            }
-            if (mushroomString == null) {
-                ioHandler.writeLine("HIBA: Nem található fonál ilyen id-val.");
-            }
-            if (tecton1 == null) {
-                ioHandler.writeLine("HIBA: Nem található kezdő tekton ilyen id-val.");
-            }
-            if (tecton2 == null) {
-                ioHandler.writeLine("HIBA: Nem található végső tekton ilyen id-val.");
-            }
-            if (insect != null && mushroomString != null && tecton1 != null && tecton2 != null) {
-                int res = insect.sabotageString(mushroomString, tecton1, tecton2);
-                if (res == -1) ioHandler.writeLine("HIBA: A tektonok nem szomszédosak.");
-            }
-        }
-        else {
-            ioHandler.writeLine("HIBA: Rossz paraméterezés.");
-        }
+    public void handleCut(String[] parameters) {
+        // Implementáció később
     }
 
-    /**
-     * Kezeli a 'breakTecton' parancsot, amely egy megadott tekton törését hajtja végre.
-     * <p>
-     * A parancs két paramétert vár:
-     * <ul>
-     *   <li>Az első paraméter a törendő tekton azonosítója (ID).</li>
-     *   <li>A második paraméter egy egész szám, amely meghatározza a tekton új méretét.</li>
-     * </ul>
-     * </p>
-     * Működés:
-     * <ul>
-     *   <li>Megkeresi az ID alapján a megfelelő tektont.</li>
-     *   <li>Ha megtalálja, meghívja a {@code Break(int)} metódust a megadott paraméterrel.</li>
-     *   <li>Ha a második paraméter nem egész szám, vagy ha a tekton nem található, hibaüzenetet ír ki.</li>
-     *   <li>Hibás paraméterszám esetén is hibaüzenetet ad.</li>
-     * </ul>
-     *
-     * @param parameters A parancs argumentumai: tekton azonosító és törési méret.
-     * @throws IOException Ha bemeneti/kimeneti hiba történik.
-     */
-    public void handleBreakTecton(String[] parameters) throws IOException {
-        if (parameters.length == 2) {
-            int breakInt;
-            try {
-                breakInt = Integer.parseInt(parameters[1]); // 2. paraméter átalakítás int-re
-            } catch (NumberFormatException e) {
-                ioHandler.writeLine("HIBA: A második paraméter nem egész szám.");
-                return;
-            }
-
-            boolean found = false;
-            for (Tecton t : gm.getTectons()) {
-                if (t.getId().equals(parameters[0])) {
-                    found = true;
-                    t.Break(breakInt);
-                }
-            }
-            if (!found) {
-                ioHandler.writeLine("HIBA: A tekton nem található.");
-            }
-        }
-        else {
-            ioHandler.writeLine("HIBA: Rossz paraméterezés.");
-        }
+    public void handleBreakTecton(String[] parameters) {
+        // Implementáció később
     }
 
-    public void handleTime(String[] parameters) throws IOException {
-        if (parameters.length == 0) {
-            if (gm.getTeams()[gm.getTeams().length - 1].getName().equals(gm.getCurrentTeam().getName())) {
-                gm.incrementLap();
-                ioHandler.writeLine("Lap: " + gm.getLaps());
-            }
-            else {
-                ioHandler.writeLine("HIBA: Még nem lépett minden csapat.");
-            }
-        }
-        else if (parameters.length == 1 && parameters[0].equals("-t")) {
-            gm.incrementLap();
-        }
-        else {
-            ioHandler.writeLine("HIBA: Rossz time paraméterezés.");
-        }
+    public void handleTime(String[] parameters) {
+        // Implementáció később
     }
 
 }
