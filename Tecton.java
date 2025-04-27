@@ -218,6 +218,8 @@ public class Tecton {
             Tecton newTecton = new Tecton(this.id + " broken", oldSize - this.size, false, x, y);
             this.setNeighbours(neighbours); //Itt ugy változik az is, hogy kik a saját szomszédai
             newTecton.setNeighbours(neighbours);
+            newTecton.neighbours.add(this);
+            neightbours.add(newTecton);
         }else
             System.out.print("The tectonic plate can't break");
 
