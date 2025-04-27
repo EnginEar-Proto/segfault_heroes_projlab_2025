@@ -160,6 +160,7 @@ public class GameManager {
         while (laps < 15) {
             for (int i = 0; i < teams.size(); i++) {
                 currentTeam = teams.get(i);
+                ioHandler.writeLine("A " + currentTeam + " csapat következik.");
                 try {
                     String command = ioHandler.readLine();
                     boolean exit = commandParser.executeCommand(command);
