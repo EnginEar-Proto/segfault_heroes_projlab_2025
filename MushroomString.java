@@ -249,8 +249,15 @@ public class MushroomString {
             return -1;
         }
 
-        toGrow.addNewString(this);
-        from.addNewString(this);
+        // Eredetileg mindenesetben hozzádta a kiinduló tektonhoz újból a fonalat, így az többszörösen megjelent.-Geri
+        //Illetve a gombatesthez adás ebben az esetben nem volt megvalósítva.
+        if(toGrow.getId().equals(from.getId())){
+            from.addNewString(this);
+            from.getMushroomBody().addString(this);
+        }else{
+            toGrow.addNewString(this);
+        }
+
         if(!tectons.contains(toGrow)) tectons.add(toGrow);
         if(!tectons.contains(from)) tectons.add(from);
         length++;
