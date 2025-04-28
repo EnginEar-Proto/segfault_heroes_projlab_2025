@@ -247,7 +247,7 @@ public class MushroomString {
      * @param from - A tekton, ahonnan a gombaszál nőni fog.
      *             A két tektonnak szomszédosnak kell lennie.
      */
-    public int growTo(Tecton toGrow, Tecton from) {
+    public int growTo(Tecton from, Tecton toGrow) {
 
         //TODO: grow on same tekton
         if(from.neighbourDistance(toGrow) != 1 && toGrow != from) {
@@ -259,19 +259,13 @@ public class MushroomString {
 
         // Eredetileg mindenesetben hozzádta a kiinduló tektonhoz újból a fonalat, így az többszörösen megjelent.-Geri
         //Illetve a gombatesthez adás ebben az esetben nem volt megvalósítva.
-//        if(toGrow.getId().equals(from.getId())){
-//            from.addNewString(this);
-//            from.getMushroomBody().addString(this);
-//        }else{
-//            toGrow.addNewString(this);
-//        }
-        //Valamilyen oknál fogva Geri megoldása elég sok failed testet okozott, nem jöttem rá, hogy miért,
-        // de az addNewStringben van contains ellenőrzés, szóval nem lesznek duplán
-        if(toGrow.getId().equals(from.getId())) {
+        if(toGrow.getId().equals(from.getId())){
+            from.addNewString(this);
             from.getMushroomBody().addString(this);
+        }else{
+            toGrow.addNewString(this);
         }
-        from.addNewString(this);
-        toGrow.addNewString(this);
+
         if(!tectons.contains(toGrow)) tectons.add(toGrow);
         if(!tectons.contains(from)) tectons.add(from);
         length++;
