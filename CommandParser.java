@@ -320,7 +320,7 @@ public class CommandParser {
             ioHandler.writeLine("HIBA: Nem létezik rovar, ezzel az azonosítóval: " + parameters[0]);
             return;
         }
-        else if(insect.getInsecter().getName().equals(gm.getCurrentTeam().getInsecter().getName()))
+        else if(gm.getTestMode() || insect.getInsecter().getName().equals(gm.getCurrentTeam().getInsecter().getName()))
             insect.moveTo(dest);
         else
             ioHandler.writeLine("HIBA: A kiválasztott rovar nem a " + gm.getCurrentTeam().getName() + " csapaté!");

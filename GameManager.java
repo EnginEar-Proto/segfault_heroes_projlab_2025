@@ -15,6 +15,7 @@ public class GameManager {
     private CommandParser commandParser;
     private Team currentTeam;
     private boolean gameStarted;
+    private boolean testMode;
 
 
 
@@ -32,6 +33,10 @@ public class GameManager {
         this.teams = new ArrayList<>();
 
         gameStarted = false;
+    }
+
+    public boolean getTestMode() {
+        return testMode;
     }
 
     public boolean getGameStarted() {
@@ -289,6 +294,7 @@ public class GameManager {
      * Tesztelési célra használt metódus, ami beolvassa a fájlt és soronként lefuttatja a parancsokat.
      */
     public void test() throws IOException {
+        testMode = true;
         String line;
         try {
             while ((line = ioHandler.readLine()) != null) {
@@ -297,6 +303,7 @@ public class GameManager {
         } catch (IOException e) {
             ioHandler.writeLine("Hiba tesztelés közben: " + e.getMessage());
         }
+        testMode = false;
     }
 
     /**
