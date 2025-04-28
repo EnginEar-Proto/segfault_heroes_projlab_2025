@@ -312,6 +312,7 @@ public class CommandParser {
         Tecton dest = gm.getTectons().stream().filter(t -> t.getId().equals(parameters[1])).findFirst().get();
         Insect insect = null;
 
+        
         for(int i = 0; i < gm.getTeams().length; i++){
             List<Insect> teamInsects = gm.getTeams()[i].getInsecter().getInsects();
             for (Insect teamInsect : teamInsects) {
@@ -320,13 +321,15 @@ public class CommandParser {
                 }
             }
         }
-
+        
         if(insect == null){
             ioHandler.writeLine("HIBA: Nem létezik rovar, ezzel az azonosítóval: " + parameters[0]);
             return;
         }
-
-        insect.moveTo(dest);
+        else if(insect.getInsecter().getName().equals(gm.getCurrentTeam().getInsecter().getName()))
+            insect.moveTo(dest);
+        else
+            ioHandler.writeLine("HIBA: A kiválasztott rovar nem a " + gm.getCurrentTeam().getName() + " csapaté!");
     }
 
     /**
