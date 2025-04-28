@@ -3,8 +3,13 @@ csap1 (msr1 + inr1) tecton: tek1
 Teams:
 csap1 (msr1 + inr1) tecton: tek1
 csap2 (msr2 + inr2) tecton: tek3
-id: str1
+id: str2
 Length: 2
-Mushroombodies: mbd0 
-Tectons: tek1 
+Mushroombodies: 
+Tectons: tek2 tek3 
+
+id: str2
+Length: 1
+Mushroombodies: 
+Tectons: tek2 
 

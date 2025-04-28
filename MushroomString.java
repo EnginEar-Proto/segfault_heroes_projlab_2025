@@ -39,7 +39,8 @@ public class MushroomString {
         return this.tectons;
     }
 
-    public MushroomString() {
+    public MushroomString(String id) {
+        this.id = id;
         length = 0;
         this.mushroomBodies = new ArrayList<MushroomBody>();
         this.tectons = new ArrayList<Tecton>();
@@ -141,7 +142,7 @@ public class MushroomString {
             index2 = temp;
         }
 
-        MushroomString newString = new MushroomString();
+        MushroomString newString = new MushroomString("_c");
         for(int i = index2; i < tectons.size(); i++) {
             final Tecton tecton = tectons.get(i);
 
@@ -167,6 +168,9 @@ public class MushroomString {
             }
 
         }
+
+        this.length = mushroomBodies.size();
+        newString.length = newString.mushroomBodies.size();
 
         for(int i = index2; i < tectons.size(); i++) {
             tectons.removeLast();

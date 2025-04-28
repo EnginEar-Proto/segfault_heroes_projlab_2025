@@ -670,7 +670,7 @@ public class CommandParser {
                     ioHandler.writeLine("Length: " + searchedms.getLength());
                     ioHandler.write("Mushroombodies: ");
                     for (MushroomBody s : searchedms.getMushroomBodies()) {
-                        ioHandler.write(s.getID() + " ");
+                        if (s != null) ioHandler.write(s.getID() + " ");
                     }
                     ioHandler.writeLine("");
                     ioHandler.write("Tectons: ");

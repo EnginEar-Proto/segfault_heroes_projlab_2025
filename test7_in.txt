@@ -12,6 +12,7 @@ growstring str1 tek1 tek1
 growstring str1 tek1 tek2
 growstring str2 tek2 tek2
 growstring str2 tek2 tek3
-sum str1
-cut ins0 str1 tek1 tek2
-sum str1
+sum str2
+move ins0 tek2
+cut ins0 str2 tek2 tek3
+sum str2
