@@ -72,6 +72,9 @@ public class CommandParser {
             case "branch":
                 handleBranch(parameters);
                 return true;
+            case "growmushroombody":
+                handleGrowMushroomBody(parameters);
+                return true;
             case "scatterspores":
                 handleGrowMushroomBody(parameters);
                 return true;
@@ -92,6 +95,9 @@ public class CommandParser {
                 return true;
             case "time":
                 handleTime(parameters);
+                return true;
+            case "scatterSpore":
+                handleScatterSpore(parameters);
                 return true;
             case "exit":
                 return false;
@@ -177,7 +183,9 @@ public class CommandParser {
      */
     public void handlePosAlloc(String[] parameters) throws IOException {
         if (parameters.length == 0) { // random kiosztás
-            gm.setStartingPosition();
+            int i = gm.setStartingPosition(currentInsectIndex, currentMushroomBodyIndex);
+            currentMushroomBodyIndex = currentMushroomBodyIndex + i;
+            currentInsectIndex = currentInsectIndex + i;
             gm.listTeams();
         }
         else if (parameters[0].equals("-m") && parameters.length == 3) { // manuális kiosztás, egy parancs egy csapathoz rendel egy tektont
@@ -205,7 +213,7 @@ public class CommandParser {
             else {
                 boolean occupied = false;
                 for (Team t : gm.getTeams()) {
-                    if (t.getStartTecton().getId().equals(tecton.getId())) {
+                    if (t.getStartTecton() != null && t.getStartTecton().getId().equals(tecton.getId())) {
                         occupied = true;
                         break;
                     }
@@ -215,8 +223,9 @@ public class CommandParser {
                     return;
                 }
                 else {
-                    team.getMushroomer().addMushroomBody(new MushroomBody(team.getMushroomer().getName() + " body1", tecton));
-                    team.getInsecter().addInsect(new Insect(team.getInsecter().getName() + " insect1", 0, Ability.NORMAL, team.getInsecter()));
+                    team.getMushroomer().addMushroomBody(new MushroomBody("mbd" + currentMushroomBodyIndex++, tecton));
+                    team.getInsecter().addInsect(new Insect("ins" + currentInsectIndex++, 0, Ability.NORMAL, team.getInsecter()));
+                    System.out.println(team.getInsecter().getInsects().size());
                     team.setPositions(tecton, tecton);
                 }
             }
@@ -292,11 +301,11 @@ public class CommandParser {
      * @throws IOException Ha a be- vagy kimenet során hiba történik 
     */
     public void handleMove(String[] parameters) throws IOException {
-        if(parameters.length != 2 || List.of(parameters).contains(null)){
+        if(parameters.length != 2){
             ioHandler.writeLine("HIBA: Rossz felparaméterezés.\nmove <rovar> <tekton>");
             return;
         }
-        Tecton dest = gm.getTectons().stream().findFirst().filter(t -> t.getId().equals(parameters[1])).get();
+        Tecton dest = gm.getTectons().stream().filter(t -> t.getId().equals(parameters[1])).findFirst().get();
         Insect insect = null;
 
         for(int i = 0; i < gm.getTeams().length; i++){
@@ -319,6 +328,26 @@ public class CommandParser {
         }
 
         insect.moveTo(dest);
+    }
+
+    /**
+     *
+     *
+     */
+    public void handleScatterSpore(String[] parameters) throws IOException {
+        if(parameters.length < 2 || parameters.length > 4) {
+            ioHandler.writeLine("HIBA: Hiányzó paraméterek\nscatterspore <gombatest> <tekton> [-t <típus>]");
+            return;
+        }else{
+            MushroomBody mbd = gm.getTectons().stream().filter(t -> t.getMushroomBody().getID().equals(parameters[0])).findFirst().get().getMushroomBody();
+            Tecton desTecton = gm.getTectons().stream().filter(t -> t.getId().equals(parameters[1])).findFirst().get();
+            if(parameters.length == 4 && parameters[3].equals("-t")){
+                Ability ab = Ability.valueOf(parameters[3]);
+                mbd.scatter(desTecton, ab);
+            }
+
+            mbd.scatter(desTecton);
+        }
     }
 
     /**
@@ -361,7 +390,7 @@ public class CommandParser {
      * <p>
      * A parancs felparaméterezve a következőkép néz ki:
      * </p>
-     * {@code growushroombody <tekton>}
+     * {@code growmushroombody <tekton>}
      * <p>
      * Ahol az első paraméter az a tekton, amelyre az új gombatestet növeszteni akarjuk.
      * </p>
@@ -370,14 +399,19 @@ public class CommandParser {
     */
     public void handleGrowMushroomBody(String[] parameters) throws IOException {
         if(parameters.length != 1 ){
-            ioHandler.writeLine("HIBA: Rossz felparaméterezés\nbranch <fonal> <tekton>");
+            ioHandler.writeLine("HIBA: Rossz felparaméterezés\ngrowmushroombody <tekton>");
             return;
         }
 
         Tecton t = gm.getTectons().stream()
-        .findFirst().filter(tec -> tec.getId().equals(parameters[0])).get();
+        .filter(tec -> tec.getId().equals(parameters[0])).findFirst().get();
 
-        t.growBody();
+        if (t.growBody()) {
+            ioHandler.writeLine("New mushroom body on this tecton");
+        }
+        else {
+            ioHandler.writeLine("There is something on this tecton");
+        }
     }
 
     /**
@@ -451,8 +485,33 @@ public class CommandParser {
     public void handleSum(String[] parameters) throws IOException {
         switch (parameters[0].substring(0,3)) {
             case "tek":
-                Tecton searched = gm.getTectons().stream().findFirst().filter(t -> t.getId().equals(parameters[0])).get();
-                ioHandler.writeLine("id:\nSpores:\nInsects:\n");
+                Tecton searched = null;
+                for (Tecton t: gm.getTectons()) {
+                    if (t.getId().equals(parameters[0])) {
+                        searched = t;
+                    }
+                }
+                if (searched != null) {
+                    ioHandler.writeLine("id: " + searched.getId());
+                    ioHandler.write("Spores: ");
+                    for (Spore s : searched.getSpores()) {
+                        ioHandler.write(s.getId() + " ");
+                    }
+                    ioHandler.writeLine("");
+                    ioHandler.write("Insects: ");
+                    for (Insect s : searched.getInsects()) {
+                        ioHandler.write(s.getId() + " ");
+                    }
+                    ioHandler.writeLine("");
+                    ioHandler.write("Neighbours: ");
+                    for (Tecton s : searched.getNeighbours()) {
+                        ioHandler.write(s.getId() + " ");
+                    }
+                    ioHandler.writeLine("");
+                }
+                else {
+                    ioHandler.writeLine("HIBA: A tekton nem található.");
+                }
                 break;
             case "spo":
                 Spore sp = null;
@@ -495,14 +554,24 @@ public class CommandParser {
                     ioHandler.writeLine("HIBA: A megadott azonosítóval nem lézeik ilyen entitás.");
                     return;
                 }
+
+                ioHandler.writeLine("");
                 break;
             case "inr":
+
+                Insecter inrSearched = List.of(gm.getTeams()).stream().filter(team -> team.getInsecter().getName().equals(parameters[0])).findFirst().get().getInsecter();
+                ioHandler.writeLine("Name:\nInsects:\n");
                 break;
             case "msr":
+                Mushroomer msrSearched = List.of(gm.getTeams()).stream().filter(team -> team.getMushroomer().getName().equals(parameters[0])).findFirst().get().getMushroomer();
+                ioHandler.writeLine("Name:\nInsects:\n");
                 break;
             case "mbd":
+                MushroomBody mdbS = gm.getTectons().stream().filter(t -> t.getMushroomBody().getID().equals(parameters[0])).findFirst().get().getMushroomBody();
+                ioHandler.writeLine("ID:\nTecton:\n");
                 break;
             case "str":
+                MushroomString strS = null;
                 break;
             default:
                 break;

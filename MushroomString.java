@@ -226,18 +226,18 @@ public class MushroomString {
     public int growTo(Tecton toGrow, Tecton from) {
 
         //TODO: grow on same tekton
-        /*if(from.neighbourDistance(toGrow) != 1) {
+        if(from.neighbourDistance(toGrow) != 1 && toGrow != from) {
             return -1;
         }
-        if(tectons.indexOf(from) != 0 && tectons.indexOf(from) != tectons.size() - 1) {
+        if(/*tectons.indexOf(from) != 0 && tectons.indexOf(from) != tectons.size() - 1 && toGrow != from*/false) {
             return -1;
-        }*/
+        }
 
         toGrow.addNewString(this);
-        tectons.add(toGrow);
+        if(!tectons.contains(toGrow)) tectons.add(toGrow);
         length++;
 
-        return toGrow.hashCode();
+        return tectons.size();
     }
 
     /**

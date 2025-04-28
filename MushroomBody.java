@@ -33,7 +33,7 @@ public class MushroomBody {
      * @return -1, ha a spórák száma nem elegendő az elszóráshoz, vagy ha a tekton túl messze van.
      * @return a spórák száma, ha a szórás sikeres.
      */
-    public int scatter(Tecton toScatter) {
+    public int scatter(Tecton toScatter  ) {
         int distance = tecton.neighbourDistance(toScatter);
         if(distance >= 4 || distance == -1) {
             return -1;
@@ -42,6 +42,24 @@ public class MushroomBody {
             return -1;
         }
         Spore sp;
+        for(int i = 0; i < distance-1; i++) {
+            sp = spores.getFirst();
+            reduceSpore(sp);
+        }
+        sp = spores.getFirst();
+        toScatter.scatterSpore(sp);
+        return spores.size();
+    }
+
+    public int scatter(Tecton toScatter, Ability ab) {
+        int distance = tecton.neighbourDistance(toScatter);
+        if(distance >= 4 || distance == -1) {
+            return -1;
+        }
+        if(distance > spores.size()) {
+            return -1;
+        }
+        Spore sp = new Spore(10, ab);
         for(int i = 0; i < distance-1; i++) {
             sp = spores.getFirst();
             reduceSpore(sp);

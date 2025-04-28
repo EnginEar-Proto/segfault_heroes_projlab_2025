@@ -1,0 +1,7 @@
+newgame -t 1
+csap1
+msr
+inr
+pos-alloc -m csap1 tek1
+start
+growmushroombody tek2

@@ -59,7 +59,7 @@ if errorlevel 1 (
     echo [PASS] Test passed: !basename!
 )
 
-del "!tempfile!" > nul 2>&1
+::del "!tempfile!" > nul 2>&1
 goto :eof
 
 :: Osszes teszt futtatasa

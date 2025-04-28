@@ -107,71 +107,74 @@ public class GameManager {
         tectons.add(tec3);
         Tecton tec4 = new Tecton("tek4", 3, true, 2, 4);
         tectons.add(tec4);
-        Tecton tec5 = new Tecton("tek5", 2, true, 3, 5);
+        Tecton tec5 = new Tecton("tek5", 2, true, 4, 5);
         tectons.add(tec5);
         Tecton tec6 = new Tecton("tek6", 3, false, 6, 5);
         tectons.add(tec6);
-        Tecton tec7 = new Tecton("tek7", 1, false, 8, 8);
+        Tecton tec7 = new Tecton("tek7", 3, false, 6, 7);
         tectons.add(tec7);
-        Tecton tec8 = new Tecton("tek8", 2, false, 9, 8);
+        Tecton tec8 = new Tecton("tek8", 2, true, 8, 8);
         tectons.add(tec8);
-        Tecton tec9 = new Tecton("tek9", 1, true, 11, 7);
+        Tecton tec9 = new Tecton("tek9", 2, true, 9, 8);
         tectons.add(tec9);
-        Tecton tec10 = new Tecton("tek10", 1, true, 12, 7);
+        Tecton tec10 = new Tecton("tek10", 1, true, 11, 7);
         tectons.add(tec10);
-        Tecton tec11 = new Tecton("tek11", 3, false, 12, 5);
+        Tecton tec11 = new Tecton("tek11", 1, false, 12, 7);
         tectons.add(tec11);
-        Tecton tec12 = new Tecton("tek12", 3, false, 12, 3);
+        Tecton tec12 = new Tecton("tek12", 3, false, 12, 5);
         tectons.add(tec12);
-        Tecton tec13 = new Tecton("tek13", 3, false, 12, 1);
+        Tecton tec13 = new Tecton("tek13", 3, false, 12, 3);
         tectons.add(tec13);
-        Tecton tec14 = new Tecton("tek14", 2, false, 5, 9);
+        Tecton tec14 = new Tecton("tek14", 3, false, 12, 1);
         tectons.add(tec14);
-        Tecton tec15 = new Tecton("tek15", 3, true, 3, 9);
+        Tecton tec15 = new Tecton("tek15", 2, true, 5, 9);
         tectons.add(tec15);
-        Tecton tec16 = new Tecton("tek16", 1, true, 5, 11);
+        Tecton tec16 = new Tecton("tek16", 3, true, 3, 9);
         tectons.add(tec16);
-        Tecton tec17 = new Tecton("tek17", 2, false, 4, 12);
+        Tecton tec17 = new Tecton("tek17", 1, false, 5, 11);
         tectons.add(tec17);
-        Tecton tec18 = new Tecton("tek18", 2, false, 3, 13);
+        Tecton tec18 = new Tecton("tek18", 2, false, 4, 12);
         tectons.add(tec18);
-        Tecton tec19 = new Tecton("tek19", 2, false, 5, 13);
+        Tecton tec19 = new Tecton("tek19", 2, false, 3, 13);
         tectons.add(tec19);
-        Tecton tec20 = new Tecton("tek20", 3, true, 7, 13);
+        Tecton tec20 = new Tecton("tek20", 2, true, 5, 13);
         tectons.add(tec20);
-        Tecton tec21 = new Tecton("tek21", 2, false, 9, 12);
+        Tecton tec21 = new Tecton("tek21", 3, false, 7, 13);
         tectons.add(tec21);
-        Tecton tec22 = new Tecton("tek22", 3, false, 11, 11);
+        Tecton tec22 = new Tecton("tek22", 2, false, 9, 12);
         tectons.add(tec22);
-        Tecton tec23 = new Tecton("tek23", 1, true, 11, 10);
+        Tecton tec23 = new Tecton("tek23", 3, true, 11, 11);
         tectons.add(tec23);
-        Tecton tec24 = new Tecton("tek24", 1, false, 11, 9);
+        Tecton tec24 = new Tecton("tek24", 1, false, 11, 10);
         tectons.add(tec24);
+        Tecton tec25 = new Tecton("tek25", 1, false, 11, 9);
+        tectons.add(tec25);
 
-        tec1.setNeighbours(List.of(tec2, tec3));
-        tec2.setNeighbours(List.of(tec3, tec1));
-        tec3.setNeighbours(List.of(tec4, tec1, tec2));
-        tec4.setNeighbours(List.of(tec5, tec3));
-        tec5.setNeighbours(List.of(tec6, tec4));
-        tec6.setNeighbours(List.of(tec7, tec5));
-        tec7.setNeighbours(List.of(tec8, tec6, tec14));
-        tec8.setNeighbours(List.of(tec7, tec9));
-        tec9.setNeighbours(List.of(tec8, tec10, tec11, tec21));
-        tec10.setNeighbours(List.of(tec9, tec12));
-        tec11.setNeighbours(List.of(tec9, tec12, tec22));
-        tec12.setNeighbours(List.of(tec11, tec13, tec10));
-        tec13.setNeighbours(List.of(tec12));
-        tec14.setNeighbours(List.of(tec7, tec15));
-        tec15.setNeighbours(List.of(tec14, tec16));
-        tec16.setNeighbours(List.of(tec15, tec17));
-        tec17.setNeighbours(List.of(tec16, tec18));
-        tec18.setNeighbours(List.of(tec17, tec19));
-        tec19.setNeighbours(List.of(tec18, tec20));
-        tec20.setNeighbours(List.of(tec19, tec21));
-        tec21.setNeighbours(List.of(tec20, tec22));
-        tec22.setNeighbours(List.of(tec21, tec23, tec24));
-        tec23.setNeighbours(List.of(tec22));
-        tec24.setNeighbours(List.of(tec22));
+        tec1.initNeighbours(List.of(tec2, tec3));
+        tec2.initNeighbours(List.of(tec3, tec1));
+        tec3.initNeighbours(List.of(tec4, tec1, tec2));
+        tec5.initNeighbours(List.of(tec6, tec4));
+        tec6.initNeighbours(List.of(tec7, tec5));
+        tec4.initNeighbours(List.of(tec5, tec3));
+        tec7.initNeighbours(List.of(tec8, tec6, tec15));
+        tec8.initNeighbours(List.of(tec7, tec9));
+        tec9.initNeighbours(List.of(tec8, tec10, tec25));
+        tec10.initNeighbours(List.of(tec9, tec11, tec12));
+        tec11.initNeighbours(List.of(tec12, tec11));
+        tec12.initNeighbours(List.of(tec11, tec13, tec10));
+        tec13.initNeighbours(List.of(tec12, tec14));
+        tec14.initNeighbours(List.of(tec13));
+        tec15.initNeighbours(List.of(tec7, tec16));
+        tec16.initNeighbours(List.of(tec15, tec17));
+        tec17.initNeighbours(List.of(tec16, tec18));
+        tec18.initNeighbours(List.of(tec17, tec19, tec20));
+        tec19.initNeighbours(List.of(tec18, tec20));
+        tec20.initNeighbours(List.of(tec18, tec19, tec21));
+        tec21.initNeighbours(List.of(tec20, tec22));
+        tec22.initNeighbours(List.of(tec21, tec23));
+        tec23.initNeighbours(List.of(tec22, tec24));
+        tec24.initNeighbours(List.of(tec23, tec25));
+        tec25.initNeighbours(List.of(tec24, tec9));
 
 
     }
@@ -180,7 +183,8 @@ public class GameManager {
      * Beállítja a játékosok kezdőpozícióit.
      * Minden csapatnak kisorsol 2 tekton pozíciót.
      */
-    public void setStartingPosition() throws IOException {
+    public int setStartingPosition(int i, int m) throws IOException {
+        int a = i;
         if (tectons.size() * 2 < tectons.size()) {
             ioHandler.writeLine("A kezőpozíciók nem oszthatóak ki, nem elegendő a tektonok száma");
         }
@@ -192,8 +196,14 @@ public class GameManager {
                 rtecton = tectons.get(rand.nextInt(tectons.size()));
             }
             team.setPositions(rtecton, rtecton);
+            Insect ins = new Insect("ins" + i++, 0, Ability.NORMAL, team.getInsecter());
+            team.getInsecter().getInsects().add(ins);
+            MushroomBody mush = new MushroomBody("mbd" + m++, rtecton);
+            team.getMushroomer().addMushroomBody(mush);
             usedTectons.add(rtecton);
         }
+
+        return i - a;
     }
 
     /**

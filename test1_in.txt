@@ -1,0 +1,10 @@
+newgame -t 2
+csap1
+msr1
+inr1
+csap2
+msr2
+inr2
+pos-alloc -m csap1 tek1
+pos-alloc -m csap2 tek2
+start

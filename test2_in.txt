@@ -1,0 +1,5 @@
+newgame
+csap1
+msr
+inr
+xxx

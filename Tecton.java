@@ -53,6 +53,10 @@ public class Tecton {
      * Ezzel a tektonnal szomszédos tektonok listája.
     */
     private ArrayList<Tecton> neighbours;
+
+    public ArrayList<Tecton> getNeighbours() {
+        return neighbours;
+    }
     
     /**
      * A Tektonon aktuális mérete. Ez az érték nem lehet kisebb mint egy.
@@ -173,13 +177,13 @@ public class Tecton {
     /**
      * Új gombatestet növeszt arra a tektonra, amelyen a függvényt meghívták.
      */
-    public void growBody(){
-        if(this.mushroomBody != null){
+    public boolean growBody(){
+        if(this.mushroomBody == null){
             MushroomBody newBody = new MushroomBody(id + "body", this);
             this.mushroomBody = newBody;
-            System.out.print("New mushroom body in this tecton");
+            return true;
         }else{
-            System.out.print("There is something on this tecton");
+            return false;
         }
 
 
@@ -199,7 +203,7 @@ public class Tecton {
     */
     public void removeStrings(){
         strings = new ArrayList<>();
-        System.out.print("All strings removed");
+        System.out.println("All strings removed");
     }
     /**
      * A tekton tördelése.
@@ -208,14 +212,17 @@ public class Tecton {
     public void Break(int size){
         if((this.size - size) > 0) {
             removeStrings();
-            int oldSize = strings.size();
+            int oldSize = this.size;
             setSize(size);
             int x = 0, y = 0;
             if(oldSize == 3){
                 x = position[0];
-                y = position[1] - 1;
+                y = position[1] + 1;
+            } else if (oldSize == 2) {
+                x = position[0] + 1;
+                y = position[1];
             }
-            Tecton newTecton = new Tecton(this.id + " broken", oldSize - this.size, false, x, y);
+            Tecton newTecton = new Tecton(this.id + "_b", oldSize - this.size, false, x, y);
             this.setNeighbours(neighbours); //Itt ugy változik az is, hogy kik a saját szomszédai
             newTecton.setNeighbours(neighbours);
             newTecton.neighbours.add(this);
@@ -311,6 +318,14 @@ public class Tecton {
             return;
         strings.add(s);
     }
+
+    public void initNeighbours(ArrayList<Tecton> tectons){
+        this.neighbours = tectons;
+    }
+    public void initNeighbours(List<Tecton> tectons){
+        this.neighbours = new ArrayList<>(tectons);
+    }
+
     /**
      * A paraméterben átadott listában szereplő tektonok szomszédosak lesznek azzal a tektonnal,
      * amelyre meghíták a függvényt. Az itt szereplő tektonok még nem feltétlenül vannak fonalakkal összekötve.
