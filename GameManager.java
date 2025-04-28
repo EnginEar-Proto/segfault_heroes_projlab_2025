@@ -183,7 +183,7 @@ public class GameManager {
      * Beállítja a játékosok kezdőpozícióit.
      * Minden csapatnak kisorsol 2 tekton pozíciót.
      */
-    public int setStartingPosition(int i, int m) throws IOException {
+    public int setStartingPosition(int i, int m, int s) throws IOException {
         int a = i;
         if (tectons.size() * 2 < tectons.size()) {
             ioHandler.writeLine("A kezőpozíciók nem oszthatóak ki, nem elegendő a tektonok száma");
@@ -199,6 +199,7 @@ public class GameManager {
             Insect ins = new Insect("ins" + i++, 0, Ability.NORMAL, team.getInsecter(), rtecton);
             team.getInsecter().getInsects().add(ins);
             MushroomBody mush = new MushroomBody("mbd" + m++, rtecton);
+            mush.loadBodyWithSpores(s);
             team.getMushroomer().addMushroomBody(mush);
             usedTectons.add(rtecton);
         }
@@ -221,15 +222,18 @@ public class GameManager {
      * A parancsokat az inputHandler-ből olvassa, és a commandParser dolgozza fel.
      */
     public void play() throws IOException {
+
         while (laps < 15) {
             for (int i = 0; i < teams.size(); i++) {
                 currentTeam = teams.get(i);
                 ioHandler.writeLine("A " + currentTeam.getName() + " csapat következik.");
                 ioHandler.writeLine("A " + currentTeam.getName() + " csapat gombásza következik.");
                 try {
+
                     String command = ioHandler.readLine();
                     boolean commandOK = commandParser.executeCommand(command);
                     while (!commandOK) {
+                        command = ioHandler.readLine();
                         commandOK = commandParser.executeCommand(command);
                     }
                 } catch (IOException e) {
@@ -241,6 +245,7 @@ public class GameManager {
                     String command = ioHandler.readLine();
                     boolean commandOK = commandParser.executeCommand(command);
                     while (!commandOK) {
+                        command = ioHandler.readLine();
                         commandOK = commandParser.executeCommand(command);
                     }
                 } catch (IOException e) {

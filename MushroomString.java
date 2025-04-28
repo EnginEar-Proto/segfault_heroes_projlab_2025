@@ -246,7 +246,9 @@ public class MushroomString {
         }
 
         toGrow.addNewString(this);
+        from.addNewString(this);
         if(!tectons.contains(toGrow)) tectons.add(toGrow);
+        if(!tectons.contains(from)) tectons.add(from);
         length++;
 
         return tectons.size();
@@ -277,6 +279,7 @@ public class MushroomString {
                     Insecter insecter = insect.getInsecter();
                     insecter.insectEatenByString(insect);
 
+                    tecton.removeInsect(insect);
                     insect.setTecton(null);
                     //mi legyen a rovarral? hogyan remove stb..?
 

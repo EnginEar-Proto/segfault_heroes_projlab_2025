@@ -3,9 +3,10 @@ public class Spore {
     private int substance;
     private Ability ability;
     private Tecton tecton;
-    public Spore(int substance, Ability ability) {
+    public Spore(String id, int substance, Ability ability) {
         this.substance = substance;
         this.ability = ability;
+        this.id = id;
     }
     public int getSubstance() {
         return substance;
@@ -34,11 +35,12 @@ public class Spore {
      * A spóra tápanyag tartalmával nő a rovar tápanyag tartalma.
      */
     public void getEaten(Insect insect) {
-        System.out.println("Spore gets eaten");
+        System.out.println("Spore gets eaten, type: " + this.ability);
         insect.addSubstance(substance);
         insect.setAbility(ability);
         if(insect.getAbility().equals(Ability.DIVIDER)){
-            insect.getInsecter().addInsect(new Insect(insect.getId() + " divided", 0, Ability.NORMAL, insect.getInsecter(), insect.getTecton()));
+            insect.getInsecter().addInsect(new Insect(insect.getId() + "_div", 0, Ability.NORMAL, insect.getInsecter(), insect.getTecton()));
         }
+        insect.getTecton().removeSpore(this);
     }
 }

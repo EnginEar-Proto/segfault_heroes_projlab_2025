@@ -49,14 +49,14 @@ public class CommandParser {
 
         String[] parts = command.split(" ");
         String action = parts[0].toLowerCase();
+
         List<String> paramsAsList = new ArrayList<>(Arrays.asList(parts));
         paramsAsList.removeFirst();
         String[] parameters = paramsAsList.toArray(new String[paramsAsList.size()]);
 
         switch (action) {
             case "newgame":
-                handleNewGame(parameters);
-                return true;
+                return handleNewGame(parameters);
             case "pos-alloc":
                 handlePosAlloc(parameters);
                 return true;
@@ -119,7 +119,7 @@ public class CommandParser {
      * @param parameters A parancs argumentumai, pl. {"-t", "3"} több csapat létrehozásához.
      * @throws IOException Ha a bemenet/kiírás során hiba történik.
      */
-    public void handleNewGame(String[] parameters) throws IOException {
+    public boolean handleNewGame(String[] parameters) throws IOException {
         gm.resetTeams();
         gm.initializeMap();
 
@@ -132,7 +132,7 @@ public class CommandParser {
                 ioHandler.write("Csapatnév: ");
                 teamName = ioHandler.readLine();
                 if (teamName.equalsIgnoreCase("xxx"))
-                    return;
+                    return true;
                 ioHandler.write("Gombász: ");
                 player1 = ioHandler.readLine();
                 ioHandler.write("Rovarász: ");
@@ -155,9 +155,11 @@ public class CommandParser {
                 Team team = new Team(teamName, new Insecter(player2), new Mushroomer(player1));
                 gm.addTeam(team);
             }
+            return true;
         }
         else {
             ioHandler.writeLine("HIBA: ismeretlen newgame paraméter");
+            return false;
         }
     }
 
@@ -180,9 +182,10 @@ public class CommandParser {
      */
     public void handlePosAlloc(String[] parameters) throws IOException {
         if (parameters.length == 0) { // random kiosztás
-            int i = gm.setStartingPosition(currentInsectIndex, currentMushroomBodyIndex);
-            currentMushroomBodyIndex = currentMushroomBodyIndex + i;
-            currentInsectIndex = currentInsectIndex + i;
+            int i = gm.setStartingPosition(currentInsectIndex, currentMushroomBodyIndex, currentSporeIndex);
+            currentMushroomBodyIndex += i;
+            currentSporeIndex += (i * 8);
+            currentInsectIndex += i;
             gm.listTeams();
         }
         else if (parameters[0].equals("-m") && parameters.length == 3) { // manuális kiosztás, egy parancs egy csapathoz rendel egy tektont
@@ -255,11 +258,16 @@ public class CommandParser {
      * @throws IOException Ha a be- vagy kimenet során hiba történik 
     */
     public void handleGrowString(String[] parameters) throws IOException {
-        if(parameters.length != 3 /*|| List.of(parameters).contains(null)*/){
+        if(parameters.length < 2){
             ioHandler.writeLine("HIBA: Hiányzó paraméterek.\ngrowstring <fonál> <tekton1> <tekton2>");
             return;
         }
 
+        String thrd = parameters[1];
+
+        if(parameters.length == 3) {
+            thrd = parameters[2];
+        }
 
         Tecton startTecton = gm.getTectons().stream()
         .filter(t -> t.getId().equals(parameters[1])).findFirst().get();
@@ -360,6 +368,7 @@ public class CommandParser {
             if(parameters.length == 4 && parameters[3].equals("-t")){
                 Ability ab = Ability.valueOf(parameters[3]);
                 mbd.scatter(desTecton, ab);
+
                 return;
             }
 
@@ -382,7 +391,7 @@ public class CommandParser {
      * @throws IOException Ha a be- vagy kimenet során hiba történik 
     */
     public void handleBranch(String[] parameters) throws IOException {
-        if(parameters.length != 2 || List.of(parameters).contains(null)){
+        if(parameters.length != 2){
             ioHandler.writeLine("HIBA: Rossz felparaméterezés\nbranch <fonal> <tekton>");
             return;
         }
@@ -390,9 +399,9 @@ public class CommandParser {
         try {
             Tecton t = 
             gm.getTectons().stream()
-            .findFirst().filter(tec -> tec.getId().equals(parameters[1])).get();
+            .filter(tec -> tec.getId().equals(parameters[1])).findFirst().get();
 
-            MushroomString s = t.getStrings().stream().findFirst().filter(st-> st.getId().equals(parameters[0])).get();
+            MushroomString s = t.getStrings().stream().filter(st-> st.getId().equals(parameters[0])).findFirst().get();
 
             s.branchOut(t);
         } catch (NoSuchElementException e) {
@@ -500,6 +509,11 @@ public class CommandParser {
      * @throws IOException Ha a be- vagy kimenet során hiba történik 
     */
     public void handleSum(String[] parameters) throws IOException {
+
+        if(parameters.length == 0){
+            ioHandler.writeLine("HIBA: Rossz felparaméterezés\nsum <entitás>");
+            return;
+        }
         switch (parameters[0].substring(0,3)) {
             case "tek":
                 Tecton searched = null;
@@ -522,6 +536,11 @@ public class CommandParser {
                     ioHandler.writeLine("");
                     ioHandler.write("Neighbours: ");
                     for (Tecton s : searched.getNeighbours()) {
+                        ioHandler.write(s.getId() + " ");
+                    }
+                    ioHandler.writeLine("");
+                    ioHandler.write("Strings: ");
+                    for (MushroomString s : searched.getStrings()) {
                         ioHandler.write(s.getId() + " ");
                     }
                     ioHandler.writeLine("");
@@ -609,11 +628,19 @@ public class CommandParser {
                 }
                 break;
             case "mbd":
-                MushroomBody mdbS = gm.getTectons().stream().filter(t -> t.getMushroomBody().getID().equals(parameters[0])).findFirst().get().getMushroomBody();
+                MushroomBody mdbS = null;
+                for (int i = 0; i < gm.getTectons().size(); i++) {
+                    MushroomBody mb = gm.getTectons().get(i).getMushroomBody();
+                    if(mb == null) continue;
+                    if (mb.getID().equals(parameters[0])) {
+                        mdbS = mb;
+                        break;
+                    }
+                }
                 if (mdbS != null) {
                     ioHandler.writeLine("id: " + mdbS.getID());
-                    ioHandler.write("Tecton: " + mdbS.getTecton());
-                    ioHandler.write("Strings: ");
+                    ioHandler.writeLine("Tecton: " + mdbS.getTecton().getId());
+                    ioHandler.writeLine("Strings: ");
                     for (MushroomString s : mdbS.getStrings()) {
                         ioHandler.write(s.getId() + " ");
                     }
@@ -658,6 +685,52 @@ public class CommandParser {
                 }
 
                 ioHandler.writeLine("");
+                break;
+            case "all":
+                ioHandler.writeLine("Tektonok: ");
+                for (Tecton t : gm.getTectons()) {
+                    ioHandler.write(t.getId() + " ");
+                }
+                ioHandler.writeLine("");
+                ioHandler.writeLine("Rovarászok: ");
+                for (Team t : gm.getTeams()) {
+                    ioHandler.write(t.getInsecter().getName() + " ");
+                }
+                ioHandler.writeLine("");
+                ioHandler.writeLine("Gombászok: ");
+                for (Team t : gm.getTeams()) {
+                    ioHandler.write(t.getMushroomer().getName() + " ");
+                }
+                ioHandler.writeLine("");
+                ioHandler.writeLine("Rovarok: ");
+                for (Team t : gm.getTeams()) {
+                    for (Insect i : t.getInsecter().getInsects()) {
+                        ioHandler.write(i.getId() + " ");
+                    }
+                }
+                ioHandler.writeLine("");
+                ioHandler.writeLine("Gombafonalak: ");
+                for (Tecton t : gm.getTectons()) {
+                    for (MushroomString i : t.getStrings()) {
+                        ioHandler.write(i.getId() + " ");
+                    }
+                }
+                ioHandler.writeLine("");
+                ioHandler.writeLine("Gombatestek: ");
+                for (Tecton t : gm.getTectons()) {
+                    if (t.getMushroomBody() != null) {
+                        ioHandler.write(t.getMushroomBody().getID() + " ");
+                    }
+                }
+                ioHandler.writeLine("");
+                ioHandler.writeLine("Spórák: ");
+                for (Tecton t : gm.getTectons()) {
+                    for (Spore i : t.getSpores()) {
+                        ioHandler.write(i.getId() + " ");
+                    }
+                }
+                ioHandler.writeLine("");
+
                 break;
             default:
                 ioHandler.writeLine("HIBA: A megadott azonosítóval nem lézeik ilyen entitás.");

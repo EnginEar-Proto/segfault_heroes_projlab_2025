@@ -22,6 +22,7 @@ public class Insect {
         this.ability = ability;
         this.insecter = insecter;
         this.tecton = tecton;
+        tecton.addInsect(this);
     }
 
     public String getId() {
@@ -103,7 +104,7 @@ public class Insect {
         for(int i = 0; i < this.tecton.getStrings().size(); i++) {
             MushroomString str = this.tecton.getStrings().get(i);
             if (tecton.getStrings().contains(str)) {
-                tecton.removeInsect(this);
+                this.tecton.removeInsect(this);
                 this.tecton = tecton;
                 this.tecton.addInsect(this);
                 break;

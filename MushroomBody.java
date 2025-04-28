@@ -15,15 +15,21 @@ public class MushroomBody {
         tecton = t;
         t.setMushroomBody(this);
 
-        spores.add(new Spore(2, Ability.NORMAL));
-        spores.add(new Spore(3, Ability.NORMAL));
-        spores.add(new Spore(1, Ability.DIVIDER));
-        spores.add(new Spore(1, Ability.DIVIDER));
-        spores.add(new Spore(2, Ability.PARALYZING));
-        spores.add(new Spore(2, Ability.PARALYZING));
-        spores.add(new Spore(2, Ability.SWIFT));
-        spores.add(new Spore(2, Ability.SWIFT));
 
+
+    }
+
+    public int loadBodyWithSpores(int startIndex) {
+        spores.add(new Spore("spr" + startIndex++,1, Ability.DIVIDER));
+        spores.add(new Spore("spr" + startIndex++,2, Ability.NORMAL));
+        spores.add(new Spore("spr" + startIndex++,3, Ability.NORMAL));
+        spores.add(new Spore("spr" + startIndex++,1, Ability.DIVIDER));
+        spores.add(new Spore("spr" + startIndex++,2, Ability.PARALYZING));
+        spores.add(new Spore("spr" + startIndex++,2, Ability.PARALYZING));
+        spores.add(new Spore("spr" + startIndex++,2, Ability.SWIFT));
+        spores.add(new Spore("spr" + startIndex++,2, Ability.SWIFT));
+
+        return startIndex;
     }
 
     public String getID() {
@@ -57,7 +63,7 @@ public class MushroomBody {
      * @return -1, ha a spórák száma nem elegendő az elszóráshoz, vagy ha a tekton túl messze van.
      * @return a spórák száma, ha a szórás sikeres.
      */
-    public int scatter(Tecton toScatter  ) {
+    public int scatter(Tecton toScatter) {
         int distance = tecton.neighbourDistance(toScatter);
         if(distance >= 4 || distance == -1) {
             return -1;
@@ -72,6 +78,7 @@ public class MushroomBody {
         }
         sp = spores.getFirst();
         toScatter.scatterSpore(sp);
+        reduceSpore(sp);
         return spores.size();
     }
 
@@ -83,7 +90,7 @@ public class MushroomBody {
         if(distance > spores.size()) {
             return -1;
         }
-        Spore sp = new Spore(10, ab);
+        Spore sp = null;
         for(int i = 0; i < distance-1; i++) {
             sp = spores.getFirst();
             reduceSpore(sp);

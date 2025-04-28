@@ -34,6 +34,10 @@ public class Main{
                     if (!gameStarted) { // Normál játékmódban a játék előtti dolgokhoz
                         String command = ioHandler.readLine();
                         running = commandParser.executeCommand(command);
+                        while (!running) {
+                            command = ioHandler.readLine();
+                            running = commandParser.executeCommand(command);
+                        }
                     } else {
                         gameManager.play(); // Indítás után a játék saját főciklusa.
                     }

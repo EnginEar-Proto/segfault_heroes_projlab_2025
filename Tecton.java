@@ -186,11 +186,13 @@ public class Tecton {
      * Új gombatestet növeszt arra a tektonra, amelyen a függvényt meghívták.
      */
     public boolean growBody(){
-        if(this.mushroomBody == null){
+        if(this.mushroomBody == null && this.spores.size() > 0 && this.size > 1 && this.strings.size() > 0){
             MushroomBody newBody = new MushroomBody(id + "body", this);
+            System.out.println("New MushroomBody");
             this.mushroomBody = newBody;
             return true;
         }else{
+            System.out.println("No new MushroomBody");
             return false;
         }
 
@@ -199,6 +201,8 @@ public class Tecton {
     public void removeString(MushroomString f){
         strings.remove(f);
     }
+
+    public void removeSpore(Spore e){spores.remove(e);}
     /**
      * Megadja, hogy van spóra azon a tektonon, amelyre a függvényt meghívták.
      * @return Logikai érték, amely igaz, ha a tektonon helyezkedik el spóra. Hamis egyébként.
