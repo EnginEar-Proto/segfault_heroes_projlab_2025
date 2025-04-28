@@ -2,12 +2,12 @@ Csapatnév: Gombász: Rovarász: Csapatnév: Gombász: Rovarász: Teams:
 csap1 (msr1 + inr1) tecton: tek1
 Teams:
 csap1 (msr1 + inr1) tecton: tek1
-csap2 (msr2 + inr2) tecton: tek3
+csap2 (msr2 + inr2) tecton: tek2
 id: str2
 Length: 2
 Parent String:
 Children Strings:
-Mushroombodies:
+Mushroombodies: mbd1
 Tectons: tek2 tek3
 
 Rovar elvágta a fonalat
@@ -15,5 +15,5 @@ id: str2
 Length: 1
 Parent String:
 Children Strings:
-Mushroombodies:
+Mushroombodies: mbd1
 Tectons: tek2

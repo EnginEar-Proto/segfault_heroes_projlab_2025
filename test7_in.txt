@@ -6,7 +6,7 @@ csap2
 msr2
 inr2
 pos-alloc -m csap1 tek1
-pos-alloc -m csap2 tek3
+pos-alloc -m csap2 tek2
 start
 growstring str1 tek1 tek1
 growstring str1 tek1 tek2
