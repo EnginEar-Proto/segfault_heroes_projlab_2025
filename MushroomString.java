@@ -39,6 +39,14 @@ public class MushroomString {
         return this.tectons;
     }
 
+    public MushroomString getParentString(){
+        return this.parentString;
+    }
+
+    public List<MushroomString> getChildrenStrings(){
+        return this.childrenStrings;
+    }
+
     public MushroomString(String id) {
         this.id = id;
         length = 0;
@@ -267,7 +275,9 @@ public class MushroomString {
      */
     public void branchOut(Tecton tecton) {
         MushroomString newString = new MushroomString(this.id + "_b", null, tectons, this);
+        newString.length = tectons.size();
         tecton.addNewString(newString);
+        addChild(newString);
     }
 
     /**

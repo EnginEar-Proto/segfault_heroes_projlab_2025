@@ -668,6 +668,14 @@ public class CommandParser {
                 if (searchedms != null) {
                     ioHandler.writeLine("id: " + searchedms.getId());
                     ioHandler.writeLine("Length: " + searchedms.getLength());
+                    ioHandler.write("Parent String: ");
+                    if (searchedms.getParentString() != null) ioHandler.writeLine(searchedms.getParentString().getId());
+                    else ioHandler.writeLine("");
+                    ioHandler.write("Children Strings: ");
+                    for (MushroomString s : searchedms.getChildrenStrings()) {
+                        ioHandler.write(s.getId() + " ");
+                    }
+                    ioHandler.writeLine("");
                     ioHandler.write("Mushroombodies: ");
                     for (MushroomBody s : searchedms.getMushroomBodies()) {
                         if (s != null) ioHandler.write(s.getID() + " ");

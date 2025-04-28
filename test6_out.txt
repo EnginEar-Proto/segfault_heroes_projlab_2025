@@ -1,0 +1,15 @@
+Csapatnév: Gombász: Rovarász: Teams:
+csap1 (msr1 + inr1) tecton: tek1
+id: str1
+Length: 2
+Parent String:
+Children Strings: str1_b
+Mushroombodies: mbd0
+Tectons: tek1 tek2
+
+id: str1_b
+Length: 2
+Parent String: str1
+Children Strings:
+Mushroombodies:
+Tectons: tek1 tek2
