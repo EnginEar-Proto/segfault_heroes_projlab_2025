@@ -222,10 +222,28 @@ public class GameManager {
         }
     }
 
+    /**
+     * Ellenőrzi, hogy a kiadot parancsot futtathatja-e gombász szerpű játékos.
+     * @param action A parancs amely futtathatóságát ellenőrizzük
+     * @return Futtatható gombász által.
+    */
     private boolean checkMushroomerAction(String action){
         return List.of("growmushroombody", "growstring", "scatterspore", "eatinsect", "branch").contains(action);
     }
 
+    /**
+     * <p>
+     *  Ellenőrzi, hogy a kiadott parancsot futtathatja-e a soron következő játékos.
+     * </p>
+     * <p>
+     *  Az ellenőrzéshez felhasználja a játékos típusát, és a kiadott parancsot.
+     *  Amennyiben az adott szerep futtathatja azt a parancsot a parancsértelemző is ellenőrzi helyességet.
+     *  Ha helyes lefutásra kerül. Egyébként a szabványos kimeneten megjelenik a hibaüzenet. 
+     * </p>
+     * @param isMushroomer Ez alapján ellenőrzi a szerepet
+     * @param command A szabványos bemenetről beolvasott parancs
+     * @return Logikai érték, amely igaz ha helyesen lefutott a parancs.
+    */
     private boolean checkActionCorrectness(boolean isMushroomer, String command) throws IOException{
         String action = command.split(" ")[0];
         
