@@ -258,15 +258,9 @@ public class CommandParser {
      * @throws IOException Ha a be- vagy kimenet során hiba történik 
     */
     public void handleGrowString(String[] parameters) throws IOException {
-        if(parameters.length < 2){
+        if(parameters.length < 3){
             ioHandler.writeLine("HIBA: Hiányzó paraméterek.\ngrowstring <fonál> <tekton1> <tekton2>");
             return;
-        }
-
-        String thrd = parameters[1];
-
-        if(parameters.length == 3) {
-            thrd = parameters[2];
         }
 
         Tecton startTecton = gm.getTectons().stream()
