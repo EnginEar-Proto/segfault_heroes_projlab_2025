@@ -40,12 +40,9 @@ public class Insecter extends Player{
      */
     public void insectEatenByString(Insect insect) {
         if(insect.getAbility().equals(Ability.PARALYZING)){
-            System.out.println("Insect was eaten by a string!");
             if(insects.contains(insect)){
                 insects.remove(insect);
             }
-        }else{
-            System.out.println("Insect cannot be eaten!");
         }
     }
 }
