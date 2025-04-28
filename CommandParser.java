@@ -365,7 +365,7 @@ public class CommandParser {
      * <p>
      * Ahol az első paraméter az a tekton, amelyre az új gombatestet növeszteni akarjuk.
      * </p>
-     * @param paramters A parancsnak átadott paraméterek tömbje, amelynek tartalmaznia kell a tekton azonosítóját.
+     * @param parameters A parancsnak átadott paraméterek tömbje, amelynek tartalmaznia kell a tekton azonosítóját.
      * @throws IOException Ha a be- vagy kimenet során hiba történik 
     */
     public void handleGrowMushroomBody(String[] parameters) throws IOException {
