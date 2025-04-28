@@ -196,7 +196,7 @@ public class GameManager {
                 rtecton = tectons.get(rand.nextInt(tectons.size()));
             }
             team.setPositions(rtecton, rtecton);
-            Insect ins = new Insect("ins" + i++, 0, Ability.NORMAL, team.getInsecter());
+            Insect ins = new Insect("ins" + i++, 0, Ability.NORMAL, team.getInsecter(), rtecton);
             team.getInsecter().getInsects().add(ins);
             MushroomBody mush = new MushroomBody("mbd" + m++, rtecton);
             team.getMushroomer().addMushroomBody(mush);
@@ -225,12 +225,23 @@ public class GameManager {
             for (int i = 0; i < teams.size(); i++) {
                 currentTeam = teams.get(i);
                 ioHandler.writeLine("A " + currentTeam.getName() + " csapat következik.");
+                ioHandler.writeLine("A " + currentTeam.getName() + " csapat gombásza következik.");
                 try {
                     String command = ioHandler.readLine();
-                    boolean exit = commandParser.executeCommand(command);
-                    if (!exit) {
-                        gameStarted = false;
-                        return;
+                    boolean commandOK = commandParser.executeCommand(command);
+                    while (!commandOK) {
+                        commandOK = commandParser.executeCommand(command);
+                    }
+                } catch (IOException e) {
+                    ioHandler.writeLine("Hiba a parancs beolvasása közben: " + e.getMessage());
+                }
+
+                ioHandler.writeLine("A " + currentTeam.getName() + " csapat rovarásza következik:");
+                try {
+                    String command = ioHandler.readLine();
+                    boolean commandOK = commandParser.executeCommand(command);
+                    while (!commandOK) {
+                        commandOK = commandParser.executeCommand(command);
                     }
                 } catch (IOException e) {
                     ioHandler.writeLine("Hiba a parancs beolvasása közben: " + e.getMessage());
@@ -273,6 +284,15 @@ public class GameManager {
      */
     public void addTeam(Team team) {
         teams.add(team);
+    }
+
+    /**
+     * Hozzáad egy új tektont a játékhoz.
+     *
+     * @param t A hozzáadni kívánt tekton.
+     */
+    public void addTecton(Tecton t) {
+        tectons.add(t);
     }
 }
 

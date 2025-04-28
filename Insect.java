@@ -16,11 +16,12 @@ public class Insect {
      * @param substance A rovar kezdeti anyagmennyisége.
      * @param ability A rovar kezdeti képessége.
      */
-    public Insect(String id, int substance, Ability ability, Insecter insecter) {
+    public Insect(String id, int substance, Ability ability, Insecter insecter, Tecton tecton) {
         this.id = id;
         this.substance = substance;
         this.ability = ability;
         this.insecter = insecter;
+        this.tecton = tecton;
     }
 
     public String getId() {
@@ -99,17 +100,14 @@ public class Insect {
      * @param tecton A cél Tecton objektum, ahova a rovar lépni szeretne.
      */
     public void moveTo(Tecton tecton){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Can insect move to given tecton? [y/n]");
-        String answer = scanner.nextLine();
-
-        if(answer.equals("y")) {
-            System.out.println("Insect moves to given tecton");
-            this.tecton = tecton;
-        } else if(answer.equals("n")) {
-            System.out.println("Insect cannot move to given tecton");
-        } else {
-            System.out.println("You gave incorrect character!");
+        for(int i = 0; i < this.tecton.getStrings().size(); i++) {
+            MushroomString str = this.tecton.getStrings().get(i);
+            if (tecton.getStrings().contains(str)) {
+                tecton.removeInsect(this);
+                this.tecton = tecton;
+                this.tecton.addInsect(this);
+                break;
+            }
         }
     }
 

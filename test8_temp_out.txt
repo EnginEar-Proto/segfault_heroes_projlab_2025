@@ -1,0 +1,6 @@
+Csapatnév: Gombász: Rovarász: Teams:
+csap1 (msr1 + inr1) tecton: tek1
+id: tek2
+Spores: 
+Insects: 
+Neighbours: tek3 tek1 

@@ -9,13 +9,37 @@ public class MushroomBody {
     private Tecton tecton;
 
     public MushroomBody(String id, Tecton t){
+        this.id = id;
         strings = new ArrayList<>();
         spores = new ArrayList<>();
         tecton = t;
+        t.setMushroomBody(this);
+
+        spores.add(new Spore(2, Ability.NORMAL));
+        spores.add(new Spore(3, Ability.NORMAL));
+        spores.add(new Spore(1, Ability.DIVIDER));
+        spores.add(new Spore(1, Ability.DIVIDER));
+        spores.add(new Spore(2, Ability.PARALYZING));
+        spores.add(new Spore(2, Ability.PARALYZING));
+        spores.add(new Spore(2, Ability.SWIFT));
+        spores.add(new Spore(2, Ability.SWIFT));
+
     }
 
     public String getID() {
         return id;
+    }
+
+    public List<MushroomString> getStrings() {
+        return strings;
+    }
+
+    public List<Spore> getSpores() {
+        return spores;
+    }
+
+    public Tecton getTecton() {
+        return tecton;
     }
 
     /**

@@ -1,0 +1,6 @@
+Csapatnév: Gombász: Rovarász: Teams:
+csap1 (msr + inr) tecton: tek1
+id: str1
+Length: 2
+Mushroombodies: null
+Tectons: tek1

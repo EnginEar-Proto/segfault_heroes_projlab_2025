@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A Mushroomer osztály a gombász gombatestjeinek kezelésére szolgál.
@@ -35,5 +36,9 @@ public class Mushroomer extends Player{
         } catch (Exception e) {
             return null;
         }
+    }
+
+    public List<MushroomBody> getMushroomBodies() {
+        return mushroomBodies;
     }
 }

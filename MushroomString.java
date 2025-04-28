@@ -27,6 +27,18 @@ public class MushroomString {
         return this.id;
     }
 
+    public int getLength(){
+        return this.length;
+    }
+
+    public List<MushroomBody> getMushroomBodies(){
+        return this.mushroomBodies;
+    }
+
+    public List<Tecton> getTectons(){
+        return this.tectons;
+    }
+
     public MushroomString() {
         length = 0;
         this.mushroomBodies = new ArrayList<MushroomBody>();
@@ -36,7 +48,7 @@ public class MushroomString {
     }
 
     public MushroomString(String id, MushroomBody mushroomBody, List<Tecton> tectons, MushroomString parentString) {
-        length = 1;
+        length = 0;
         this.mushroomBodies = new ArrayList<MushroomBody>();
         this.tectons = new ArrayList<Tecton>();
         this.childrenStrings = new ArrayList<MushroomString>();

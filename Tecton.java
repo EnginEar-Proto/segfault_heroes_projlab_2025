@@ -95,6 +95,14 @@ public class Tecton {
         return this.spores;
     }
 
+    public void removeInsect(Insect i) {
+        insects.remove(i);
+    }
+
+    public void addInsect(Insect i) {
+        insects.add(i);
+    }
+
     public boolean getSaveMushroomString() {
         return saveMushroomString;
     }
@@ -203,13 +211,12 @@ public class Tecton {
     */
     public void removeStrings(){
         strings = new ArrayList<>();
-        System.out.println("All strings removed");
     }
     /**
      * A tekton tördelése.
      * @param size - A tekton új mérete 
      */
-    public void Break(int size){
+    public Tecton Break(int size){
         if((this.size - size) > 0) {
             removeStrings();
             int oldSize = this.size;
@@ -227,8 +234,10 @@ public class Tecton {
             newTecton.setNeighbours(neighbours);
             newTecton.neighbours.add(this);
             neighbours.add(newTecton);
-        }else
-            System.out.print("The tectonic plate can't break");
+            return newTecton;
+        }else {
+            return null;
+        }
 
     }
     /**
@@ -332,7 +341,10 @@ public class Tecton {
      * @param tectons - Szomszédos tektonokból álló lista.
      */
     public void setNeighbours(List<Tecton> tectons){
+        neighbours.clear();
+
         for(int i = 0; i < tectons.size(); i++){
+            if (this == tectons.get(i)) continue;
             if(size == 2 && (tectons.get(i).position[1] != position[1] + 2 || tectons.get(i).position[1] != position[1] + 3)){
                 neighbours.add(tectons.get(i));
             }

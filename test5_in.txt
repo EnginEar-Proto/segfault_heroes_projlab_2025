@@ -1,0 +1,9 @@
+newgame -t 1
+csap1
+msr
+inr
+pos-alloc -m csap1 tek1
+start
+growstring str1 tek1 tek1
+growstring str1 tek1 tek2
+sum str1
