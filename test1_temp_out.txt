@@ -1,5 +1,0 @@
-Csapatnév: Gombász: Rovarász: Csapatnév: Gombász: Rovarász: Teams:
-csap1 (msr1 + inr1) tecton: tek1
-Teams:
-csap1 (msr1 + inr1) tecton: tek1
-csap2 (msr2 + inr2) tecton: tek2
