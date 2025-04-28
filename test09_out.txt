@@ -1,0 +1,11 @@
+Csapatnév: Gombász: Rovarász: Teams:
+csap1 (msr1 + inr1) tecton: tek1
+NORMAL
+id: ins0 Ability: NORMALSubstance level: 2
+
+id: tek2
+MuhsroomBody:
+Spores:
+Insects: ins0
+Neighbours: tek3 tek1
+Strings: str1

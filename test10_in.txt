@@ -1,0 +1,20 @@
+newgame -t 2
+csap1
+msr1
+inr1
+csap2
+msr2
+inr2
+pos-alloc -m csap1 tek1
+pos-alloc -m csap2 tek3
+start
+growstring str1 tek1 tek1
+growstring str2 tek3 tek3
+growstring str1 tek1 tek2
+growstring str2 tek3 tek2
+scatterspore mbd0 tek2 PARALYZING
+move ins1 tek2
+growstring str1 tek2 tek3
+eatspore ins1 spr4
+eatInsect str1 tek2
+sum tek2

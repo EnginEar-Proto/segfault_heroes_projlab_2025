@@ -1,0 +1,13 @@
+newgame -t 1
+csap1
+msr1
+inr1
+pos-alloc -m csap1 tek1
+start
+growstring str1 tek1 tek1
+growstring str1 tek1 tek2
+scatterspore mbd0 tek2 NORMAL
+move ins0 tek2
+eatspore ins0 spr1
+sum ins0
+sum tek2

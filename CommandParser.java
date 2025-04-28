@@ -223,7 +223,9 @@ public class CommandParser {
                     return;
                 }
                 else {
-                    team.getMushroomer().addMushroomBody(new MushroomBody("mbd" + currentMushroomBodyIndex++, tecton));
+                    MushroomBody newMbd = new MushroomBody("mbd" + currentMushroomBodyIndex++, tecton);
+                    newMbd.loadBodyWithSpores(0);
+                    team.getMushroomer().addMushroomBody(newMbd);
                     team.getInsecter().addInsect(new Insect("ins" + currentInsectIndex++, 0, Ability.NORMAL, team.getInsecter(), tecton));
                     team.setPositions(tecton, tecton);
                 }
@@ -331,7 +333,7 @@ public class CommandParser {
      * <p>
      *     A parancs felparaméterezve a követező kép néz ki:
      * </p>
-     * {@code scatterspore <gombatest> <cél-tekton> [-t <spóra-típus>]}
+     * {@code scatterspore <gombatest> <cél-tekton> <spóra-típus>}
      *<p>
      *     Ahol az első paraméter a gombatest, amely a spóráját fogja elszórni.
      *     A második paraméter a tekton, ahová a spóra szóródni fog.
@@ -341,8 +343,8 @@ public class CommandParser {
      * @params parameters A parancsnak átadott paraméterek tömbje, amelynek tartalmaznia kell a rovar és a tekton azonosítóját.
      */
     public void handleScatterSpore(String[] parameters) throws IOException {
-        if(parameters.length < 2 || parameters.length > 4) {
-            ioHandler.writeLine("HIBA: Hiányzó paraméterek\nscatterspore <gombatest> <tekton> [-t <típus>]");
+        if(parameters.length != 3) {
+            ioHandler.writeLine("HIBA: Hiányzó paraméterek\nscatterspore <gombatest> <tekton> <típus>");
             return;
         }else{
             MushroomBody mbd = null;
@@ -362,14 +364,11 @@ public class CommandParser {
             }
 
             Tecton desTecton = gm.getTectons().stream().filter(t -> t.getId().equals(parameters[1])).findFirst().get();
-            if(parameters.length == 4 && parameters[3].equals("-t")){
-                Ability ab = Ability.valueOf(parameters[3]);
-                mbd.scatter(desTecton, ab);
+            Ability ab = Ability.valueOf(parameters[2]);
+            ioHandler.writeLine(ab.toString());
 
-                return;
-            }
 
-            mbd.scatter(desTecton);
+            mbd.scatter(desTecton, ab);
         }
     }
 
@@ -647,7 +646,7 @@ public class CommandParser {
                     ioHandler.writeLine("");
                     ioHandler.write("Spores: ");
                     for (Spore s : mdbS.getSpores()) {
-                        ioHandler.write(s.getId() + " ");
+                        ioHandler.write(s.getId() +"(" + s.getAbility().toString() + ")" + " ");
                     }
                     ioHandler.writeLine("");
                 }

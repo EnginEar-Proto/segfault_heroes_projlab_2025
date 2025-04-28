@@ -294,14 +294,14 @@ public class MushroomString {
      */
     public boolean eatParalyzedInsects(Tecton tecton) {
         boolean foundParalyzedInsect = false;
+        List<Insect> removableInsects = new ArrayList<>();
         if(tectons.contains(tecton)) {
             for(Insect insect : tecton.getInsects()) {
                 if(insect.getAbility() == Ability.PARALYZING) {
                     Insecter insecter = insect.getInsecter();
                     insecter.insectEatenByString(insect);
 
-                    tecton.removeInsect(insect);
-                    insect.setTecton(null);
+                    removableInsects.add(insect);
                     //mi legyen a rovarral? hogyan remove stb..?
 
                     if(tecton.getMushroomBody() == null) {
@@ -310,6 +310,10 @@ public class MushroomString {
                     }
                     foundParalyzedInsect = true;
                 }
+            }
+            for (Insect insect : removableInsects) {
+                tecton.removeInsect(insect);
+                insect.setTecton(null);
             }
         }
         return foundParalyzedInsect;

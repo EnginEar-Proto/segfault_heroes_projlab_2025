@@ -1,0 +1,12 @@
+Csapatnév: Gombász: Rovarász: Csapatnév: Gombász: Rovarász: Teams:
+csap1 (msr1 + inr1) tecton: tek1
+Teams:
+csap1 (msr1 + inr1) tecton: tek1
+csap2 (msr2 + inr2) tecton: tek3
+PARALYZING
+id: tek2
+MuhsroomBody: str1body
+Spores:
+Insects:
+Neighbours: tek3 tek1
+Strings: str1 str2

@@ -91,7 +91,6 @@ public class Insect {
      * @param spore A spóra, amelyet a rovar elfogyaszt.
      */
     public void eat(Spore spore){
-        System.out.println("Insect eats spore");
         spore.getEaten(this);
     }
 
@@ -125,7 +124,6 @@ public class Insect {
      * @param substance A hozzáadandó anyagmennyiség.
      */
     public void addSubstance(int substance){
-        System.out.println("Substance level added to insect");
         this.substance += substance;
     }
 }

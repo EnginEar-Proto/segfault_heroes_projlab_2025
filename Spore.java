@@ -35,7 +35,6 @@ public class Spore {
      * A spóra tápanyag tartalmával nő a rovar tápanyag tartalma.
      */
     public void getEaten(Insect insect) {
-        System.out.println("Spore gets eaten, type: " + this.ability);
         insect.addSubstance(substance);
         insect.setAbility(ability);
         if(insect.getAbility().equals(Ability.DIVIDER)){

@@ -24,22 +24,26 @@ echo ====== TEST RUNNER ======
 echo Available tests:
 for /L %%i in (0,1,%total%) do (
     if defined test[%%i] (
-        echo %%i: !test[%%i]!
+        set /a displayIndex=%%i+1
+        echo !displayIndex!: !test[%%i]!
     )
 )
+
 set /p choice=Type a test number, 'all' to run all, or 'exit' to quit:
 
 if /I "%choice%"=="exit" goto :eof
 
 if /I "%choice%"=="all" goto run_all
 
-:: Ervenyesseg ellenorzese
-if not defined test[%choice%] (
+:: Ellenőrzés + 1-el csökkentés
+set /a choiceIndex=%choice%-1
+
+if not defined test[%choiceIndex%] (
     echo Invalid selection.
     goto menu
 )
 
-call :run_single %choice%
+call :run_single %choiceIndex%
 goto menu
 
 :: Egy teszt futtatasa
@@ -59,7 +63,7 @@ if errorlevel 1 (
     echo [PASS] Test passed: !basename!
 )
 
-::del "!tempfile!" > nul 2>&1
+del "!tempfile!" > nul 2>&1
 goto :eof
 
 :: Osszes teszt futtatasa
