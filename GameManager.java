@@ -224,8 +224,15 @@ public class GameManager {
     private boolean checkActionCorrectness(boolean isMushroomer, String command) throws IOException{
         String action = command.split(" ")[0];
         
-        if((!isMushroomer && checkMushroomerAction(action)) || (isMushroomer && !checkMushroomerAction(action))) 
+        if((!isMushroomer && checkMushroomerAction(action)) || (isMushroomer && !checkMushroomerAction(action))) {
+            ioHandler.writeLine("A " +
+            (isMushroomer ? "gombász" : "rovarász") +
+            " nem futtathatja a(z) " +
+            action +
+            " parancsot!"
+            );
             return false;
+        }
         else
             return commandParser.executeCommand(command);
     }
