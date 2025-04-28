@@ -217,6 +217,34 @@ public class GameManager {
         }
     }
 
+    private boolean checkMushroomerAction(String action){
+        return List.of("growmushroombody", "growstring", "scatterspore", "eatinsect", "branch").contains(action);
+    }
+
+    private boolean checkActionCorrectness(boolean isMushroomer, String command) throws IOException{
+        String action = command.split(" ")[0];
+        
+        if((!isMushroomer && checkMushroomerAction(action)) || (isMushroomer && !checkMushroomerAction(action))) {
+            ioHandler.writeLine("A " +
+            (isMushroomer ? "gombász" : "rovarász") +
+            " nem futtathatja a(z) " +
+            action +
+            " parancsot!"
+            );
+            return false;
+        }
+        else
+            return commandParser.executeCommand(command);
+    }
+
+    private void PlayerStep(boolean isMushroomer) throws IOException{
+        String command = ioHandler.readLine();
+
+        while (!checkActionCorrectness(isMushroomer, command)) {
+            command = ioHandler.readLine();
+        }
+    }
+
     /**
      * A játék fő ciklusa.
      * A parancsokat az inputHandler-ből olvassa, és a commandParser dolgozza fel.
@@ -229,25 +257,14 @@ public class GameManager {
                 ioHandler.writeLine("A " + currentTeam.getName() + " csapat következik.");
                 ioHandler.writeLine("A " + currentTeam.getName() + " csapat gombásza következik.");
                 try {
-
-                    String command = ioHandler.readLine();
-                    boolean commandOK = commandParser.executeCommand(command);
-                    while (!commandOK) {
-                        command = ioHandler.readLine();
-                        commandOK = commandParser.executeCommand(command);
-                    }
+                    PlayerStep(true);
                 } catch (IOException e) {
                     ioHandler.writeLine("Hiba a parancs beolvasása közben: " + e.getMessage());
                 }
 
                 ioHandler.writeLine("A " + currentTeam.getName() + " csapat rovarásza következik:");
                 try {
-                    String command = ioHandler.readLine();
-                    boolean commandOK = commandParser.executeCommand(command);
-                    while (!commandOK) {
-                        command = ioHandler.readLine();
-                        commandOK = commandParser.executeCommand(command);
-                    }
+                    PlayerStep(false);
                 } catch (IOException e) {
                     ioHandler.writeLine("Hiba a parancs beolvasása közben: " + e.getMessage());
                 }
