@@ -858,6 +858,7 @@ public class CommandParser {
             if (insect != null && mushroomString != null && tecton1 != null && tecton2 != null) {
                 int res = insect.sabotageString(mushroomString, tecton1, tecton2);
                 if (res == -1) ioHandler.writeLine("HIBA: A tektonok nem szomszédosak.");
+                else ioHandler.writeLine("Rovar elvágta a fonalat");
             }
         }
         else {

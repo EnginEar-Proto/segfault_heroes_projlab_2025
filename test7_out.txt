@@ -8,6 +8,7 @@ Length: 2
 Mushroombodies:
 Tectons: tek2 tek3
 
+Rovar elvágta a fonalat
 id: str2
 Length: 1
 Mushroombodies:

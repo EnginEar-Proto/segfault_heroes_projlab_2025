@@ -117,7 +117,6 @@ public class Insect {
      * @param string A MushroomString objektum, amelyet el kell vágni.
      */
     public int sabotageString(MushroomString string, Tecton t1, Tecton t2){
-        System.out.println("Insect cuts string");
         return string.cut(t1, t2);
     }
 
