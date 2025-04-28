@@ -4,7 +4,9 @@ id: tek2
 Spores:
 Insects:
 Neighbours: tek2_b
+Strings:
 id: tek2_b
 Spores:
 Insects:
 Neighbours: tek2
+Strings:
