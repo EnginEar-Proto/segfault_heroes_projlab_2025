@@ -433,10 +433,10 @@ public class CommandParser {
         .filter(tec -> tec.getId().equals(parameters[0])).findFirst().get();
 
         if (t.growBody()) {
-            ioHandler.writeLine("New mushroom body on this tecton");
+            ioHandler.writeLine("Új Gombatest a tektonon");
         }
         else {
-            ioHandler.writeLine("There is something on this tecton");
+            ioHandler.writeLine("Gombatest növesztés nem lehetséges ezen a tektonon.");
         }
     }
 

@@ -184,15 +184,14 @@ public class Tecton {
     }
     /**
      * Új gombatestet növeszt arra a tektonra, amelyen a függvényt meghívták.
+     * Visszatér azzal, hogy sikeres volt e növesztés.
      */
     public boolean growBody(){
         if(this.mushroomBody == null && this.spores.size() > 0 && this.size > 1 && this.strings.size() > 0){
             MushroomBody newBody = new MushroomBody(id + "body", this);
-            System.out.println("New MushroomBody");
             this.mushroomBody = newBody;
             return true;
         }else{
-            System.out.println("No new MushroomBody");
             return false;
         }
 
