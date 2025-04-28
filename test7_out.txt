@@ -5,11 +5,15 @@ csap1 (msr1 + inr1) tecton: tek1
 csap2 (msr2 + inr2) tecton: tek3
 id: str2
 Length: 2
+Parent String:
+Children Strings:
 Mushroombodies:
 Tectons: tek2 tek3
 
 Rovar elvágta a fonalat
 id: str2
 Length: 1
+Parent String:
+Children Strings:
 Mushroombodies:
 Tectons: tek2

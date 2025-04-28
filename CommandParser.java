@@ -524,6 +524,9 @@ public class CommandParser {
                 }
                 if (searched != null) {
                     ioHandler.writeLine("id: " + searched.getId());
+                    ioHandler.write("MuhsroomBody: ");
+                    if (searched.getMushroomBody() != null) ioHandler.writeLine(searched.getMushroomBody().getID());
+                    else ioHandler.writeLine("");
                     ioHandler.write("Spores: ");
                     for (Spore s : searched.getSpores()) {
                         ioHandler.write(s.getId() + " ");

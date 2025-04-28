@@ -1,11 +1,13 @@
 Csapatnév: Gombász: Rovarász: Teams:
 csap1 (msr + inr) tecton: tek1
 id: tek2
+MuhsroomBody:
 Spores:
 Insects:
 Neighbours: tek2_b
 Strings:
 id: tek2_b
+MuhsroomBody:
 Spores:
 Insects:
 Neighbours: tek2
