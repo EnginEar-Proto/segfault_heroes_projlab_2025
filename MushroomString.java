@@ -181,7 +181,7 @@ public class MushroomString {
         newString.length = newString.mushroomBodies.size();
 
         for(int i = index2; i < tectons.size(); i++) {
-            tectons.removeLast();
+            tectons.remove(tectons.size()-1);
         }
 
         if(mushroomBodies.isEmpty()) timeLeft = 2;

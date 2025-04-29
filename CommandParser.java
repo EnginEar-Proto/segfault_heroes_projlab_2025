@@ -51,7 +51,7 @@ public class CommandParser {
         String action = parts[0].toLowerCase();
 
         List<String> paramsAsList = new ArrayList<>(Arrays.asList(parts));
-        paramsAsList.removeFirst();
+        paramsAsList.remove(0);
         String[] parameters = paramsAsList.toArray(new String[paramsAsList.size()]);
 
         switch (action) {

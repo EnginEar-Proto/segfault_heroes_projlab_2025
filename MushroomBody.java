@@ -79,10 +79,10 @@ public class MushroomBody {
         }
         Spore sp = null;
         for(int i = 0; i < distance-1; i++) {
-            sp = givenSpores.getFirst();
+            sp = givenSpores.get(0);
             reduceSpore(sp);
         }
-        sp = givenSpores.getFirst();
+        sp = givenSpores.get(0);
         toScatter.scatterSpore(sp);
         return spores.size();
     }

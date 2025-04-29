@@ -69,7 +69,7 @@ public class Team {
      */
     public void setPositions(Tecton t1, Tecton t2) {
         if(insecter.getInsects().size()>0) {
-            t1.setBugPosition(insecter.getInsects().getFirst());
+            t1.setBugPosition(insecter.getInsects().get(0));
         }
         t2.setMushroomBody(mushroomer.getMushroomBody(0));
         startTecton = t1;
