@@ -7,6 +7,7 @@ public class Team {
     private int score;
     private String name;
     private Tecton startTecton;
+    private TeamColor color;
 
     public Team() {}
 
@@ -16,6 +17,7 @@ public class Team {
         this.mushroomer = mushroomer;
     }
 
+    public TeamColor getColor() { return color; }
     /**
      * Visszaadja a csapat kezdő tektonját.
      * @return a csapat kezdő tektonja.
