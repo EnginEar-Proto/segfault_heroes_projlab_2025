@@ -1,7 +1,7 @@
 import java.awt.*;
 import java.awt.Color;
 
-public class Board {
+public class Board implements DrawableInterface {
     /**
      * Sorok száma.
      */
@@ -23,9 +23,10 @@ public class Board {
     /**
      * A rajzolásért felelős metódus.
      * Felváltva rajzolja a sötét és világos mezőket.
-     * @param graphics2D ez az objektum rajzolja a táblát
+     * @param g ez az objektum rajzolja a táblát
      */
-    public void draw(Graphics2D graphics2D) {
+    public void draw(Graphics g) {
+        Graphics2D graphics2D = (Graphics2D) g;
         graphics2D.setColor(new Color(154, 154, 154));
         graphics2D.fillRect(0, 0, SQUARE_SIZE * 15, SQUARE_SIZE * 15);
     }

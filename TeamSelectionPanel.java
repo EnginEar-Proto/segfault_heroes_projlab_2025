@@ -9,8 +9,8 @@ public class TeamSelectionPanel extends JPanel {
      */
     public TeamSelectionPanel() {
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-        setPreferredSize(new Dimension(600, 500));
-        setMaximumSize(new Dimension(600, 500));
+        setPreferredSize(new Dimension(300, 250));
+        setMaximumSize(new Dimension(300, 250));
 
         add(Box.createRigidArea(new Dimension(0, 20)));
     }
@@ -27,10 +27,8 @@ public class TeamSelectionPanel extends JPanel {
      * @return Stringek tömbje, mely tartalmazza a playerek nevét.
      */
     public String[] requestPlayerNames(JFrame frame, int teamNumber) {
-        JLabel titleLabel = new JLabel("Az" + teamNumber + ". csapat adatai");
+        JLabel titleLabel = new JLabel("Az " + teamNumber + ". csapat adatai");
         titleLabel.setFont(new Font("Arial", Font.PLAIN, 30));
-        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(titleLabel);
 
         JLabel teamLabel = new JLabel("Csapatnév:");
         JTextField teamField = new JTextField();
@@ -39,6 +37,7 @@ public class TeamSelectionPanel extends JPanel {
         JLabel insecterLabel = new JLabel("Insecter:");
         JTextField insecterField = new JTextField();
 
+        add(titleLabel);
         add(teamLabel);
         add(teamField);
         add(mushroomerLabel);
@@ -47,7 +46,7 @@ public class TeamSelectionPanel extends JPanel {
         add(insecterField);
 
         while (true) {
-            int result = JOptionPane.showConfirmDialog(frame, this, "Enter Team and Player Names", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+            int result = JOptionPane.showConfirmDialog(this, this, "Enter Team and Player Names", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
             if (result != JOptionPane.OK_OPTION) {
                 return null;

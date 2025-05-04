@@ -16,6 +16,6 @@ public class InsectView implements DrawableInterface {
         System.out.println("rovar rajzolva");
         int[] pos = model.getTecton().getPosition();
         Graphics2D g2d = (Graphics2D) g;
-        if (image != null) g2d.drawImage(image, pos[0], pos[1], null);
+        if (image != null) g2d.drawImage(image, pos[0] * Board.SQUARE_SIZE, pos[1] * Board.SQUARE_SIZE, null);
     }
 }

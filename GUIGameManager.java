@@ -14,12 +14,14 @@ public class GUIGameManager {
     private int laps = 1;
     private Team currentTeam;
     private boolean gameStarted;
+    private Board board;
 
 
     public GUIGameManager() {
         this.tectons = new ArrayList<>();
         this.teams = new ArrayList<>();
-
+        board = new Board();
+        modelViewers.add(board);
         gameStarted = false;
     }
 
