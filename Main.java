@@ -12,7 +12,7 @@ import java.io.IOException;
  * 2 argumentum megadása esetén, ha "GUI" paraméter van megadva, akkor elindul a grafikus interfésszel a játék, a második paraméterként megadott csapatszámmal, ami 2-től 5 lehet.
 */
 public class Main{
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         if (args[0].equals("GUI") && args.length == 2) {
             if (Integer.parseInt(args[1]) < 2 || Integer.parseInt(args[1]) > 5){
                 System.out.println("Rossz csapat szám.");

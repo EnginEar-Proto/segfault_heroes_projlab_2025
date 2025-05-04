@@ -65,6 +65,10 @@ public class Tecton {
 
     private int[] position = new int[2];
 
+    public int[] getPosition() {
+        return position;
+    }
+
     private String id;
 
     public Tecton(String id, int size, boolean saveMushroomString, int x, int y) {

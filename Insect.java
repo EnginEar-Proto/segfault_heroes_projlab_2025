@@ -1,4 +1,5 @@
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Az Insect osztály egy rovart reprezentál, amely különböző műveleteket hajthat végre,

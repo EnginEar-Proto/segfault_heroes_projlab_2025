@@ -2,9 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 
 public class MainFrame extends JFrame {
-    private GamePanel gamePanel;
+    private GamePanel gamePanel = new GamePanel(new GUIGameManager());
 
     private static final int size = 800;
 
@@ -21,8 +22,12 @@ public class MainFrame extends JFrame {
         setLocation(x, y);
 
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        addWindowListener(new CheckersWindowAdapter());
+        addWindowListener(new FungoriumWindowAdapter());
 
+        add(gamePanel);
+        setVisible(true);
+        gamePanel.setVisible(true);
+        repaint();
     }
 
     /**
@@ -30,7 +35,7 @@ public class MainFrame extends JFrame {
      * Bezárás esetén megkérdezi a felhasználót, hogy valóban be akarja-e zárni az ablakot.
      * Ha igen, akkor bezárja az ablakot, ha nem, akkor nem csinál semmit.
      */
-    private static class CheckersWindowAdapter extends WindowAdapter {
+    private static class FungoriumWindowAdapter extends WindowAdapter {
         @Override
         public void windowClosing(WindowEvent e) {
             int result = JOptionPane.showConfirmDialog(
@@ -50,13 +55,24 @@ public class MainFrame extends JFrame {
         }
     }
 
-    public void startNewGame(int teamCount) {
+    public void startNewGame(int teamCount) throws IOException {
         TeamSelectionPanel teamSelectionPanel = new TeamSelectionPanel();
         add(teamSelectionPanel);
         for (int i = 0; i < teamCount; i++) {
-            teamSelectionPanel.requestPlayerNames(this);
+            String[] names = teamSelectionPanel.requestPlayerNames(this, i + 1);
+            Team team = new Team(names[0], new Insecter(names[1]), new Mushroomer(names[2]));
+            gamePanel.getGuiGameManager().addTeam(team);
         }
         remove(teamSelectionPanel);
+        clearFrame();
+        add(gamePanel);
+        gamePanel.setVisible(true);
+        gamePanel.getGuiGameManager().initializeMap();
+        gamePanel.getGuiGameManager().setStartingPosition();
+        revalidate();
+        repaint();
+        gamePanel.revalidate();
+        gamePanel.repaint();
     }
 
     /**
@@ -66,5 +82,9 @@ public class MainFrame extends JFrame {
         getContentPane().removeAll();
         revalidate();
         repaint();
+    }
+
+    protected void paintComponent(Graphics g) {
+        gamePanel.paintComponent(g);
     }
 }

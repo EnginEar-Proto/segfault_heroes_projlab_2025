@@ -12,12 +12,6 @@ public class TeamSelectionPanel extends JPanel {
         setPreferredSize(new Dimension(600, 500));
         setMaximumSize(new Dimension(600, 500));
 
-
-        JLabel titleLabel = new JLabel("Select Teams");
-        titleLabel.setFont(new Font("Arial", Font.PLAIN, 30));
-        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        add(titleLabel);
-
         add(Box.createRigidArea(new Dimension(0, 20)));
     }
 
@@ -32,7 +26,11 @@ public class TeamSelectionPanel extends JPanel {
      * @param frame A frame, amelyen megjelenik.
      * @return Stringek tömbje, mely tartalmazza a playerek nevét.
      */
-    public String[] requestPlayerNames(JFrame frame) {
+    public String[] requestPlayerNames(JFrame frame, int teamNumber) {
+        JLabel titleLabel = new JLabel("Az" + teamNumber + ". csapat adatai");
+        titleLabel.setFont(new Font("Arial", Font.PLAIN, 30));
+        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        add(titleLabel);
 
         JLabel teamLabel = new JLabel("Csapatnév:");
         JTextField teamField = new JTextField();
@@ -58,6 +56,13 @@ public class TeamSelectionPanel extends JPanel {
             String teamName = teamField.getText();
             String mushroomer = mushroomerField.getText().trim();
             String insecter = insecterField.getText().trim();
+            remove(teamLabel);
+            remove(teamField);
+            remove(mushroomerLabel);
+            remove(mushroomerField);
+            remove(insecterLabel);
+            remove(insecterField);
+            remove(titleLabel);
             return new String[]{teamName, mushroomer, insecter};
         }
     }
