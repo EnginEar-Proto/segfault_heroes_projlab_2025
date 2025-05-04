@@ -194,7 +194,7 @@ public class GUIGameManager {
             team.setPositions(rtecton, rtecton);
             Insect ins = new Insect("ins" + currentInsectIndex++, 0, Ability.NORMAL, team.getInsecter(), rtecton);
             team.getInsecter().getInsects().add(ins);
-            InsectView insView = new InsectView(ins);
+            InsectView insView = new InsectView(ins, Color.BLUE);
             modelViewers.add(insView);
             MushroomBody mush = new MushroomBody("mbd" + currentMushroomBodyIndex++, rtecton);
             mush.loadBodyWithSpores(currentSporeIndex);

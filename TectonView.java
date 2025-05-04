@@ -3,15 +3,12 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class MushroomBodyView implements DrawableInterface{
-    private MushroomBody model;
+public class TectonView {
+    private Tecton model;
     private transient Image image;
-    private Color color;
 
-    public MushroomBodyView(MushroomBody model, Color c) throws IOException {
+    public TectonView(Tecton model) throws IOException {
         this.model = model;
-        color = c;
-        //TODO : color szerinti betöltés
         image = ImageIO.read(ClassLoader.getSystemResourceAsStream("insect.png")).getScaledInstance(50, 50, BufferedImage.SCALE_SMOOTH);
     }
 

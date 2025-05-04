@@ -3,12 +3,12 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-public class InsectView implements DrawableInterface {
-    private Insect model;
+public class SporeView {
+    private Spore model;
     private transient Image image;
     private Color color;
 
-    public InsectView(Insect model, Color c) throws IOException {
+    public SporeView(Spore model, Color c) throws IOException {
         this.model = model;
         color = c;
         //TODO : color szerinti betöltés
@@ -16,9 +16,6 @@ public class InsectView implements DrawableInterface {
     }
 
     public void draw(Graphics g) {
-        System.out.println("rovar rajzolva");
-        int[] pos = model.getTecton().getPosition();
         Graphics2D g2d = (Graphics2D) g;
-        if (image != null) g2d.drawImage(image, pos[0] * Board.SQUARE_SIZE, pos[1] * Board.SQUARE_SIZE, null);
     }
 }
