@@ -54,7 +54,8 @@ public class GUIGameManager {
         return teams.toArray(new Team[teams.size()]);
     }
 
-    private List<DrawableInterface> modelViewers = new ArrayList<>();
+    public static List<DrawableInterface> modelViewers = new ArrayList<>();
+
     /**
      * Törli az aktuálisan játszó csapatokat.
      */
