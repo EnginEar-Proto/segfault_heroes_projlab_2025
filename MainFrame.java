@@ -6,6 +6,7 @@ import java.io.IOException;
 
 public class MainFrame extends JFrame {
     private GamePanel gamePanel = new GamePanel(new GUIGameManager());
+    private IOPanel ioPanel = new IOPanel();
 
     private static final int size = 800;
 
