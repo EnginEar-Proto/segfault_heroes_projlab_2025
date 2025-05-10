@@ -191,7 +191,7 @@ public class GameManager {
     public int setStartingPosition(int i, int m, int s) throws IOException {
         int a = i;
         if (tectons.size() * 2 < tectons.size()) {
-            ioHandler.writeLine("A kezőpozíciók nem oszthatóak ki, nem elegendő a tektonok száma");
+            ioHandler.writeLine("A kezdőpozíciók nem oszthatóak ki, nem elegendő a tektonok száma");
         }
         Random rand = new Random();
         ArrayList<Tecton> usedTectons = new ArrayList<>();

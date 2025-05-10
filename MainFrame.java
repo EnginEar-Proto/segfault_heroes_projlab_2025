@@ -66,14 +66,22 @@ public class MainFrame extends JFrame {
         }
         remove(teamSelectionPanel);
         clearFrame();
+
         add(gamePanel);
         gamePanel.setVisible(true);
         gamePanel.getGuiGameManager().initializeMap();
         gamePanel.getGuiGameManager().setStartingPosition();
-        revalidate();
-        repaint();
         gamePanel.revalidate();
         gamePanel.repaint();
+
+        ioPanel.setVisible(true);
+        ioPanel.updateState(1, gamePanel.getGuiGameManager().getTeams()[0].getName(), 
+        "Mushroomer",
+        0,
+        gamePanel.getGuiGameManager().getTeams()[0].getMushroomer().getMushroomBodies().size());
+        
+        revalidate();
+        repaint();
     }
 
     /**

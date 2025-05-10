@@ -12,6 +12,8 @@ public class InsectView implements DrawableInterface {
         this.model = model;
         color = c;
         //TODO : color szerinti betöltés
+        // Itt a színes betötésnél nem lenne egyszerűbb, ha hozzáfűzzük a fájl eléréshez a csaptindexet?
+        // Ahhoz viszont szükséges van arra, hogy a rovarász mely csapthoz tartozása kikövetkeztethető legyen.
         image = ImageIO.read(ClassLoader.getSystemResourceAsStream("insect.png")).getScaledInstance(50, 50, BufferedImage.SCALE_SMOOTH);
     }
 
