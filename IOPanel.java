@@ -43,13 +43,22 @@ public class IOPanel extends JPanel {
         add(operationsLabel);
 
         cutButton = createButton("Fonál Vágás");
+        cutButton.setIcon(new ImageIcon("cut.png"));
         consumeButton = createButton("Spóra fogyasztás");
+        consumeButton.setIcon(new ImageIcon("spore1.png"));
+
         moveButton = createButton("Rovar mozgatása");
         endTurnButton = createButton("Lépés tovább adása");
 
         growStringButton = createButton("Fonál növesztés");
+        growMushroomBodyButton.setIcon(new ImageIcon("growstring.png"))
+        ;
         branchStringButton = createButton("Fonál ágaztatás");
+        branchStringButton.setIcon(new ImageIcon("branch.png"));
+
         growMushroomBodyButton = createButton("Gombatest növesztés");
+        growMushroomBodyButton.setIcon(new ImageIcon("growbody.png"));
+
         eatInsectsButton = createButton("Rovar evés");
         scatterSporesButton = createButton("Spóra szórás");
 
