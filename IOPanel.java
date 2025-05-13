@@ -132,6 +132,9 @@ public class IOPanel extends JPanel {
             insecterActionButtons.forEach(btn -> btn.setVisible(false));
             mushroomerActionButtons.forEach(btn -> btn.setVisible(false));
         }
+
+        repaint();
+        revalidate();
     }
 
     // Eseménykezelők beállítása
