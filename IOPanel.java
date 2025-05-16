@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class IOPanel extends JPanel {
     private JLabel roundLabel;
@@ -19,9 +21,14 @@ public class IOPanel extends JPanel {
     private JButton eatInsectsButton;
     private JButton scatterSporesButton;
 
+    //TODO: Hozzáadni az osztálydiagrammhoz
+    private ArrayList<JButton> mushroomerActionButtons, insecterActionButtons;
+
     public IOPanel() {
+        mushroomerActionButtons = new ArrayList<>();
+        insecterActionButtons = new ArrayList<>();
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBackground(new Color(51, 70, 95));
+        setBackground(new Color(67, 87, 112));
         setForeground(Color.WHITE);
         setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
@@ -62,6 +69,24 @@ public class IOPanel extends JPanel {
         eatInsectsButton = createButton("Rovar evés");
         scatterSporesButton = createButton("Spóra szórás");
 
+
+        mushroomerActionButtons.addAll(List.of(
+            growStringButton,
+            branchStringButton,
+            growMushroomBodyButton,
+            eatInsectsButton,
+            scatterSporesButton,
+            cutButton,
+            endTurnButton
+        ));
+
+        insecterActionButtons.addAll(List.of(
+            cutButton,
+            consumeButton,
+            moveButton,
+            endTurnButton
+        ));
+
         add(growStringButton);
         add(branchStringButton);
         add(growMushroomBodyButton);
@@ -96,6 +121,20 @@ public class IOPanel extends JPanel {
         teamLabel.setText("Csapat: " + team);
         roleLabel.setText("Szerep: " + role);
         statsLabel.setText("<html>Csapat statisztikák<br>Tápanyag pontok: " + nutrients + "<br>Gombatestek: " + bodies + "</html>");
+    
+        if(role.equals("Mushroomer")){
+            mushroomerActionButtons.forEach(btn -> btn.setVisible(true));
+            insecterActionButtons.forEach(btn -> btn.setVisible(false));
+        }else if(role.equals("Insecter")){
+            insecterActionButtons.forEach(btn -> btn.setVisible(true));
+            mushroomerActionButtons.forEach(btn -> btn.setVisible(false));
+        }else{
+            insecterActionButtons.forEach(btn -> btn.setVisible(false));
+            mushroomerActionButtons.forEach(btn -> btn.setVisible(false));
+        }
+
+        repaint();
+        revalidate();
     }
 
     // Eseménykezelők beállítása
