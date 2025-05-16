@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -143,15 +144,29 @@ public class IOPanel extends JPanel {
 
     public void setCutAction(ActionListener l) { cutButton.addActionListener(l); }
     public void setConsumeAction(ActionListener l) { consumeButton.addActionListener(l); }
-    public void setMoveAction(ActionListener l) { moveButton.addActionListener(l); }
-    //panel.setMoveAction(e -> {})
+    /*public void setMoveAction(ActionListener l) {
+        moveButton.addActionListener(l);
+        Insect ins = null;
+        Tecton tec = null;
+        panel.addMouseListener(new MouseAdapter() {
+
+        });
+
+
+    }*/
+
+
 
     public void setEndTurnAction(ActionListener l) { endTurnButton.addActionListener(l); }
 
     public void setGrowStringAction(ActionListener l) { growStringButton.addActionListener(l); }
     public void setBranchStringAction(ActionListener l) { branchStringButton.addActionListener(l); }
+
+    //Kopi
     public void setGrowMushroomBodyAction(ActionListener l) { growMushroomBodyButton.addActionListener(l); }
+    //Kopi
     public void setEatInsectsAction(ActionListener l) { eatInsectsButton.addActionListener(l); }
+    //Kopi
     public void setscatterSporesAction(ActionListener l) { scatterSporesButton.addActionListener(l); }
 }
 
