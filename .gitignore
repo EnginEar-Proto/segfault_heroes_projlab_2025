@@ -2,3 +2,5 @@ out
 .idea
 *.class
 *_temp_out.txt
+*.pdf
+*.zip

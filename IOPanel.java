@@ -51,7 +51,7 @@ public class IOPanel extends JPanel {
         endTurnButton = createButton("Lépés tovább adása");
 
         growStringButton = createButton("Fonál növesztés");
-        growMushroomBodyButton.setIcon(new ImageIcon("growstring.png"))
+        growStringButton.setIcon(new ImageIcon("growstring.png"))
         ;
         branchStringButton = createButton("Fonál ágaztatás");
         branchStringButton.setIcon(new ImageIcon("branch.png"));
