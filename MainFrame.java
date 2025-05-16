@@ -6,16 +6,18 @@ import java.io.IOException;
 
 public class MainFrame extends JFrame {
     private GamePanel gamePanel = new GamePanel(new GUIGameManager());
-    private IOPanel ioPanel = new IOPanel();
+    private IOPanel ioPanel = new IOPanel(gamePanel);
 
-    private static final int size = 800;
+    private static final int width = 1143;
+    private static final int height = 909;
 
     public MainFrame(String title) {
         super(title);
 
-        setMinimumSize(new Dimension(size, size));
-        setSize(size, size);
+        setMinimumSize(new Dimension(width, height));
+        setSize(width, height);
         setResizable(true);
+        setLayout(new BorderLayout());
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         int x = (screenSize.width - getWidth()) / 2;
@@ -61,13 +63,14 @@ public class MainFrame extends JFrame {
         add(teamSelectionPanel);
         for (int i = 0; i < teamCount; i++) {
             String[] names = teamSelectionPanel.requestPlayerNames(this, i + 1);
-            Team team = new Team(names[0], new Insecter(names[1]), new Mushroomer(names[2]));
+            Team team = new Team(names[0], new Insecter(names[1]), new Mushroomer(names[2]), TeamColor.values()[i]);
             gamePanel.getGuiGameManager().addTeam(team);
         }
         remove(teamSelectionPanel);
         clearFrame();
 
-        add(gamePanel);
+        add(gamePanel, BorderLayout.CENTER);
+        add(ioPanel,  BorderLayout.EAST);
         gamePanel.setVisible(true);
         gamePanel.getGuiGameManager().initializeMap();
         gamePanel.getGuiGameManager().setStartingPosition();

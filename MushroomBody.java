@@ -20,16 +20,34 @@ public class MushroomBody {
     }
 
     public int loadBodyWithSpores(int startIndex) {
-        spores.add(new Spore("spr" + startIndex++,1, Ability.DIVIDER));
-        spores.add(new Spore("spr" + startIndex++,2, Ability.NORMAL));
-        spores.add(new Spore("spr" + startIndex++,3, Ability.NORMAL));
-        spores.add(new Spore("spr" + startIndex++,1, Ability.DIVIDER));
-        spores.add(new Spore("spr" + startIndex++,2, Ability.PARALYZING));
-        spores.add(new Spore("spr" + startIndex++,2, Ability.PARALYZING));
-        spores.add(new Spore("spr" + startIndex++,2, Ability.SWIFT));
-        spores.add(new Spore("spr" + startIndex++,2, Ability.SWIFT));
-
+        Spore s1 = new Spore("spr" + startIndex++,1, Ability.DIVIDER);
+        Spore s2 = new Spore("spr" + startIndex++,2, Ability.NORMAL);
+        Spore s3 = new Spore("spr" + startIndex++,3, Ability.NORMAL);
+        Spore s4 = new Spore("spr" + startIndex++,1, Ability.DIVIDER);
+        Spore s5 = new Spore("spr" + startIndex++,2, Ability.PARALYZING);
+        Spore s6 = new Spore("spr" + startIndex++,2, Ability.PARALYZING);
+        Spore s7 = new Spore("spr" + startIndex++,2, Ability.SWIFT);
+        Spore s8 = new Spore("spr" + startIndex++,2, Ability.SWIFT);
+        spores.add(s1);
+        spores.add(s2);
+        spores.add(s3);
+        spores.add(s4);
+        spores.add(s5);
+        spores.add(s6);
+        spores.add(s7);
+        spores.add(s8);
         return startIndex;
+    }
+
+    public void initializeSporeViews(TeamColor color) {
+        for (Spore s: spores) {
+            try {
+                SporeView sv = new SporeView(s, color);
+                GUIGameManager.modelViewers.add(sv);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public String getID() {

@@ -138,7 +138,7 @@ public class CommandParser {
                 ioHandler.write("Rovarász: ");
                 player2 = ioHandler.readLine();
 
-                Team team = new Team(teamName, new Insecter(player2), new Mushroomer(player1));
+                Team team = new Team(teamName, new Insecter(player2), new Mushroomer(player1), TeamColor.RED);
                 gm.addTeam(team);
             }
         }
@@ -152,7 +152,7 @@ public class CommandParser {
                 ioHandler.write("Rovarász: ");
                 player2 = ioHandler.readLine();
 
-                Team team = new Team(teamName, new Insecter(player2), new Mushroomer(player1));
+                Team team = new Team(teamName, new Insecter(player2), new Mushroomer(player1), TeamColor.RED);
                 gm.addTeam(team);
             }
             return true;

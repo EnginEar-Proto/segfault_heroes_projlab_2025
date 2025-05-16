@@ -11,10 +11,11 @@ public class Team {
 
     public Team() {}
 
-    public Team(String name, Insecter insecter, Mushroomer mushroomer) {
+    public Team(String name, Insecter insecter, Mushroomer mushroomer, TeamColor color) {
         this.name = name;
         this.insecter = insecter;
         this.mushroomer = mushroomer;
+        this.color = color;
     }
 
     public TeamColor getColor() { return color; }

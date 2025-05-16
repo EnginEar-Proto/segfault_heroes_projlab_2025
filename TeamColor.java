@@ -1,3 +1,3 @@
 public enum TeamColor {
-    RED, BlUE, YELLOW, GREEN, PINK;
+    RED, BLUE, YELLOW, GREEN, PINK;
 }

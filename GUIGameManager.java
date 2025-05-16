@@ -110,7 +110,7 @@ public class GUIGameManager {
         tectons.add(tec6);
         Tecton tec7 = new Tecton("tek7", 3, false, 6, 7);
         tectons.add(tec7);
-        Tecton tec8 = new Tecton("tek8", 2, true, 8, 8);
+        Tecton tec8 = new Tecton("tek8", 1, true, 8, 8);
         tectons.add(tec8);
         Tecton tec9 = new Tecton("tek9", 2, true, 9, 8);
         tectons.add(tec9);
@@ -146,6 +146,63 @@ public class GUIGameManager {
         tectons.add(tec24);
         Tecton tec25 = new Tecton("tek25", 1, false, 11, 9);
         tectons.add(tec25);
+
+        try{
+            TectonView tv1 = new TectonView(tec1);
+            modelViewers.add(tv1);
+            TectonView tv2 = new TectonView(tec2);
+            modelViewers.add(tv2);
+            TectonView tv3 = new TectonView(tec3);
+            modelViewers.add(tv3);
+            TectonView tv4 = new TectonView(tec4);
+            modelViewers.add(tv4);
+            TectonView tv5 = new TectonView(tec5);
+            modelViewers.add(tv5);
+            TectonView tv6 = new TectonView(tec6);
+            modelViewers.add(tv6);
+            TectonView tv7 = new TectonView(tec7);
+            modelViewers.add(tv7);
+            TectonView tv8 = new TectonView(tec8);
+            modelViewers.add(tv8);
+
+            TectonView tv9 = new TectonView(tec9);
+            modelViewers.add(tv9);
+            TectonView tv10 = new TectonView(tec10);
+            modelViewers.add(tv10);
+            TectonView tv11 = new TectonView(tec11);
+            modelViewers.add(tv11);
+            TectonView tv12 = new TectonView(tec12);
+            modelViewers.add(tv12);
+            TectonView tv13 = new TectonView(tec13);
+            modelViewers.add(tv13);
+            TectonView tv14 = new TectonView(tec14);
+            modelViewers.add(tv14);
+            TectonView tv15 = new TectonView(tec15);
+            modelViewers.add(tv15);
+            TectonView tv16 = new TectonView(tec16);
+            modelViewers.add(tv16);
+
+            TectonView tv17 = new TectonView(tec17);
+            modelViewers.add(tv17);
+            TectonView tv18 = new TectonView(tec18);
+            modelViewers.add(tv18);
+            TectonView tv19 = new TectonView(tec19);
+            modelViewers.add(tv19);
+            TectonView tv20 = new TectonView(tec20);
+            modelViewers.add(tv20);
+            TectonView tv21 = new TectonView(tec21);
+            modelViewers.add(tv21);
+            TectonView tv22 = new TectonView(tec22);
+            modelViewers.add(tv22);
+            TectonView tv23 = new TectonView(tec23);
+            modelViewers.add(tv23);
+            TectonView tv24 = new TectonView(tec24);
+            modelViewers.add(tv24);
+            TectonView tv25 = new TectonView(tec25);
+            modelViewers.add(tv25);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         tec1.initNeighbours(List.of(tec2, tec3));
         tec2.initNeighbours(List.of(tec3, tec1));
@@ -194,11 +251,14 @@ public class GUIGameManager {
             team.setPositions(rtecton, rtecton);
             Insect ins = new Insect("ins" + currentInsectIndex++, 0, Ability.NORMAL, team.getInsecter(), rtecton);
             team.getInsecter().getInsects().add(ins);
-            InsectView insView = new InsectView(ins, Color.BLUE);
-            modelViewers.add(insView);
             MushroomBody mush = new MushroomBody("mbd" + currentMushroomBodyIndex++, rtecton);
             mush.loadBodyWithSpores(currentSporeIndex);
             team.getMushroomer().addMushroomBody(mush);
+            mush.initializeSporeViews(team.getColor());
+            MushroomBodyView msbView = new MushroomBodyView(mush, team.getColor());
+            modelViewers.add(msbView);
+            InsectView insView = new InsectView(ins, team.getColor());
+            modelViewers.add(insView);
             usedTectons.add(rtecton);
         }
     }

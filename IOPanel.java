@@ -21,10 +21,13 @@ public class IOPanel extends JPanel {
     private JButton eatInsectsButton;
     private JButton scatterSporesButton;
 
+    private GamePanel panel;
+
     //TODO: Hozzáadni az osztálydiagrammhoz
     private ArrayList<JButton> mushroomerActionButtons, insecterActionButtons;
 
-    public IOPanel() {
+    public IOPanel(GamePanel p) {
+        panel = p;
         mushroomerActionButtons = new ArrayList<>();
         insecterActionButtons = new ArrayList<>();
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -137,10 +140,12 @@ public class IOPanel extends JPanel {
         revalidate();
     }
 
-    // Eseménykezelők beállítása
+
     public void setCutAction(ActionListener l) { cutButton.addActionListener(l); }
     public void setConsumeAction(ActionListener l) { consumeButton.addActionListener(l); }
     public void setMoveAction(ActionListener l) { moveButton.addActionListener(l); }
+    //panel.setMoveAction(e -> {})
+
     public void setEndTurnAction(ActionListener l) { endTurnButton.addActionListener(l); }
 
     public void setGrowStringAction(ActionListener l) { growStringButton.addActionListener(l); }
