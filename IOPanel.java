@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -141,7 +143,6 @@ public class IOPanel extends JPanel {
         revalidate();
     }
 
-
     public void setCutAction(ActionListener l) { cutButton.addActionListener(l); }
     public void setConsumeAction(ActionListener l) { consumeButton.addActionListener(l); }
     /*public void setMoveAction(ActionListener l) {
@@ -168,5 +169,30 @@ public class IOPanel extends JPanel {
     public void setEatInsectsAction(ActionListener l) { eatInsectsButton.addActionListener(l); }
     //Kopi
     public void setscatterSporesAction(ActionListener l) { scatterSporesButton.addActionListener(l); }
+
+    private class CutButtonAdapter implements MouseListener{
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            //Rovarok kilistázása (amely rovar lebénult, az disabled button-ként jelenjen meg az enumerációban)
+            //Rovar kiválasztása
+            //A rovar által elérhető fonalak felsorolása
+            //Fonal kiválasztása
+            //Vágás végrehajtása és a képernő frissítése
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {}
+
+        @Override
+        public void mouseReleased(MouseEvent e) {}
+
+        @Override
+        public void mouseEntered(MouseEvent e) {}
+
+        @Override
+        public void mouseExited(MouseEvent e) {}
+
+    }
 }
 
