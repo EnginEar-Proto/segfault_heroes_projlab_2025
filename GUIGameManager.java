@@ -13,6 +13,7 @@ public class GUIGameManager {
     private ArrayList<Team> teams;
     private int laps = 1;
     private Team currentTeam;
+    private boolean isCurrentPlayerMushroomer = true;
     private boolean gameStarted;
     private Board board;
 
@@ -304,41 +305,18 @@ public class GUIGameManager {
         return false;
     }
 
-    private void PlayerStep(boolean isMushroomer) throws IOException{
-
-    }
-
-    /**
-     * A játék fő ciklusa.
-     * A parancsokat az inputHandler-ből olvassa, és a commandParser dolgozza fel.
-     */
-    public void play() throws IOException {
-
-        while (laps < 15) {
-            for (int i = 0; i < teams.size(); i++) {
-                currentTeam = teams.get(i);
-                try {
-                    PlayerStep(true);
-                } catch (IOException e) {
-                }
-
-                try {
-                    PlayerStep(false);
-                } catch (IOException e) {
-                }
-            }
-            incrementLap();
+    private void PlayerStep(IOPanel ioPanel) throws IOException {
+        if (isCurrentPlayerMushroomer) {
+            ioPanel.updateState(laps, currentTeam, "Insecter", currentTeam.getScore(), currentTeam.getMushroomer().getMushroomBodies().size());
+            if (++laps > 15)
+                ioPanel.showResults(); //Geri írd meg pls
         }
-        gameStarted = false;
-        showResults();
-    }
-
-    /**
-     * Kiírja az eredményeket, pontszámokat.
-     */
-    public void showResults() throws IOException {
-
-    }
+        else {
+            int nextIndex = (teams.indexOf(currentTeam) + 1) % teams.size();
+            currentTeam = teams.get(nextIndex);
+            ioPanel.updateState(laps, currentTeam, "Mushroomer", currentTeam.getScore(), currentTeam.getMushroomer().getMushroomBodies().size());
+        }
+    } //Kopi: készen vagyunk, pusholhatod
 
     /**
      * Hozzáad egy új csapatot a játékhoz.
@@ -368,7 +346,6 @@ public class GUIGameManager {
      * A megadott képernyő koordináták alapján visszaadja azt a tektont, amelyik azon a koordinátán van.
      * @param x
      * @param y
-     * @param Tecton
      */
     public Tecton getTectonByCoords(int x, int y) {
         Tecton res = null;

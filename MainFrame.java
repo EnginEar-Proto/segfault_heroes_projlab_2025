@@ -86,7 +86,7 @@ public class MainFrame extends JFrame {
         gamePanel.repaint();
 
         ioPanel.setVisible(true);
-        ioPanel.updateState(1, gamePanel.getGuiGameManager().getTeams()[0].getName(), 
+        ioPanel.updateState(1, gamePanel.getGuiGameManager().getTeams()[0],
         "Mushroomer",
         0,
             gamePanel.getGuiGameManager().getTeams()[0].getMushroomer().getMushroomBodies().size());

@@ -124,9 +124,9 @@ public class IOPanel extends JPanel {
         return button;
     }
 
-    public void updateState(int round, String team, String role, int nutrients, int bodies) {
+    public void updateState(int round, Team team, String role, int nutrients, int bodies) {
         roundLabel.setText("Kör: " + round);
-        teamLabel.setText("Csapat: " + team);
+        teamLabel.setText("Csapat: " + team.getName());
         roleLabel.setText("Szerep: " + role);
         statsLabel.setText("<html>Csapat statisztikák<br>Tápanyag pontok: " + nutrients + "<br>Gombatestek: " + bodies + "</html>");
     
@@ -142,6 +142,13 @@ public class IOPanel extends JPanel {
 
         repaint();
         revalidate();
+    }
+
+    public void showResults() {
+        removeAll();
+        revalidate();
+        repaint();
+        //TODO result kiírása szépen.
     }
 
     public void setCutAction(ActionListener l) { cutButton.addMouseListener(new CutButtonAdapter()); }
