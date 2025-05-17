@@ -224,7 +224,7 @@ public class IOPanel extends JPanel {
         final int[] click = new int[2];
 
             //az a listener, ami a játéktéren figyeli a kattintásokat
-            MouseListener listener = new MouseListener() {
+            MouseAdapter listener = new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     click[0] = e.getX();
@@ -286,17 +286,7 @@ public class IOPanel extends JPanel {
                         System.out.println("Vmi gatya");
                         return;
                     }
-
-
                 }
-                @Override
-                public void mousePressed(MouseEvent e) {}
-                @Override
-                public void mouseReleased(MouseEvent e) {}
-                @Override
-                public void mouseEntered(MouseEvent e) {}
-                @Override
-                public void mouseExited(MouseEvent e) {}
             };
 
             panel.addMouseListener(listener);
