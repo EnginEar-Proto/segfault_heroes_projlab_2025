@@ -168,11 +168,12 @@ public class IOPanel extends JPanel {
 
     public void setEndTurnAction(ActionListener l) { endTurnButton.addActionListener(l); }
 
-    public void setGrowStringAction(ActionListener l) { growStringButton.addMouseListener(new GrowButtonAdapter()); }
+    public void setBranchStringButton(ActionListener l) { growStringButton.addMouseListener(new GrowButtonAdapter()); }
 
-    public void setBranchStringButton(ActionListener l) {
-        growStringButton.addActionListener(l);
-        growStringButton.addActionListener(e -> {
+    //Bálint
+    public void setMoveAction(ActionListener l) {
+        moveButton.addActionListener(l);
+        moveButton.addActionListener(e -> {
             panel.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
             // Állapot követése: 0 = nincs kiválasztva semmi, 1 = rovar kiválasztva, várunk texton célpontra
@@ -306,8 +307,54 @@ public class IOPanel extends JPanel {
     }
     //Kopi
     public void setEatInsectsAction(ActionListener l) { eatInsectsButton.addActionListener(l); }
-    //Kopi
-    public void setscatterSporesAction(ActionListener l) { scatterSporesButton.addActionListener(l); }
+    //Bálint: elvileg elszórja, de nem jelenik meg
+    public void setscatterSporesAction(ActionListener l) {
+        scatterSporesButton.addActionListener(l);
+        scatterSporesButton.addActionListener(e -> {
+            panel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+            // Állapot követése: 0 = nincs kiválasztva semmi, 1 = rovar kiválasztva, várunk texton célpontra
+            final int[] selectionState = {0};
+            final MushroomBody[] selectedMushroomBody = {null};
+            System.out.println("Kiválasztva");
+
+            MouseAdapter mouseAdapter = new MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent e) {
+                    // Meghatározzuk a kattintás koordinátáit
+                    int x = e.getX();
+                    int y = e.getY();
+
+                    if (selectionState[0] == 0) {
+                        // Első kattintás: rovar kiválasztása
+                        Tecton mushroomBodyTecton = panel.getGuiGameManager().getTectonByCoords(x, y);
+                        System.out.println(mushroomBodyTecton.getId());
+                        if (mushroomBodyTecton != null) {
+                            selectedMushroomBody[0] = mushroomBodyTecton.getMushroomBody();
+                            selectionState[0] = 1;
+                        }
+                    } else if (selectionState[0] == 1) {
+                        // Második kattintás: texton célpont kiválasztása
+                        Tecton targetTecton = panel.getGuiGameManager().getTectonByCoords(x, y);
+                        System.out.println(targetTecton.getId());
+                        if (targetTecton != null) {
+
+                            selectedMushroomBody[0].scatter(targetTecton, Ability.NORMAL);
+                            panel.revalidate();
+                            panel.repaint();
+
+                            // Visszaállítjuk az állapotot és eltávolítjuk a figyelőt
+                            selectionState[0] = 0;
+                            panel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                            panel.removeMouseListener(this);
+                        }
+                    }
+                }
+            };
+
+            panel.addMouseListener(mouseAdapter);
+        });
+    }
 
     private class CutButtonAdapter extends MouseAdapter{
 
