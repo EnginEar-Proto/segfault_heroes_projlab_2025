@@ -2,10 +2,8 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -164,10 +162,141 @@ public class IOPanel extends JPanel {
     public void setEndTurnAction(ActionListener l) { endTurnButton.addActionListener(l); }
 
     public void setGrowStringAction(ActionListener l) { growStringButton.addMouseListener(new GrowButtonAdapter()); }
-    public void setBranchStringAction(ActionListener l) { branchStringButton.addActionListener(l); }
+
+    public void setBranchStringButton(ActionListener l) {
+        growStringButton.addActionListener(l);
+        growStringButton.addActionListener(e -> {
+            panel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+            // Állapot követése: 0 = nincs kiválasztva semmi, 1 = rovar kiválasztva, várunk texton célpontra
+            final int[] selectionState = {0};
+            final Insect[] selectedInsect = {null};
+            System.out.println("Kiválasztva");
+
+            MouseAdapter mouseAdapter = new MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent e) {
+                    // Meghatározzuk a kattintás koordinátáit
+                    int x = e.getX();
+                    int y = e.getY();
+
+                    if (selectionState[0] == 0) {
+                        // Első kattintás: rovar kiválasztása
+                        Tecton insectTecton = panel.getGuiGameManager().getTectonByCoords(x, y);
+                        System.out.println(insectTecton.getId());
+                        if (insectTecton != null) {
+                            selectedInsect[0] = insectTecton.getInsects().get(0);
+                            selectionState[0] = 1;
+                        }
+                    } else if (selectionState[0] == 1) {
+                        // Második kattintás: texton célpont kiválasztása
+                        Tecton targetTecton = panel.getGuiGameManager().getTectonByCoords(x, y);
+                        System.out.println(targetTecton.getId());
+                        if (targetTecton != null) {
+                            // Rovart mozgatjuk a kiválasztott tektonra
+                            selectedInsect[0].moveTo(targetTecton);
+                            panel.revalidate();
+                            panel.repaint();
+
+                            // Visszaállítjuk az állapotot és eltávolítjuk a figyelőt
+                            selectionState[0] = 0;
+                            panel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                            panel.removeMouseListener(this);
+                        }
+                    }
+                }
+            };
+
+            panel.addMouseListener(mouseAdapter);
+        });
+    }
 
     //Kopi
-    public void setGrowMushroomBodyAction(ActionListener l) {growMushroomBodyButton.addActionListener(l); }
+    public void setGrowMushroomBodyAction(ActionListener l) {
+        growMushroomBodyButton.addActionListener(l);
+        final int[] click = new int[2];
+
+            //az a listener, ami a játéktéren figyeli a kattintásokat
+            MouseListener listener = new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    click[0] = e.getX();
+                    click[1] = e.getY();
+
+                    //választott tecton megkeresése
+                    Tecton tec = panel.getGuiGameManager().getTectonByCoords(e.getX(), e.getY());
+                    GUIGameManager gm = panel.getGuiGameManager();
+
+                    if(tec == null) {
+                        //TODO: kéne vmi visszajelzés
+                        System.out.println("Nincs tecton");
+                        return;
+                    }
+
+                    //ha van már gombatest a tektonon, nem lehet folytatni a műveletet
+                    if(tec.getMushroomBody() != null) {
+                        System.out.println("Már van gomba");
+                        return;
+                    }
+
+                    //az adott csapat stringjeinek összegyűjtése (lehet kéne fgv)
+                    Mushroomer mushroomer = gm.getCurrentTeam().getMushroomer();
+                    ArrayList<MushroomString> strings = new ArrayList<>();
+                    for (int i = 0; i < mushroomer.getMushroomBodies().size(); i++){
+                        MushroomBody mb = mushroomer.getMushroomBodies().get(i);
+                        strings.addAll(mb.getStrings());
+                    }
+
+
+                    //megnézi van e csapathoz tartozó string a tektonon
+                    boolean isGrowable = false;
+                    for (int i = 0; i < tec.getStrings().size(); i++) {
+                        if(strings.contains(tec.getStrings().get(i))) {
+                            isGrowable = true;
+                            break;
+                        }
+                    }
+                    //TODO: visszajelzés
+                    if(!isGrowable) {
+                        System.out.println("Nincs string");
+                        return;
+                    }
+
+                    //hozzáadja a játékohoz az új gombát
+                    if(tec.growBody()){
+                        try{
+                            mushroomer.addMushroomBody(tec.getMushroomBody());
+                            GUIGameManager.modelViewers.add(new MushroomBodyView(tec.getMushroomBody(), gm.getCurrentTeam().getColor()));
+                            panel.removeMouseListener(this);
+                            panel.revalidate();
+                            panel.repaint();
+                            System.out.println("BODYADDED");
+
+                        } catch (IOException exception) {
+                            System.out.println("IOEXCEPTION");
+                        }
+                    } else {
+                        System.out.println("Vmi gatya");
+                        return;
+                    }
+
+
+                }
+                @Override
+                public void mousePressed(MouseEvent e) {}
+                @Override
+                public void mouseReleased(MouseEvent e) {}
+                @Override
+                public void mouseEntered(MouseEvent e) {}
+                @Override
+                public void mouseExited(MouseEvent e) {}
+            };
+
+            panel.addMouseListener(listener);
+
+            //gamePanel.removeMouseListener();
+
+    }
     //Kopi
     public void setEatInsectsAction(ActionListener l) { eatInsectsButton.addActionListener(l); }
     //Kopi

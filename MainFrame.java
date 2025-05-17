@@ -14,6 +14,14 @@ public class MainFrame extends JFrame {
     public MainFrame(String title) {
         super(title);
 
+        ioPanel.setBranchStringButton(e -> {
+            System.out.println(">> Kattintottam a GrowString-re a MAIN-ben!");
+        });
+        ioPanel.setGrowMushroomBodyAction(e -> {
+            System.out.println(">> GrowMushroomBody");
+        });
+
+
         setMinimumSize(new Dimension(width, height));
         setSize(width, height);
         setResizable(true);
@@ -82,93 +90,6 @@ public class MainFrame extends JFrame {
         "Mushroomer",
         0,
             gamePanel.getGuiGameManager().getTeams()[0].getMushroomer().getMushroomBodies().size());
-
-        ioPanel.setGrowMushroomBodyAction(new ActionListener() {
-            final int[] click = new int[2];
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                //az a listener, ami a játéktéren figyeli a kattintásokat
-                MouseListener listener = new MouseListener() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        click[0] = e.getX();
-                        click[1] = e.getY();
-
-                        //választott tecton megkeresése
-                        Tecton tec = gamePanel.getGuiGameManager().getTectonByCoords(e.getX(), e.getY());
-                        GUIGameManager gm = gamePanel.getGuiGameManager();
-
-                        if(tec == null) {
-                            //TODO: kéne vmi visszajelzés
-                            System.out.println("Nincs tecton");
-                            return;
-                        }
-
-                        //ha van már gombatest a tektonon, nem lehet folytatni a műveletet
-                        if(tec.getMushroomBody() != null) {
-                            System.out.println("Már van gomba");
-                            return;
-                        }
-
-                        //az adott csapat stringjeinek összegyűjtése (lehet kéne fgv)
-                        Mushroomer mushroomer = gm.getCurrentTeam().getMushroomer();
-                        ArrayList<MushroomString> strings = new ArrayList<>();
-                        for (int i = 0; i < mushroomer.getMushroomBodies().size(); i++){
-                            MushroomBody mb = mushroomer.getMushroomBodies().get(i);
-                            strings.addAll(mb.getStrings());
-                        }
-
-
-                        //megnézi van e csapathoz tartozó string a tektonon
-                        boolean isGrowable = false;
-                        for (int i = 0; i < tec.getStrings().size(); i++) {
-                            if(strings.contains(tec.getStrings().get(i))) {
-                                isGrowable = true;
-                                break;
-                            }
-                        }
-                        //TODO: visszajelzés
-                        if(!isGrowable) {
-                            System.out.println("Nincs string");
-                            return;
-                        }
-
-                        //hozzáadja a játékohoz az új gombát
-                        if(tec.growBody()){
-                            try{
-                                mushroomer.addMushroomBody(tec.getMushroomBody());
-                                GUIGameManager.modelViewers.add(new MushroomBodyView(tec.getMushroomBody(), gm.getCurrentTeam().getColor()));
-                                gamePanel.removeMouseListener(this);
-                                gamePanel.revalidate();
-                                gamePanel.repaint();
-                                System.out.println("BODYADDED");
-                            } catch (IOException exception) {
-                                System.out.println("IOEXCEPTION");
-                            }
-                        } else {
-                            System.out.println("Vmi gatya");
-                            return;
-                        }
-
-
-                    }
-                    @Override
-                    public void mousePressed(MouseEvent e) {}
-                    @Override
-                    public void mouseReleased(MouseEvent e) {}
-                    @Override
-                    public void mouseEntered(MouseEvent e) {}
-                    @Override
-                    public void mouseExited(MouseEvent e) {}
-                };
-
-                gamePanel.addMouseListener(listener);
-
-                //gamePanel.removeMouseListener();
-            }
-        });
 
 
         
