@@ -316,7 +316,7 @@ public class GUIGameManager {
             currentTeam = teams.get(nextIndex);
             ioPanel.updateState(laps, currentTeam, "Mushroomer", currentTeam.getScore(), currentTeam.getMushroomer().getMushroomBodies().size());
         }
-    } //Kopi: készen vagyunk, pusholhatod
+    }
 
     /**
      * Hozzáad egy új csapatot a játékhoz.
