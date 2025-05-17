@@ -231,6 +231,7 @@ public class GUIGameManager {
         tec25.initNeighbours(List.of(tec24, tec9));
 
 
+
     }
 
     /**
@@ -260,6 +261,18 @@ public class GUIGameManager {
             InsectView insView = new InsectView(ins, team.getColor());
             modelViewers.add(insView);
             usedTectons.add(rtecton);
+
+            Tecton startTecton = rtecton;
+            Tecton destTecton = rtecton.getNeighbours().getFirst();
+
+            MushroomString s = new MushroomString("str1", startTecton.getMushroomBody(), List.of(startTecton), null);
+            s.growTo(startTecton, startTecton);
+            s.growTo(startTecton, destTecton);
+
+            mush.scatter(destTecton, Ability.NORMAL);
+            mush.scatter(destTecton, Ability.NORMAL);
+            mush.scatter(destTecton, Ability.NORMAL);
+
         }
         currentTeam = teams.get(0);
     }

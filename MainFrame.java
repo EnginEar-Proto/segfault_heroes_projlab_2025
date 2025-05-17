@@ -132,8 +132,16 @@ public class MainFrame extends JFrame {
 
 
                         if(tec.growBody()){
-                            mushroomer.addMushroomBody(tec.getMushroomBody());
-                            gamePanel.removeMouseListener(this);
+                            try{
+                                mushroomer.addMushroomBody(tec.getMushroomBody());
+                                GUIGameManager.modelViewers.add(new MushroomBodyView(tec.getMushroomBody(), gm.getCurrentTeam().getColor()));
+                                gamePanel.removeMouseListener(this);
+                                gamePanel.revalidate();
+                                gamePanel.repaint();
+                                System.out.println("BODYADDED");
+                            } catch (IOException exception) {
+                                System.out.println("IOEXCEPTION");
+                            }
                         } else {
                             System.out.println("Vmi gatya");
                             return;

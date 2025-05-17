@@ -96,6 +96,17 @@ public class IOPanel extends JPanel {
             moveButton,
             endTurnButton
         ));
+
+        add(growStringButton);
+        add(branchStringButton);
+        add(growMushroomBodyButton);
+        add(eatInsectsButton);
+        add(scatterSporesButton);
+
+        add(cutButton);
+        add(consumeButton);
+        add(moveButton);
+        add(endTurnButton);
     }
 
     private JLabel createLabel(String text) {
@@ -122,11 +133,11 @@ public class IOPanel extends JPanel {
         statsLabel.setText("<html>Csapat statisztikák<br>Tápanyag pontok: " + nutrients + "<br>Gombatestek: " + bodies + "</html>");
     
         if(role.equals("Mushroomer")){
-            ActionButtonContainer.removeAll();
-            mushroomerActionButtons.forEach(btn -> ActionButtonContainer.add(btn));
+            mushroomerActionButtons.forEach(btn -> btn.setVisible(true));
+            insecterActionButtons.forEach(btn -> btn.setVisible(false));
         }else if(role.equals("Insecter")){
-            ActionButtonContainer.removeAll();
-            insecterActionButtons.forEach(btn -> ActionButtonContainer.add(btn));
+            insecterActionButtons.forEach(btn -> btn.setVisible(true));
+            mushroomerActionButtons.forEach(btn -> btn.setVisible(false));
         }else{
             ActionButtonContainer.removeAll();
         }
