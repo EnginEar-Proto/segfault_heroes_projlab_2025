@@ -354,6 +354,34 @@ public class GUIGameManager {
             d.draw(g);
         }
     }
+
+    /**
+     * A megadott képernyő koordináták alapján visszaadja azt a tektont, amelyik azon a koordinátán van.
+     * @param x
+     * @param y
+     * @param Tecton
+     */
+    public Tecton getTectonByCoords(int x, int y) {
+        Tecton res = null;
+        for (int i = 0; i < modelViewers.size(); i++){
+            TectonView model = (TectonView) modelViewers.get(i);
+            try{
+                res = model.getModel();
+            } catch (Exception e){
+                continue;
+            }
+
+            int[] pos = res.getPosition();
+            int[] posEnd = {pos[0] * Board.SQUARE_SIZE, pos[1] * Board.SQUARE_SIZE};
+
+            if(pos[0] > x || posEnd[0] < x) {res = null; continue;}
+            if(pos[1] > y || posEnd[1] < y) {res = null; continue;}
+
+            break;
+        }
+
+        return res;
+    }
 }
 
 
