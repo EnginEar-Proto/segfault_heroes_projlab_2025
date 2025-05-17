@@ -89,26 +89,30 @@ public class MainFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-
-
+                //az a listener, ami a játéktéren figyeli a kattintásokat
                 MouseListener listener = new MouseListener() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
                         click[0] = e.getX();
                         click[1] = e.getY();
 
+                        //választott tecton megkeresése
                         Tecton tec = gamePanel.getGuiGameManager().getTectonByCoords(e.getX(), e.getY());
                         GUIGameManager gm = gamePanel.getGuiGameManager();
 
-                        System.out.println("Tecton: " + tec.getId() + " team: " + gm.getCurrentTeam().getName());
                         if(tec == null) {
                             //TODO: kéne vmi visszajelzés
                             System.out.println("Nincs tecton");
                             return;
                         }
 
-                        if(tec.getMushroomBody() != null) return;
+                        //ha van már gombatest a tektonon, nem lehet folytatni a műveletet
+                        if(tec.getMushroomBody() != null) {
+                            System.out.println("Már van gomba");
+                            return;
+                        }
 
+                        //az adott csapat stringjeinek összegyűjtése (lehet kéne fgv)
                         Mushroomer mushroomer = gm.getCurrentTeam().getMushroomer();
                         ArrayList<MushroomString> strings = new ArrayList<>();
                         for (int i = 0; i < mushroomer.getMushroomBodies().size(); i++){
@@ -117,6 +121,7 @@ public class MainFrame extends JFrame {
                         }
 
 
+                        //megnézi van e csapathoz tartozó string a tektonon
                         boolean isGrowable = false;
                         for (int i = 0; i < tec.getStrings().size(); i++) {
                             if(strings.contains(tec.getStrings().get(i))) {
@@ -130,7 +135,7 @@ public class MainFrame extends JFrame {
                             return;
                         }
 
-
+                        //hozzáadja a játékohoz az új gombát
                         if(tec.growBody()){
                             try{
                                 mushroomer.addMushroomBody(tec.getMushroomBody());
