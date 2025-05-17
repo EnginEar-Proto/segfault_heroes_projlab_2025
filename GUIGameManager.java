@@ -261,6 +261,7 @@ public class GUIGameManager {
             modelViewers.add(insView);
             usedTectons.add(rtecton);
         }
+        currentTeam = teams.get(0);
     }
 
 
@@ -299,29 +300,24 @@ public class GUIGameManager {
      * A parancsokat az inputHandler-ből olvassa, és a commandParser dolgozza fel.
      */
     public void play() throws IOException {
-        /*
+
         while (laps < 15) {
             for (int i = 0; i < teams.size(); i++) {
                 currentTeam = teams.get(i);
-                ioHandler.writeLine("A " + currentTeam.getName() + " csapat következik.");
-                ioHandler.writeLine("A " + currentTeam.getName() + " csapat gombásza következik.");
                 try {
                     PlayerStep(true);
                 } catch (IOException e) {
-                    ioHandler.writeLine("Hiba a parancs beolvasása közben: " + e.getMessage());
                 }
 
-                ioHandler.writeLine("A " + currentTeam.getName() + " csapat rovarásza következik:");
                 try {
                     PlayerStep(false);
                 } catch (IOException e) {
-                    ioHandler.writeLine("Hiba a parancs beolvasása közben: " + e.getMessage());
                 }
             }
             incrementLap();
         }
         gameStarted = false;
-        showResults();*/
+        showResults();
     }
 
     /**
@@ -364,18 +360,29 @@ public class GUIGameManager {
     public Tecton getTectonByCoords(int x, int y) {
         Tecton res = null;
         for (int i = 0; i < modelViewers.size(); i++){
-            TectonView model = (TectonView) modelViewers.get(i);
+            TectonView model;
             try{
+                model = (TectonView) modelViewers.get(i);
                 res = model.getModel();
             } catch (Exception e){
                 continue;
             }
 
             int[] pos = res.getPosition();
-            int[] posEnd = {pos[0] * Board.SQUARE_SIZE, pos[1] * Board.SQUARE_SIZE};
+            int[] pixelPos = {pos[0] * Board.SQUARE_SIZE, pos[1] * Board.SQUARE_SIZE};
+            int[] posEnd = {pixelPos[0] + Board.SQUARE_SIZE, pixelPos[1] + Board.SQUARE_SIZE};
+            switch (res.getSize()) {
+                case 3:
+                    posEnd[0] = pixelPos[0] + Board.SQUARE_SIZE * 2;
+                    posEnd[1] = pixelPos[1] + Board.SQUARE_SIZE * 2;
+                    break;
+                case 2:
+                    posEnd[0] = pixelPos[0] + Board.SQUARE_SIZE * 2;
+                    break;
+            }
 
-            if(pos[0] > x || posEnd[0] < x) {res = null; continue;}
-            if(pos[1] > y || posEnd[1] < y) {res = null; continue;}
+            if(pixelPos[0] > x || posEnd[0] < x) {res = null; continue;}
+            if(pixelPos[1] > y || posEnd[1] < y) {res = null; continue;}
 
             break;
         }

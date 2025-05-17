@@ -1,8 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MainFrame extends JFrame {
     private GamePanel gamePanel = new GamePanel(new GUIGameManager());
@@ -81,7 +81,83 @@ public class MainFrame extends JFrame {
         ioPanel.updateState(1, gamePanel.getGuiGameManager().getTeams()[0].getName(), 
         "Mushroomer",
         0,
-        gamePanel.getGuiGameManager().getTeams()[0].getMushroomer().getMushroomBodies().size());
+            gamePanel.getGuiGameManager().getTeams()[0].getMushroomer().getMushroomBodies().size());
+
+        ioPanel.setGrowMushroomBodyAction(new ActionListener() {
+            final int[] click = new int[2];
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+
+
+                MouseListener listener = new MouseListener() {
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        click[0] = e.getX();
+                        click[1] = e.getY();
+
+                        Tecton tec = gamePanel.getGuiGameManager().getTectonByCoords(e.getX(), e.getY());
+                        GUIGameManager gm = gamePanel.getGuiGameManager();
+
+                        System.out.println("Tecton: " + tec.getId() + " team: " + gm.getCurrentTeam().getName());
+                        if(tec == null) {
+                            //TODO: kéne vmi visszajelzés
+                            System.out.println("Nincs tecton");
+                            return;
+                        }
+
+                        if(tec.getMushroomBody() != null) return;
+
+                        Mushroomer mushroomer = gm.getCurrentTeam().getMushroomer();
+                        ArrayList<MushroomString> strings = new ArrayList<>();
+                        for (int i = 0; i < mushroomer.getMushroomBodies().size(); i++){
+                            MushroomBody mb = mushroomer.getMushroomBodies().get(i);
+                            strings.addAll(mb.getStrings());
+                        }
+
+
+                        boolean isGrowable = false;
+                        for (int i = 0; i < tec.getStrings().size(); i++) {
+                            if(strings.contains(tec.getStrings().get(i))) {
+                                isGrowable = true;
+                                break;
+                            }
+                        }
+                        //TODO: visszajelzés
+                        if(!isGrowable) {
+                            System.out.println("Nincs string");
+                            return;
+                        }
+
+
+                        if(tec.growBody()){
+                            mushroomer.addMushroomBody(tec.getMushroomBody());
+                            gamePanel.removeMouseListener(this);
+                        } else {
+                            System.out.println("Vmi gatya");
+                            return;
+                        }
+
+
+                    }
+                    @Override
+                    public void mousePressed(MouseEvent e) {}
+                    @Override
+                    public void mouseReleased(MouseEvent e) {}
+                    @Override
+                    public void mouseEntered(MouseEvent e) {}
+                    @Override
+                    public void mouseExited(MouseEvent e) {}
+                };
+
+                gamePanel.addMouseListener(listener);
+
+                //gamePanel.removeMouseListener();
+            }
+        });
+
+
         
         revalidate();
         repaint();

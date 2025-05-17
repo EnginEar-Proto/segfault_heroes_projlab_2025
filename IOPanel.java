@@ -163,7 +163,7 @@ public class IOPanel extends JPanel {
     public void setBranchStringAction(ActionListener l) { branchStringButton.addActionListener(l); }
 
     //Kopi
-    public void setGrowMushroomBodyAction(ActionListener l) { growMushroomBodyButton.addActionListener(l); }
+    public void setGrowMushroomBodyAction(ActionListener l) {growMushroomBodyButton.addActionListener(l); }
     //Kopi
     public void setEatInsectsAction(ActionListener l) { eatInsectsButton.addActionListener(l); }
     //Kopi
