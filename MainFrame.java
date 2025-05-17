@@ -14,11 +14,14 @@ public class MainFrame extends JFrame {
     public MainFrame(String title) {
         super(title);
 
-        ioPanel.setBranchStringButton(e -> {
+        ioPanel.setMoveAction(e -> {
             System.out.println(">> Kattintottam a GrowString-re a MAIN-ben!");
         });
         ioPanel.setGrowMushroomBodyAction(e -> {
             System.out.println(">> GrowMushroomBody");
+        });
+        ioPanel.setscatterSporesAction(e -> {
+            System.out.println(">> ScatterSpores");
         });
 
 
