@@ -13,13 +13,13 @@ public class SporeView implements DrawableInterface{
         color = c;
         switch (color) {
             case RED -> {
-                image = ImageIO.read(ClassLoader.getSystemResourceAsStream("Assets/spora1.png")).getScaledInstance(Board.HALF_SIZE * 4, Board.HALF_SIZE * 4 , BufferedImage.SCALE_SMOOTH);
+                image = ImageIO.read(ClassLoader.getSystemResourceAsStream("Assets/spora1.png")).getScaledInstance(Board.HALF_SIZE, Board.HALF_SIZE, BufferedImage.SCALE_SMOOTH);
             }
             case BLUE -> {
-                image = ImageIO.read(ClassLoader.getSystemResourceAsStream("Assets/spora2.png")).getScaledInstance(Board.HALF_SIZE * 4, Board.HALF_SIZE * 4, BufferedImage.SCALE_SMOOTH);
+                image = ImageIO.read(ClassLoader.getSystemResourceAsStream("Assets/spora2.png")).getScaledInstance(Board.HALF_SIZE, Board.HALF_SIZE, BufferedImage.SCALE_SMOOTH);
             }
             case YELLOW -> {
-                image = ImageIO.read(ClassLoader.getSystemResourceAsStream("Assets/spora4.png")).getScaledInstance(Board.HALF_SIZE * 4, Board.HALF_SIZE * 4, BufferedImage.SCALE_SMOOTH);
+                image = ImageIO.read(ClassLoader.getSystemResourceAsStream("Assets/spora4.png")).getScaledInstance(Board.HALF_SIZE, Board.HALF_SIZE, BufferedImage.SCALE_SMOOTH);
             }
             case GREEN -> {
                 image = ImageIO.read(ClassLoader.getSystemResourceAsStream("Assets/spora3.png")).getScaledInstance(Board.HALF_SIZE, Board.HALF_SIZE, BufferedImage.SCALE_SMOOTH);

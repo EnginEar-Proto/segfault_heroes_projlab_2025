@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -222,7 +221,8 @@ public class IOPanel extends JPanel {
     //Kopi
     public void setGrowMushroomBodyAction(ActionListener l) {
         growMushroomBodyButton.addActionListener(l);
-        final int[] click = new int[2];
+        growMushroomBodyButton.addActionListener(e -> {
+            final int[] click = new int[2];
 
             //az a listener, ami a játéktéren figyeli a kattintásokat
             MouseAdapter listener = new MouseAdapter() {
@@ -235,14 +235,14 @@ public class IOPanel extends JPanel {
                     Tecton tec = panel.getGuiGameManager().getTectonByCoords(e.getX(), e.getY());
                     GUIGameManager gm = panel.getGuiGameManager();
 
-                    if(tec == null) {
+                    if (tec == null) {
                         //TODO: kéne vmi visszajelzés
                         System.out.println("Nincs tecton");
                         return;
                     }
 
                     //ha van már gombatest a tektonon, nem lehet folytatni a műveletet
-                    if(tec.getMushroomBody() != null) {
+                    if (tec.getMushroomBody() != null) {
                         System.out.println("Már van gomba");
                         return;
                     }
@@ -250,7 +250,7 @@ public class IOPanel extends JPanel {
                     //az adott csapat stringjeinek összegyűjtése (lehet kéne fgv)
                     Mushroomer mushroomer = gm.getCurrentTeam().getMushroomer();
                     ArrayList<MushroomString> strings = new ArrayList<>();
-                    for (int i = 0; i < mushroomer.getMushroomBodies().size(); i++){
+                    for (int i = 0; i < mushroomer.getMushroomBodies().size(); i++) {
                         MushroomBody mb = mushroomer.getMushroomBodies().get(i);
                         strings.addAll(mb.getStrings());
                     }
@@ -259,20 +259,20 @@ public class IOPanel extends JPanel {
                     //megnézi van e csapathoz tartozó string a tektonon
                     boolean isGrowable = false;
                     for (int i = 0; i < tec.getStrings().size(); i++) {
-                        if(strings.contains(tec.getStrings().get(i))) {
+                        if (strings.contains(tec.getStrings().get(i))) {
                             isGrowable = true;
                             break;
                         }
                     }
                     //TODO: visszajelzés
-                    if(!isGrowable) {
+                    if (!isGrowable) {
                         System.out.println("Nincs string");
                         return;
                     }
 
                     //hozzáadja a játékohoz az új gombát
-                    if(tec.growBody()){
-                        try{
+                    if (tec.growBody()) {
+                        try {
                             mushroomer.addMushroomBody(tec.getMushroomBody());
                             GUIGameManager.modelViewers.add(new MushroomBodyView(tec.getMushroomBody(), gm.getCurrentTeam().getColor()));
                             panel.removeMouseListener(this);
@@ -292,13 +292,15 @@ public class IOPanel extends JPanel {
 
             panel.addMouseListener(listener);
 
-            //gamePanel.removeMouseListener();
 
+        });
     }
     //Kopi
     public void setEatInsectsAction(ActionListener l) { eatInsectsButton.addActionListener(l); }
+
+
     //Bálint: elvileg elszórja, de nem jelenik meg
-    public void setscatterSporesAction(ActionListener l) {
+    public void setScatterSporesAction(ActionListener l) {
         scatterSporesButton.addActionListener(l);
         scatterSporesButton.addActionListener(e -> {
             panel.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -315,6 +317,7 @@ public class IOPanel extends JPanel {
                     int x = e.getX();
                     int y = e.getY();
 
+                    GUIGameManager gm = panel.getGuiGameManager();
                     if (selectionState[0] == 0) {
                         // Első kattintás: rovar kiválasztása
                         Tecton mushroomBodyTecton = panel.getGuiGameManager().getTectonByCoords(x, y);
@@ -330,6 +333,14 @@ public class IOPanel extends JPanel {
                         if (targetTecton != null) {
 
                             selectedMushroomBody[0].scatter(targetTecton, Ability.NORMAL);
+                            System.out.println("Spore: " + targetTecton.getSpores().getLast());
+                            try {
+                                GUIGameManager.modelViewers.add(new SporeView(targetTecton.getSpores().getLast(), gm.getCurrentTeam().getColor()));
+                                System.out.println("modelAdded");
+
+                            } catch (Exception exception) {
+                                System.out.println("Vmi gatya");
+                            }
                             panel.revalidate();
                             panel.repaint();
 
@@ -337,7 +348,7 @@ public class IOPanel extends JPanel {
                             selectionState[0] = 0;
                             panel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                             panel.removeMouseListener(this);
-                        }
+                        } else System.out.print("gatya");
                     }
                 }
             };

@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class MainFrame extends JFrame {
     private GamePanel gamePanel = new GamePanel(new GUIGameManager());
@@ -20,7 +19,7 @@ public class MainFrame extends JFrame {
         ioPanel.setGrowMushroomBodyAction(e -> {
             System.out.println(">> GrowMushroomBody");
         });
-        ioPanel.setscatterSporesAction(e -> {
+        ioPanel.setScatterSporesAction(e -> {
             System.out.println(">> ScatterSpores");
         });
 

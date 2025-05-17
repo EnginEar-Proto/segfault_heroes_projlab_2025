@@ -102,6 +102,7 @@ public class MushroomBody {
         }
         sp = givenSpores.get(0);
         toScatter.scatterSpore(sp);
+        sp.setTecton(toScatter);
         return spores.size();
     }
 
