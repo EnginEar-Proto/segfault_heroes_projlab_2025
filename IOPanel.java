@@ -152,7 +152,7 @@ public class IOPanel extends JPanel {
 
     public void setEndTurnAction(ActionListener l) { endTurnButton.addActionListener(l); }
 
-    public void setGrowStringAction(ActionListener l) { growStringButton.addActionListener(l); }
+    public void setGrowStringAction(ActionListener l) { growStringButton.addMouseListener(new GrowButtonAdapter()); }
     public void setBranchStringAction(ActionListener l) { branchStringButton.addActionListener(l); }
 
     //Kopi
@@ -180,6 +180,8 @@ public class IOPanel extends JPanel {
 
                 insBtn.setVisible(true);
                 ActionButtonContainer.add(insBtn);
+                repaint();
+                revalidate();
             });
         }
     }
@@ -216,6 +218,8 @@ public class IOPanel extends JPanel {
 
                 strRouteBtn.setVisible(true);
                 ActionButtonContainer.add(strRouteBtn);
+                repaint();
+                revalidate();
             });
         }
     }
@@ -237,9 +241,42 @@ public class IOPanel extends JPanel {
             try {
                 insect.sabotageString(str, insect.getTecton(), dest);
                 ActionButtonContainer.removeAll();
+                repaint();
+                revalidate();
             } catch (Exception exp) {
                 exp.printStackTrace();
             }
+        }
+    }
+
+    private class GrowButtonAdapter extends MouseAdapter {
+
+        @Override
+        public void mouseClicked(MouseEvent e){
+            // Felajánlja az összes olyan tektont amelyről nőhet fonal.
+            repaint();
+            revalidate();
+        }
+    }
+
+    private class SourceTectonButtonAdapter extends MouseAdapter {
+
+        @Override
+        public void mouseClicked(MouseEvent e){
+            // Felajánlja az összes olyan tektont amelyre nőhet fonal.
+            repaint();
+            revalidate();
+        }
+    }
+
+    private class DestTectonButtonAdapter extends MouseAdapter {
+        private Tecton sourceTecton;
+        
+        @Override
+        public void mouseClicked(MouseEvent e){
+            // Feldolgozza a fonal nővesztést.
+            repaint();
+            revalidate();
         }
     }
 }
