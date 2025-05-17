@@ -1,7 +1,11 @@
 import javax.swing.*;
+import javax.swing.border.Border;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +30,7 @@ public class IOPanel extends JPanel {
 
     //TODO: Hozzáadni az osztálydiagrammhoz
     private ArrayList<JButton> mushroomerActionButtons, insecterActionButtons;
+    private JPanel ActionButtonContainer;
 
     public IOPanel(GamePanel p) {
         panel = p;
@@ -40,6 +45,7 @@ public class IOPanel extends JPanel {
         teamLabel = createLabel("Csapat: ");
         roleLabel = createLabel("Szerep: ");
         statsLabel = createLabel("<html>Csapat statisztikák<br>Tápanyag pontok: 0<br>Gombatestek: 0</html>");
+        ActionButtonContainer = new JPanel(); 
 
         add(Box.createRigidArea(new Dimension(0, 10)));
         add(roundLabel);
@@ -90,17 +96,6 @@ public class IOPanel extends JPanel {
             moveButton,
             endTurnButton
         ));
-
-        add(growStringButton);
-        add(branchStringButton);
-        add(growMushroomBodyButton);
-        add(eatInsectsButton);
-        add(scatterSporesButton);
-
-        add(cutButton);
-        add(consumeButton);
-        add(moveButton);
-        add(endTurnButton);
     }
 
     private JLabel createLabel(String text) {
@@ -127,22 +122,20 @@ public class IOPanel extends JPanel {
         statsLabel.setText("<html>Csapat statisztikák<br>Tápanyag pontok: " + nutrients + "<br>Gombatestek: " + bodies + "</html>");
     
         if(role.equals("Mushroomer")){
-            mushroomerActionButtons.forEach(btn -> btn.setVisible(true));
-            insecterActionButtons.forEach(btn -> btn.setVisible(false));
+            ActionButtonContainer.removeAll();
+            mushroomerActionButtons.forEach(btn -> ActionButtonContainer.add(btn));
         }else if(role.equals("Insecter")){
-            insecterActionButtons.forEach(btn -> btn.setVisible(true));
-            mushroomerActionButtons.forEach(btn -> btn.setVisible(false));
+            ActionButtonContainer.removeAll();
+            insecterActionButtons.forEach(btn -> ActionButtonContainer.add(btn));
         }else{
-            insecterActionButtons.forEach(btn -> btn.setVisible(false));
-            mushroomerActionButtons.forEach(btn -> btn.setVisible(false));
+            ActionButtonContainer.removeAll();
         }
 
         repaint();
         revalidate();
     }
 
-
-    public void setCutAction(ActionListener l) { cutButton.addActionListener(l); }
+    public void setCutAction(ActionListener l) { cutButton.addMouseListener(new CutButtonAdapter()); }
     public void setConsumeAction(ActionListener l) { consumeButton.addActionListener(l); }
     /*public void setMoveAction(ActionListener l) {
         moveButton.addActionListener(l);
@@ -159,7 +152,7 @@ public class IOPanel extends JPanel {
 
     public void setEndTurnAction(ActionListener l) { endTurnButton.addActionListener(l); }
 
-    public void setGrowStringAction(ActionListener l) { growStringButton.addActionListener(l); }
+    public void setGrowStringAction(ActionListener l) { growStringButton.addMouseListener(new GrowButtonAdapter()); }
     public void setBranchStringAction(ActionListener l) { branchStringButton.addActionListener(l); }
 
     //Kopi
@@ -168,5 +161,123 @@ public class IOPanel extends JPanel {
     public void setEatInsectsAction(ActionListener l) { eatInsectsButton.addActionListener(l); }
     //Kopi
     public void setscatterSporesAction(ActionListener l) { scatterSporesButton.addActionListener(l); }
+
+    private class CutButtonAdapter extends MouseAdapter{
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            //Előző gombok eltüntetése
+            ActionButtonContainer.removeAll();
+
+            //Rovarok kilistázása (amely rovar lebénult, az disabled button-ként jelenjen meg az enumerációban)
+            panel.getGuiGameManager()
+            .getCurrentTeam()
+            .getInsecter().getInsects()
+            .forEach(ins -> {
+                JButton insBtn = new JButton(ins.getId());
+                insBtn.setEnabled(!ins.getAbility().equals(Ability.PARALYZING));
+                insBtn.addMouseListener(new InsectSelectButtonAdapter(ins));
+
+                insBtn.setVisible(true);
+                ActionButtonContainer.add(insBtn);
+                repaint();
+                revalidate();
+            });
+        }
+    }
+
+    private class InsectSelectButtonAdapter extends MouseAdapter{
+        private Insect insect;
+
+        public InsectSelectButtonAdapter(Insect _insect){
+            super();
+            insect = _insect;
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e){
+            ActionButtonContainer.removeAll();
+
+            Tecton srcTecton = insect.getTecton();
+            List<Tecton> destTecton = srcTecton.getNeighbours().stream().filter(nTec ->srcTecton.canMoveTo(nTec)).toList();
+
+            destTecton.forEach(tec -> {
+                StringBuilder strB = new StringBuilder();
+                JButton strRouteBtn = new JButton(
+                    strB.append(srcTecton.getId())
+                    .append(" -> ")
+                    .append(tec.getId()).toString()
+                );
+
+                MushroomString str = srcTecton.getStrings()
+                .stream().filter(s -> s.getTectons().contains(tec))
+                .findFirst()
+                .get();
+
+                strRouteBtn.addMouseListener(new StringSelectButtonAdapter(str, insect, tec));
+
+                strRouteBtn.setVisible(true);
+                ActionButtonContainer.add(strRouteBtn);
+                repaint();
+                revalidate();
+            });
+        }
+    }
+
+    private class StringSelectButtonAdapter extends MouseAdapter {
+        private MushroomString str;
+        private Insect insect;
+        private Tecton dest;
+
+        public StringSelectButtonAdapter(MushroomString _str, Insect _insect, Tecton _dest){
+            super();
+            str = _str;
+            insect = _insect;
+            dest = _dest;
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e){
+            try {
+                insect.sabotageString(str, insect.getTecton(), dest);
+                ActionButtonContainer.removeAll();
+                repaint();
+                revalidate();
+            } catch (Exception exp) {
+                exp.printStackTrace();
+            }
+        }
+    }
+
+    private class GrowButtonAdapter extends MouseAdapter {
+
+        @Override
+        public void mouseClicked(MouseEvent e){
+            // Felajánlja az összes olyan tektont amelyről nőhet fonal.
+            repaint();
+            revalidate();
+        }
+    }
+
+    private class SourceTectonButtonAdapter extends MouseAdapter {
+
+        @Override
+        public void mouseClicked(MouseEvent e){
+            // Felajánlja az összes olyan tektont amelyre nőhet fonal.
+            repaint();
+            revalidate();
+        }
+    }
+
+    private class DestTectonButtonAdapter extends MouseAdapter {
+        private Tecton sourceTecton;
+        
+        @Override
+        public void mouseClicked(MouseEvent e){
+            // Feldolgozza a fonal nővesztést.
+            repaint();
+            revalidate();
+        }
+    }
 }
 
