@@ -280,11 +280,12 @@ public class MushroomString {
      *                 A toBranch tecton méretének legalább 2-nek kell lennie.
      *
      */
-    public void branchOut(Tecton tecton) {
+    public MushroomString branchOut(Tecton tecton) {
         MushroomString newString = new MushroomString(this.id + "_b", null, tectons, this);
         newString.length = tectons.size();
         tecton.addNewString(newString);
         addChild(newString);
+        return newString;
     }
 
     /**

@@ -317,7 +317,7 @@ public class GUIGameManager {
             ioPanel.updateState(laps, currentTeam, "Insecter", currentTeam.getScore(), currentTeam.getMushroomer().getMushroomBodies().size());
             isCurrentPlayerMushroomer = false;
             if (teams.indexOf(currentTeam) == teams.size()-1 && ++laps > 15)
-                ioPanel.showResults(); //Geri írd meg pls
+                ioPanel.showResults();
         }
         else {
             int nextIndex = (teams.indexOf(currentTeam) + 1) % teams.size();
@@ -340,7 +340,7 @@ public class GUIGameManager {
                 newTecton = tectons.get(tectonNumber - 1).Break(1);
                 System.out.println("\t ujtecton merete: "+newTecton.getSize());
                 TectonView tv_new = new TectonView(newTecton);
-                modelViewers.add(tv_new);
+                modelViewers.add(0, tv_new);
                 System.out.println("\t Regi tec merete"+oldTec.getModel().getSize());
                 oldTec.reSizedPic();
             }
@@ -380,34 +380,7 @@ public class GUIGameManager {
 
     public void render(Graphics g) {
         for (DrawableInterface d : modelViewers) {
-            if(d instanceof Board) {
-                d.draw(g);
-            }
-        }
-        for (DrawableInterface d : modelViewers) {
-            if(d instanceof TectonView) {
-                d.draw(g);
-            }
-        }
-        for (DrawableInterface d : modelViewers) {
-            if(d instanceof MushroomBodyView) {
-                d.draw(g);
-            }
-        }
-        for (DrawableInterface d : modelViewers) {
-            if(d instanceof SporeView) {
-                d.draw(g);
-            }
-        }
-        for (DrawableInterface d : modelViewers) {
-            if(d instanceof InsectView) {
-                d.draw(g);
-            }
-        }
-        for (DrawableInterface d : modelViewers) {
-            if(d instanceof MushroomStringView) {
-                d.draw(g);
-            }
+            d.draw(g);
         }
     }
 

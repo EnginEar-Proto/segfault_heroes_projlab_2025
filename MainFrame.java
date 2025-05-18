@@ -37,6 +37,9 @@ public class MainFrame extends JFrame {
         ioPanel.setEndTurnAction(e -> {
             System.out.println(">> EndTurn");
         });
+        ioPanel.setConsumeAction(e -> {
+            System.out.println(">> Consume");
+        });
 
 
         setMinimumSize(new Dimension(width, height));

@@ -7,6 +7,7 @@ public class SporeView implements DrawableInterface{
     private Spore model;
     private transient Image image;
     private TeamColor color;
+    private boolean eaten = false;
 
     public SporeView(Spore model, TeamColor c) throws IOException {
         this.model = model;
@@ -31,6 +32,7 @@ public class SporeView implements DrawableInterface{
     }
 
     public void draw(Graphics g) {
+        if (eaten) return;
         if (model.getTecton() == null) return;
         //System.out.println("spora rajzolva");
         int[] pos = model.getTecton().getPosition();
@@ -39,7 +41,15 @@ public class SporeView implements DrawableInterface{
         if (image != null) g2d.drawImage(image, pos[0] * Board.SQUARE_SIZE + Board.HALF_SIZE , pos[1] * Board.SQUARE_SIZE, null);
     }
 
+    public void setEaten(boolean eaten) {
+        this.eaten = eaten;
+    }
+
     public boolean modelEquals(Object o) {
         return model.equals(o);
+    }
+
+    public Spore getModel() {
+        return model;
     }
 }

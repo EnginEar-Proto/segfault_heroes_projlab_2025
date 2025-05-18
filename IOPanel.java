@@ -64,8 +64,7 @@ public class IOPanel extends JPanel {
         endTurnButton = createButton("Lépés tovább adása");
 
         growStringButton = createButton("Fonál növesztés");
-        growStringButton.setIcon(new ImageIcon("growstring.png"))
-        ;
+        growStringButton.setIcon(new ImageIcon("growstring.png"));
         branchStringButton = createButton("Fonál ágaztatás");
         branchStringButton.setIcon(new ImageIcon("branch.png"));
 
@@ -137,19 +136,7 @@ public class IOPanel extends JPanel {
     }
 
     public void setCutAction(ActionListener l) { cutButton.addMouseListener(new CutButtonAdapter()); }
-    public void setConsumeAction(ActionListener l) { consumeButton.addActionListener(l); }
-    /*public void setMoveAction(ActionListener l) {
-        moveButton.addActionListener(l);
-        Insect ins = null;
-        Tecton tec = null;
-        panel.addMouseListener(new MouseAdapter() {
-
-        });
-
-
-    }*/
-
-
+    public void setConsumeAction(ActionListener l) { consumeButton.addMouseListener(new EatSporeButtonAdapter()); }
 
     public void setEndTurnAction(ActionListener l) {
         IOPanel ioPanel = this;
@@ -164,7 +151,53 @@ public class IOPanel extends JPanel {
         });
     }
 
-    public void setBranchStringButton(ActionListener l) { /*growStringButton.addMouseListener(new GrowButtonAdapter());*/ }
+    public void setBranchStringButton(ActionListener l) {
+        IOPanel ioPanel = this;
+        branchStringButton.addActionListener(l);
+        branchStringButton.addActionListener(e -> {
+            panel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+            final MushroomString[] selectedString = {null};
+
+            MouseAdapter mouseAdapter = new MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent e) {
+                    int x = e.getX();
+                    int y = e.getY();
+
+                    GUIGameManager gm = panel.getGuiGameManager();
+                    Tecton clickedTecton = gm.getTectonByCoords(x, y);
+                    if (clickedTecton == null) {
+                        System.out.println("Nem érvényes tekton.");
+                        return;
+                    }
+                    if (clickedTecton.getStrings().isEmpty()) {
+                        System.out.println("Nincs fonál ezen a tektonon.");
+                        return;
+                    }
+                    Tecton targetTecton = clickedTecton;
+                    selectedString[0] = clickedTecton.getStrings().get(0);
+                    System.out.println("Fonál kiválasztva: " + selectedString[0].getId());
+                    System.out.println("Tekton kiválasztva: " + targetTecton.getId());
+                    try {
+                        MushroomString newstring = selectedString[0].branchOut(targetTecton);
+                        GUIGameManager.modelViewers.add(new MushroomStringView(newstring));
+                        panel.getGuiGameManager().PlayerStep(ioPanel);
+                        System.out.println("Fonál branchelve: " + selectedString[0].getId() + " " + targetTecton.getId());
+                    } catch (Exception ex) {
+                        System.out.println("Nem sikerült növeszteni a fonalat.");
+                    }
+
+                    panel.revalidate();
+                    panel.repaint();
+                    panel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                    panel.removeMouseListener(this);
+                }
+            };
+
+            panel.addMouseListener(mouseAdapter);
+        });
+    }
 
     public void setGrowStringAction(ActionListener l) {
         IOPanel ioPanel = this;
@@ -570,6 +603,106 @@ public class IOPanel extends JPanel {
             try {
                 insect.sabotageString(str, insect.getTecton(), dest);
                 panel.getGuiGameManager().PlayerStep((IOPanel)ActionButtonContainer.getParent());
+                repaint();
+                revalidate();
+            } catch (Exception exp) {
+                exp.printStackTrace();
+            }
+        }
+    }
+    private class EatSporeButtonAdapter extends MouseAdapter{
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            //Előző gombok eltüntetése
+            ActionButtonContainer.removeAll();
+
+            //Rovarok kilistázása (amely rovar lebénult, az disabled button-ként jelenjen meg az enumerációban)
+            panel.getGuiGameManager()
+                    .getCurrentTeam()
+                    .getInsecter().getInsects()
+                    .forEach(ins -> {
+                        JButton insBtn = createButton(ins.getId());
+                        System.out.println("EatSporeButtonAdapter");
+                        insBtn.setEnabled(!ins.getAbility().equals(Ability.PARALYZING));
+                        insBtn.addMouseListener(new EatSporeInsectSelectButtonAdapter(ins));
+
+                        ActionButtonContainer.add(insBtn);
+                        repaint();
+                        revalidate();
+                    });
+        }
+    }
+
+    private class EatSporeInsectSelectButtonAdapter extends MouseAdapter{
+        private Insect insect;
+
+        public EatSporeInsectSelectButtonAdapter(Insect _insect){
+            super();
+            insect = _insect;
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e){
+            ActionButtonContainer.removeAll();
+
+            Tecton srcTecton = insect.getTecton();
+
+            if(srcTecton.getSpores().isEmpty()){
+                try {
+                    panel.getGuiGameManager().PlayerStep((IOPanel)ActionButtonContainer.getParent());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                return;
+            }
+
+            srcTecton.getSpores().forEach(spore -> {
+                StringBuilder strB = new StringBuilder();
+                JButton strRouteBtn = createButton(
+                        strB.append(srcTecton.getId()).toString()
+                );
+
+                Spore firstspore = srcTecton.getSpores()
+                        .stream().filter(s -> s.getTecton() == srcTecton)
+                        .findFirst()
+                        .get();
+
+                strRouteBtn.addMouseListener(new SporeSelectButtonAdapter(insect, firstspore));
+
+                strRouteBtn.setVisible(true);
+                ActionButtonContainer.add(strRouteBtn);
+            });
+            repaint();
+            revalidate();
+        }
+    }
+    private class SporeSelectButtonAdapter extends MouseAdapter {
+        private Spore spore;
+        private Insect insect;
+
+        public SporeSelectButtonAdapter(Insect _insect, Spore s){
+            super();
+            spore = s;
+            insect = _insect;
+        }
+
+        @Override
+        public void mouseClicked(MouseEvent e){
+            try {
+                insect.eat(spore);
+                panel.getGuiGameManager().PlayerStep((IOPanel)ActionButtonContainer.getParent());
+                for (int i = 0; i < GUIGameManager.modelViewers.size(); i++){
+                    SporeView model;
+                    try{
+                        model = (SporeView) GUIGameManager.modelViewers.get(i);
+                    } catch (Exception ex){
+                        continue;
+                    }
+                    if(model.getModel() == spore)
+                        ((SporeView) GUIGameManager.modelViewers.get(i)).setEaten(true);
+                }
+
                 repaint();
                 revalidate();
             } catch (Exception exp) {

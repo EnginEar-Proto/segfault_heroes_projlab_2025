@@ -8,9 +8,11 @@ import java.io.IOException;
 public class MushroomStringView implements DrawableInterface{
     private MushroomString model;
     private transient Image image;
+    private double number;
 
     public MushroomStringView(MushroomString model) throws IOException {
         this.model = model;
+        number = -1 + Math.random() * 2;
     }
 
     public MushroomString getModel(){
@@ -24,9 +26,11 @@ public class MushroomStringView implements DrawableInterface{
         //System.out.print("mushroomstring rajzolva: ");
         for (int i = 0; i < tectons.size() - 1; i++) {
             g2d.drawLine(tectons.get(i).getPosition()[0] * Board.SQUARE_SIZE + Board.HALF_SIZE, tectons.get(i).getPosition()[1] * Board.SQUARE_SIZE + Board.HALF_SIZE, tectons.get(i + 1).getPosition()[0] * Board.SQUARE_SIZE + Board.HALF_SIZE, tectons.get(i + 1).getPosition()[1] * Board.SQUARE_SIZE + Board.HALF_SIZE);
-            System.out.print(tectons.get(i).getId() + " " + tectons.get(i + 1).getId() + " ");
+            //System.out.print(tectons.get(i).getId() + " " + tectons.get(i + 1).getId() + " ");
         }
-        System.out.println();
+        g2d.drawLine(tectons.get(tectons.size() - 1).getPosition()[0] * Board.SQUARE_SIZE + Board.HALF_SIZE, tectons.get(tectons.size() - 1).getPosition()[1] * Board.SQUARE_SIZE + Board.HALF_SIZE, tectons.get(tectons.size() - 1).getPosition()[0] * Board.SQUARE_SIZE + (int)(Math.sin(number) * (double)Board.HALF_SIZE), tectons.get(tectons.size() - 1).getPosition()[1] * Board.SQUARE_SIZE + (int)(Math.cos(number) * (double)Board.HALF_SIZE));
+
+        //System.out.println();
     }
     public boolean modelEquals(Object o) {
         return model.equals(o);
