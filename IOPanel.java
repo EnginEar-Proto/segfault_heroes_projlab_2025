@@ -518,36 +518,5 @@ public class IOPanel extends JPanel {
             }
         }
     }
-
-    private class GrowButtonAdapter extends MouseAdapter {
-
-        @Override
-        public void mouseClicked(MouseEvent e){
-            // Felajánlja az összes olyan tektont amelyről nőhet fonal.
-            repaint();
-            revalidate();
-        }
-    }
-
-    private class SourceTectonButtonAdapter extends MouseAdapter {
-
-        @Override
-        public void mouseClicked(MouseEvent e){
-            // Felajánlja az összes olyan tektont amelyre nőhet fonal.
-            repaint();
-            revalidate();
-        }
-    }
-
-    private class DestTectonButtonAdapter extends MouseAdapter {
-        private Tecton sourceTecton;
-        
-        @Override
-        public void mouseClicked(MouseEvent e){
-            // Feldolgozza a fonal nővesztést.
-            repaint();
-            revalidate();
-        }
-    }
 }
 
