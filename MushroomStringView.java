@@ -17,8 +17,11 @@ public class MushroomStringView implements DrawableInterface{
         Graphics2D g2d = (Graphics2D) g;
         List<Tecton> tectons = model.getTectons();
         g2d.setColor(Color.WHITE);
-        for (int i = 0; i < tectons.size()-1; i++) {
-            g2d.drawLine(tectons.get(i).getPosition()[0] * Board.SQUARE_SIZE, tectons.get(i).getPosition()[0] * Board.SQUARE_SIZE, tectons.get(i+1).getPosition()[0] * Board.SQUARE_SIZE, tectons.get(i+1).getPosition()[0] * Board.SQUARE_SIZE);
+        System.out.print("mushroomstring rajzolva: ");
+        for (int i = 0; i < tectons.size() - 1; i++) {
+            g2d.drawLine(tectons.get(i).getPosition()[0] * Board.SQUARE_SIZE + Board.HALF_SIZE, tectons.get(i).getPosition()[0] * Board.SQUARE_SIZE + Board.HALF_SIZE, tectons.get(i + 1).getPosition()[0] * Board.SQUARE_SIZE + Board.HALF_SIZE, tectons.get(i + 1).getPosition()[0] * Board.SQUARE_SIZE + Board.HALF_SIZE);
+            System.out.print(tectons.get(i) + " ");
         }
+        System.out.println();
     }
 }

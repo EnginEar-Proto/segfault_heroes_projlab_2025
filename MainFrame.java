@@ -13,8 +13,11 @@ public class MainFrame extends JFrame {
     public MainFrame(String title) {
         super(title);
 
+        ioPanel.setGrowStringAction(e -> {
+            System.out.println(">> GrowMushroomString");
+        });
         ioPanel.setMoveAction(e -> {
-            System.out.println(">> Kattintottam a GrowString-re a MAIN-ben!");
+            System.out.println(">> MoveInsect");
         });
         ioPanel.setGrowMushroomBodyAction(e -> {
             System.out.println(">> GrowMushroomBody");

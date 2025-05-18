@@ -169,8 +169,74 @@ public class IOPanel extends JPanel {
 
     public void setBranchStringButton(ActionListener l) { growStringButton.addMouseListener(new GrowButtonAdapter()); }
 
+    public void setGrowStringAction(ActionListener l) {
+        IOPanel ioPanel = this;
+        growStringButton.addActionListener(l);
+        growStringButton.addActionListener(e -> {
+            panel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+            final int[] selectionState = {0}; // 0 = fonál kiválasztás, 1 = start tekton, 2 = cél tekton
+            final MushroomString[] selectedString = {null};
+            final Tecton[] startTecton = {null};
+
+            MouseAdapter mouseAdapter = new MouseAdapter() {
+                @Override
+                public void mouseClicked(java.awt.event.MouseEvent e) {
+                    int x = e.getX();
+                    int y = e.getY();
+
+                    GUIGameManager gm = panel.getGuiGameManager();
+                    Tecton clickedTecton = gm.getTectonByCoords(x, y);
+                    if (clickedTecton == null) {
+                        System.out.println("Nem érvényes tekton.");
+                        return;
+                    }
+
+                    switch (selectionState[0]) {
+                        case 0 -> {
+                            // Fonál kiválasztása (ha van több is, az elsőt használjuk)
+                            if (clickedTecton.getStrings().isEmpty()) {
+                                System.out.println("Nincs fonál ezen a tektonon.");
+                                return;
+                            }
+                            selectedString[0] = clickedTecton.getStrings().get(0);
+                            startTecton[0] = clickedTecton;
+                            selectionState[0] = 1;
+                            System.out.println("Fonál kiválasztva: " + selectedString[0].getId());
+                            System.out.println("Tekton kiválasztva: " + startTecton[0].getId());
+                            return;
+                        }
+                        case 1 -> {
+                            // Cél tekton kiválasztása
+                            Tecton targetTecton = clickedTecton;
+                            try {
+                                selectedString[0].growTo(startTecton[0], targetTecton);
+                                GUIGameManager.modelViewers.add(new MushroomStringView(selectedString[0]));
+                                panel.getGuiGameManager().PlayerStep(ioPanel);
+                                System.out.println("Fonál növesztve: " + selectedString[0].getId() + " " + startTecton[0].getId() + " " + targetTecton.getId());
+                            } catch (Exception ex) {
+                                System.out.println("Nem sikerült növeszteni a fonalat.");
+                            }
+
+                            panel.revalidate();
+                            panel.repaint();
+
+                            // Visszaállítás
+                            selectionState[0] = 0;
+                            panel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+                            panel.removeMouseListener(this);
+                        }
+                    }
+                }
+            };
+
+            panel.addMouseListener(mouseAdapter);
+        });
+    }
+
     //Bálint
     public void setMoveAction(ActionListener l) {
+        IOPanel ioPanel = this;
         moveButton.addActionListener(l);
         moveButton.addActionListener(e -> {
             panel.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -202,6 +268,11 @@ public class IOPanel extends JPanel {
                         if (targetTecton != null) {
                             // Rovart mozgatjuk a kiválasztott tektonra
                             selectedInsect[0].moveTo(targetTecton);
+                            try {
+                                panel.getGuiGameManager().PlayerStep(ioPanel);
+                            } catch (IOException ex) {
+                                System.out.println("IOEXCEPTION");
+                            }
                             panel.revalidate();
                             panel.repaint();
 
@@ -279,7 +350,7 @@ public class IOPanel extends JPanel {
                             panel.removeMouseListener(this);
                             panel.revalidate();
                             panel.repaint();
-                            panel.getGuiGameManager().PlayerStep(ioPanel);
+                            gm.PlayerStep(ioPanel);
                             System.out.println("BODYADDED");
 
                         } catch (IOException exception) {

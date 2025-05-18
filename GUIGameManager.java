@@ -33,6 +33,14 @@ public class GUIGameManager {
     private int currentMushroomStringIndex = 0;
     private int currentSporeIndex = 0;
 
+    public int getCurrentMushroomStringIndex() {
+        return currentMushroomStringIndex;
+    }
+
+    public void incrementCurrentMushroomStringIndex() {
+        currentMushroomStringIndex++;
+    }
+
     private GamePanel gamePanel;
 
     public void setGamePanel(GamePanel gamePanel) {
@@ -308,6 +316,7 @@ public class GUIGameManager {
     public void PlayerStep(IOPanel ioPanel) throws IOException {
         if (isCurrentPlayerMushroomer) {
             ioPanel.updateState(laps, currentTeam, "Insecter", currentTeam.getScore(), currentTeam.getMushroomer().getMushroomBodies().size());
+            isCurrentPlayerMushroomer = false;
             if (++laps > 15)
                 ioPanel.showResults(); //Geri írd meg pls
         }
@@ -315,6 +324,7 @@ public class GUIGameManager {
             int nextIndex = (teams.indexOf(currentTeam) + 1) % teams.size();
             currentTeam = teams.get(nextIndex);
             ioPanel.updateState(laps, currentTeam, "Mushroomer", currentTeam.getScore(), currentTeam.getMushroomer().getMushroomBodies().size());
+            isCurrentPlayerMushroomer = true;
         }
     }
 
