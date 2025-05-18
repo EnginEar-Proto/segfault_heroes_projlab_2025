@@ -406,7 +406,10 @@ public class IOPanel extends JPanel {
                         System.out.println(targetTecton.getId());
                         if (targetTecton != null) {
 
-                            selectedMushroomBody[0].scatter(targetTecton, Ability.NORMAL);
+                            if(selectedMushroomBody[0].scatter(targetTecton, Ability.NORMAL) == -1) {
+                                System.out.println("Nincs spóra");
+                                return;
+                            };
                             System.out.println("Spore: " + targetTecton.getSpores().getLast());
                             try {
                                 GUIGameManager.modelViewers.add(new SporeView(targetTecton.getSpores().getLast(), gm.getCurrentTeam().getColor()));

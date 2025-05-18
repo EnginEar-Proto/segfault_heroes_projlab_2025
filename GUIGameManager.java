@@ -277,9 +277,9 @@ public class GUIGameManager {
             MushroomString s = new MushroomString("str1", startTecton.getMushroomBody(), List.of(startTecton), null);
             s.growTo(startTecton, startTecton);
 
+            /*mush.scatter(destTecton, Ability.NORMAL);
             mush.scatter(destTecton, Ability.NORMAL);
-            mush.scatter(destTecton, Ability.NORMAL);
-            mush.scatter(destTecton, Ability.NORMAL);
+            mush.scatter(destTecton, Ability.NORMAL);*/
 
         }
         currentTeam = teams.get(0);
