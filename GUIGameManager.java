@@ -380,7 +380,34 @@ public class GUIGameManager {
 
     public void render(Graphics g) {
         for (DrawableInterface d : modelViewers) {
-            d.draw(g);
+            if(d instanceof Board) {
+                d.draw(g);
+            }
+        }
+        for (DrawableInterface d : modelViewers) {
+            if(d instanceof TectonView) {
+                d.draw(g);
+            }
+        }
+        for (DrawableInterface d : modelViewers) {
+            if(d instanceof MushroomBodyView) {
+                d.draw(g);
+            }
+        }
+        for (DrawableInterface d : modelViewers) {
+            if(d instanceof SporeView) {
+                d.draw(g);
+            }
+        }
+        for (DrawableInterface d : modelViewers) {
+            if(d instanceof InsectView) {
+                d.draw(g);
+            }
+        }
+        for (DrawableInterface d : modelViewers) {
+            if(d instanceof MushroomStringView) {
+                d.draw(g);
+            }
         }
     }
 
