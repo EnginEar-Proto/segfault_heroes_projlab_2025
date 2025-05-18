@@ -31,6 +31,10 @@ public class MainFrame extends JFrame {
         ioPanel.setEatInsectsAction(e -> {
             System.out.println(">> StringEatsInsect");
         });
+        ioPanel.setCutAction(e -> {
+            System.out.println(">> CutString");
+        });
+
 
         setMinimumSize(new Dimension(width, height));
         setSize(width, height);
