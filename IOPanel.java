@@ -518,10 +518,17 @@ public class IOPanel extends JPanel {
         public void mouseClicked(MouseEvent e){
             ActionButtonContainer.removeAll();
 
-            System.out.println("InsectAdapter");
-
             Tecton srcTecton = insect.getTecton();
             List<Tecton> destTecton = srcTecton.getNeighbours().stream().filter(nTec ->srcTecton.canMoveTo(nTec)).toList();
+
+            if(destTecton.isEmpty()){
+                try {
+                    panel.getGuiGameManager().PlayerStep((IOPanel)ActionButtonContainer.getParent());
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                return;
+            }
 
             destTecton.forEach(tec -> {
                 StringBuilder strB = new StringBuilder();
@@ -540,9 +547,9 @@ public class IOPanel extends JPanel {
 
                 strRouteBtn.setVisible(true);
                 ActionButtonContainer.add(strRouteBtn);
-                repaint();
-                revalidate();
             });
+            repaint();
+            revalidate();
         }
     }
 
@@ -563,7 +570,6 @@ public class IOPanel extends JPanel {
             try {
                 insect.sabotageString(str, insect.getTecton(), dest);
                 panel.getGuiGameManager().PlayerStep((IOPanel)ActionButtonContainer.getParent());
-                ActionButtonContainer.removeAll();
                 repaint();
                 revalidate();
             } catch (Exception exp) {
