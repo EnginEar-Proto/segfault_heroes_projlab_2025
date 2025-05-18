@@ -167,9 +167,7 @@ public class IOPanel extends JPanel {
 
     public void setEndTurnAction(ActionListener l) { endTurnButton.addActionListener(l); }
 
-    public void setBranchStringButton(ActionListener l) {
-        growStringButton.addActionListener(l);
-    }
+    //public void setBranchStringButton(ActionListener l) { growStringButton.addMouseListener(new GrowButtonAdapter()); }
 
     public void setGrowStringAction(ActionListener l) {
         IOPanel ioPanel = this;
@@ -410,6 +408,7 @@ public class IOPanel extends JPanel {
                     } catch (IOException ex) {
 
                     }
+                    panel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 
 
                 }

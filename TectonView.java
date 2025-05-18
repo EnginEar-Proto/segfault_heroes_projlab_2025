@@ -22,6 +22,20 @@ public class TectonView implements DrawableInterface{
         }
     }
 
+    public void reSizedPic() throws IOException {
+        switch (model.getSize()){
+            case 3:
+                image = ImageIO.read(ClassLoader.getSystemResourceAsStream("Assets/Tecton.png")).getScaledInstance((Board.SQUARE_SIZE * 2), (Board.SQUARE_SIZE * 2), BufferedImage.SCALE_SMOOTH);
+                break;
+            case 2:
+                image = ImageIO.read(ClassLoader.getSystemResourceAsStream("Assets/Tecton3.png")).getScaledInstance((Board.SQUARE_SIZE * 2), Board.SQUARE_SIZE, BufferedImage.SCALE_SMOOTH);
+                break;
+            case 1:
+                image = ImageIO.read(ClassLoader.getSystemResourceAsStream("Assets/Tecton2.png")).getScaledInstance(Board.SQUARE_SIZE, Board.SQUARE_SIZE, BufferedImage.SCALE_SMOOTH);
+                break;
+        }
+    }
+
     public void draw(Graphics g) {
         //System.out.println("tekton rajzolva, meret: " + model.getSize());
         int[] pos = model.getPosition();
