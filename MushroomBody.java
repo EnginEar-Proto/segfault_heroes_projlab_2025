@@ -85,9 +85,9 @@ public class MushroomBody {
         int distance = tecton.neighbourDistance(toScatter);
         List<Spore> givenSpores = new ArrayList<>();
         for(Spore spore : spores) {
-            if(spore.getAbility().equals(ab)) {
+            //if(spore.getAbility().equals(ab)) {
                 givenSpores.add(spore);
-            }
+            //}
         }
         if(distance >= 4 || distance == -1) {
             return -1;

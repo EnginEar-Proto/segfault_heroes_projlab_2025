@@ -32,10 +32,14 @@ public class SporeView implements DrawableInterface{
 
     public void draw(Graphics g) {
         if (model.getTecton() == null) return;
-        System.out.println("spora rajzolva");
+        //System.out.println("spora rajzolva");
         int[] pos = model.getTecton().getPosition();
         Graphics2D g2d = (Graphics2D) g;
         System.out.println(model);
         if (image != null) g2d.drawImage(image, pos[0] * Board.SQUARE_SIZE + Board.HALF_SIZE , pos[1] * Board.SQUARE_SIZE, null);
+    }
+
+    public boolean modelEquals(Object o) {
+        return model.equals(o);
     }
 }

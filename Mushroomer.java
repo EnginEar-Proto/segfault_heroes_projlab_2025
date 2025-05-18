@@ -38,6 +38,16 @@ public class Mushroomer extends Player{
         }
     }
 
+    public ArrayList<MushroomString> getMushroomStrings() {
+        ArrayList<MushroomString> strings = new ArrayList<>();
+        for (int i = 0; i < getMushroomBodies().size(); i++) {
+            MushroomBody mb = getMushroomBodies().get(i);
+            strings.addAll(mb.getStrings());
+        }
+
+        return strings;
+    }
+
     public List<MushroomBody> getMushroomBodies() {
         return mushroomBodies;
     }

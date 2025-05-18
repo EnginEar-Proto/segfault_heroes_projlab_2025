@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  * <h2>Tekton</h2>
@@ -363,5 +362,22 @@ public class Tecton {
                 neighbours.add(tectons.get(i));
             }
         }
+    }
+
+    /**
+     * Megnézi, hogy egy paraméterként adott fonallistából van e olyan fonal, ami a tectonon is rajta van.
+     * Ha van true értékkel tér vissza
+     * @param strings
+     * @return boolean
+     */
+    public boolean containsString(ArrayList<MushroomString> strings) {
+        boolean contains = false;
+        for (int i = 0; i < getStrings().size(); i++) {
+            if (strings.contains(getStrings().get(i))) {
+                contains = true;
+                break;
+            }
+        }
+        return contains;
     }
 }

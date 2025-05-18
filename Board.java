@@ -30,4 +30,8 @@ public class Board implements DrawableInterface {
         graphics2D.setColor(new Color(154, 154, 154));
         graphics2D.fillRect(0, 0, SQUARE_SIZE * 15, SQUARE_SIZE * 15);
     }
+
+    public boolean modelEquals(Object o){
+        return false;
+    }
 }

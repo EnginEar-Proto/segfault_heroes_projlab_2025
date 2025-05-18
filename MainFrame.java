@@ -25,7 +25,12 @@ public class MainFrame extends JFrame {
         ioPanel.setScatterSporesAction(e -> {
             System.out.println(">> ScatterSpores");
         });
-
+        ioPanel.setBranchStringButton(e -> {
+            System.out.println(">> BranchString");
+        });
+        ioPanel.setEatInsectsAction(e -> {
+            System.out.println(">> StringEatsInsect");
+        });
 
         setMinimumSize(new Dimension(width, height));
         setSize(width, height);

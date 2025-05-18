@@ -167,7 +167,9 @@ public class IOPanel extends JPanel {
 
     public void setEndTurnAction(ActionListener l) { endTurnButton.addActionListener(l); }
 
-    public void setBranchStringButton(ActionListener l) { growStringButton.addMouseListener(new GrowButtonAdapter()); }
+    public void setBranchStringButton(ActionListener l) {
+        growStringButton.addActionListener(l);
+    }
 
     public void setGrowStringAction(ActionListener l) {
         IOPanel ioPanel = this;
@@ -294,6 +296,7 @@ public class IOPanel extends JPanel {
         IOPanel ioPanel = this;
         growMushroomBodyButton.addActionListener(l);
         growMushroomBodyButton.addActionListener(e -> {
+            panel.setCursor(new Cursor(Cursor.HAND_CURSOR));
             final int[] click = new int[2];
 
             //az a listener, ami a játéktéren figyeli a kattintásokat
@@ -321,21 +324,11 @@ public class IOPanel extends JPanel {
 
                     //az adott csapat stringjeinek összegyűjtése (lehet kéne fgv)
                     Mushroomer mushroomer = gm.getCurrentTeam().getMushroomer();
-                    ArrayList<MushroomString> strings = new ArrayList<>();
-                    for (int i = 0; i < mushroomer.getMushroomBodies().size(); i++) {
-                        MushroomBody mb = mushroomer.getMushroomBodies().get(i);
-                        strings.addAll(mb.getStrings());
-                    }
+                    ArrayList<MushroomString> strings = mushroomer.getMushroomStrings();
 
 
                     //megnézi van e csapathoz tartozó string a tektonon
-                    boolean isGrowable = false;
-                    for (int i = 0; i < tec.getStrings().size(); i++) {
-                        if (strings.contains(tec.getStrings().get(i))) {
-                            isGrowable = true;
-                            break;
-                        }
-                    }
+                    boolean isGrowable = tec.containsString(strings);
                     //TODO: visszajelzés
                     if (!isGrowable) {
                         System.out.println("Nincs string");
@@ -351,6 +344,7 @@ public class IOPanel extends JPanel {
                             panel.revalidate();
                             panel.repaint();
                             gm.PlayerStep(ioPanel);
+                            panel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
                             System.out.println("BODYADDED");
 
                         } catch (IOException exception) {
@@ -369,7 +363,62 @@ public class IOPanel extends JPanel {
         });
     }
     //Kopi
-    public void setEatInsectsAction(ActionListener l) { eatInsectsButton.addActionListener(l); }
+    public void setEatInsectsAction(ActionListener l) {
+        eatInsectsButton.addActionListener(l);
+        eatInsectsButton.addActionListener(e -> {
+            panel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+            IOPanel ioPanel = this;
+
+            MouseAdapter mouseAdapter = new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    int x = e.getX();
+                    int y = e.getY();
+                    Tecton tec = panel.getGuiGameManager().getTectonByCoords(x, y);
+                    if(tec == null) {
+                        System.out.println("Nincs tecton kiválasztva");
+                        return;
+                    }
+
+                    Team currentTeam = panel.getGuiGameManager().getCurrentTeam();
+                    Mushroomer mushroomer = currentTeam.getMushroomer();
+                    Insecter insecter = currentTeam.getInsecter();
+                    ArrayList<MushroomString> strings = mushroomer.getMushroomStrings();
+
+                    boolean isEatingOk = tec.containsString(strings);
+                    if(!isEatingOk) {
+                        System.out.println("Nincs fonala a csapatnak");
+                        return;
+                    }
+
+                    for (Insect insect : tec.getInsects()){
+                        if(insecter.getInsects().contains(insect)) continue;
+                        if(insect.getAbility() != Ability.PARALYZING) continue;
+
+                        tec.removeInsect(insect);
+                        insect.getInsecter().getInsects().remove(insect);
+                        GUIGameManager.modelViewers.stream().filter(view -> view.modelEquals(insect)).forEach(view -> {
+                            GUIGameManager.modelViewers.remove(view);
+                            System.out.println("Insect removed");
+                        });
+                    }
+
+                    panel.revalidate();
+                    panel.repaint();
+                    try {
+                        panel.getGuiGameManager().PlayerStep(ioPanel);
+                    } catch (IOException ex) {
+
+                    }
+
+
+                }
+            };
+
+            panel.addMouseListener(mouseAdapter);
+
+        });
+    }
 
 
     //Bálint: elvileg elszórja, de nem jelenik meg
