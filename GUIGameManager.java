@@ -276,7 +276,6 @@ public class GUIGameManager {
 
             MushroomString s = new MushroomString("str1", startTecton.getMushroomBody(), List.of(startTecton), null);
             s.growTo(startTecton, startTecton);
-            s.growTo(startTecton, destTecton);
 
             mush.scatter(destTecton, Ability.NORMAL);
             mush.scatter(destTecton, Ability.NORMAL);
@@ -317,7 +316,7 @@ public class GUIGameManager {
         if (isCurrentPlayerMushroomer) {
             ioPanel.updateState(laps, currentTeam, "Insecter", currentTeam.getScore(), currentTeam.getMushroomer().getMushroomBodies().size());
             isCurrentPlayerMushroomer = false;
-            if (++laps > 15)
+            if (teams.indexOf(currentTeam) == teams.size()-1 && ++laps > 15)
                 ioPanel.showResults(); //Geri írd meg pls
         }
         else {
