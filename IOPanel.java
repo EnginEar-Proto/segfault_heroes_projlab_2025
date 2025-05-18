@@ -167,7 +167,7 @@ public class IOPanel extends JPanel {
 
     public void setEndTurnAction(ActionListener l) { endTurnButton.addActionListener(l); }
 
-    public void setBranchStringButton(ActionListener l) { growStringButton.addMouseListener(new GrowButtonAdapter()); }
+    //public void setBranchStringButton(ActionListener l) { growStringButton.addMouseListener(new GrowButtonAdapter()); }
 
     public void setGrowStringAction(ActionListener l) {
         IOPanel ioPanel = this;

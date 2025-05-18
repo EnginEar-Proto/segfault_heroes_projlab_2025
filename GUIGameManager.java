@@ -325,8 +325,41 @@ public class GUIGameManager {
             ioPanel.updateState(laps, currentTeam, "Mushroomer", currentTeam.getScore(), currentTeam.getMushroomer().getMushroomBodies().size());
             isCurrentPlayerMushroomer = true;
         }
+        randomBreak();
     }
 
+    public void randomBreak()throws IOException{
+        int number = (int)(Math.random() * 5) + 1; // 1-5 között
+        if (/*number == 2*/true) {
+            int tectonNumber = (int)(Math.random() * 25) + 1;
+            int oldSize = tectons.get(tectonNumber-1).getSize();
+            System.out.println("\t" + "old size: " + oldSize + "  id: " + tectons.get(tectonNumber-1).getId());
+            Tecton newTecton = null;
+            TectonView oldTec = findView(tectons.get(tectonNumber-1));
+            if(oldSize-1 > 0) {
+                newTecton = tectons.get(tectonNumber - 1).Break(1);
+                System.out.println("\t ujtecton merete: "+newTecton.getSize());
+                TectonView tv_new = new TectonView(newTecton);
+                modelViewers.add(tv_new);
+                System.out.println("\t Regi tec merete"+oldTec.getModel().getSize());
+                oldTec.reSizedPic();
+            }
+        }
+    }
+
+    public TectonView findView(Tecton tec){
+        for (int i = 0; i < modelViewers.size(); i++){
+            TectonView model;
+            try{
+                model = (TectonView) modelViewers.get(i);
+            } catch (Exception e){
+                continue;
+            }
+            if(model.getModel() == tec)
+                return model;
+        }
+        return null;
+    }
     /**
      * Hozzáad egy új csapatot a játékhoz.
      *

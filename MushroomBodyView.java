@@ -31,7 +31,7 @@ public class MushroomBodyView implements DrawableInterface{
     }
 
     public void draw(Graphics g) {
-        System.out.println("gombatest rajzolva");
+        //System.out.println("gombatest rajzolva");
         int[] pos = model.getTecton().getPosition();
         Graphics2D g2d = (Graphics2D) g;
         if (image != null) g2d.drawImage(image, pos[0] * Board.SQUARE_SIZE, pos[1] * Board.SQUARE_SIZE, null);

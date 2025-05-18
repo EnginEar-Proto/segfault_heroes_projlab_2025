@@ -231,7 +231,10 @@ public class Tecton {
         if((this.size - size) > 0) {
             removeStrings();
             int oldSize = this.size;
-            setSize(size);
+            if(this.size == 3) {
+                setSize(2);
+            }else
+                setSize(1);
             int x = 0, y = 0;
             if(oldSize == 3){
                 x = position[0];
@@ -240,7 +243,7 @@ public class Tecton {
                 x = position[0] + 1;
                 y = position[1];
             }
-            Tecton newTecton = new Tecton(this.id + "_b", oldSize - this.size, false, x, y);
+            Tecton newTecton = new Tecton(this.id + "_b", this.size, false, x, y);
             this.setNeighbours(neighbours); //Itt ugy változik az is, hogy kik a saját szomszédai
             newTecton.setNeighbours(neighbours);
             newTecton.neighbours.add(this);
