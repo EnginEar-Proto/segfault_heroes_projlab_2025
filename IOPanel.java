@@ -151,7 +151,18 @@ public class IOPanel extends JPanel {
 
 
 
-    public void setEndTurnAction(ActionListener l) { endTurnButton.addActionListener(l); }
+    public void setEndTurnAction(ActionListener l) {
+        IOPanel ioPanel = this;
+        endTurnButton.addActionListener(l);
+        endTurnButton.addActionListener(e -> {
+            try {
+                panel.getGuiGameManager().PlayerStep(ioPanel);
+            } catch (IOException ex) {
+                System.out.println("IOEXCEPTION");
+            }
+            panel.revalidate();
+        });
+    }
 
     public void setBranchStringButton(ActionListener l) { /*growStringButton.addMouseListener(new GrowButtonAdapter());*/ }
 

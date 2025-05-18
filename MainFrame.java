@@ -34,6 +34,9 @@ public class MainFrame extends JFrame {
         ioPanel.setCutAction(e -> {
             System.out.println(">> CutString");
         });
+        ioPanel.setEndTurnAction(e -> {
+            System.out.println(">> EndTurn");
+        });
 
 
         setMinimumSize(new Dimension(width, height));
@@ -65,7 +68,7 @@ public class MainFrame extends JFrame {
         public void windowClosing(WindowEvent e) {
             int result = JOptionPane.showConfirmDialog(
                     e.getWindow(),
-                    "Do you really want to close the application?\nAll unsaved data will be lost!",
+                    "Do you really want to close the application?\nAll data will be lost!",
                     "Confirm Exit",
                     JOptionPane.YES_NO_OPTION,
                     JOptionPane.WARNING_MESSAGE
