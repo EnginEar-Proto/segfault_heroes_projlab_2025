@@ -305,7 +305,7 @@ public class GUIGameManager {
         return false;
     }
 
-    private void PlayerStep(IOPanel ioPanel) throws IOException {
+    public void PlayerStep(IOPanel ioPanel) throws IOException {
         if (isCurrentPlayerMushroomer) {
             ioPanel.updateState(laps, currentTeam, "Insecter", currentTeam.getScore(), currentTeam.getMushroomer().getMushroomBodies().size());
             if (++laps > 15)

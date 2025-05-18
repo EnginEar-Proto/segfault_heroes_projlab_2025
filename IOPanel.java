@@ -220,6 +220,7 @@ public class IOPanel extends JPanel {
 
     //Kopi
     public void setGrowMushroomBodyAction(ActionListener l) {
+        IOPanel ioPanel = this;
         growMushroomBodyButton.addActionListener(l);
         growMushroomBodyButton.addActionListener(e -> {
             final int[] click = new int[2];
@@ -278,6 +279,7 @@ public class IOPanel extends JPanel {
                             panel.removeMouseListener(this);
                             panel.revalidate();
                             panel.repaint();
+                            panel.getGuiGameManager().PlayerStep(ioPanel);
                             System.out.println("BODYADDED");
 
                         } catch (IOException exception) {
@@ -301,6 +303,7 @@ public class IOPanel extends JPanel {
 
     //Bálint: elvileg elszórja, de nem jelenik meg
     public void setScatterSporesAction(ActionListener l) {
+        IOPanel ioPanel = this;
         scatterSporesButton.addActionListener(l);
         scatterSporesButton.addActionListener(e -> {
             panel.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -336,6 +339,7 @@ public class IOPanel extends JPanel {
                             System.out.println("Spore: " + targetTecton.getSpores().getLast());
                             try {
                                 GUIGameManager.modelViewers.add(new SporeView(targetTecton.getSpores().getLast(), gm.getCurrentTeam().getColor()));
+                                panel.getGuiGameManager().PlayerStep(ioPanel);
                                 System.out.println("modelAdded");
 
                             } catch (Exception exception) {
