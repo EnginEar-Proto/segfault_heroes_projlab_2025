@@ -25,7 +25,6 @@ public class IOPanel extends JPanel {
 
     private GamePanel panel;
 
-    //TODO: Hozzáadni az osztálydiagrammhoz
     private ArrayList<JButton> mushroomerActionButtons, insecterActionButtons;
     private JPanel ActionButtonContainer;
 
@@ -42,7 +41,8 @@ public class IOPanel extends JPanel {
         teamLabel = createLabel("Csapat: ");
         roleLabel = createLabel("Szerep: ");
         statsLabel = createLabel("<html>Csapat statisztikák<br>Tápanyag pontok: 0<br>Gombatestek: 0</html>");
-        ActionButtonContainer = new JPanel(); 
+        ActionButtonContainer = new JPanel();
+        ActionButtonContainer.setLayout(new BoxLayout(ActionButtonContainer, BoxLayout.Y_AXIS));
 
         add(Box.createRigidArea(new Dimension(0, 10)));
         add(roundLabel);
@@ -54,7 +54,6 @@ public class IOPanel extends JPanel {
 
         JLabel operationsLabel = createLabel("Műveletek");
         operationsLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
-        add(operationsLabel);
 
         cutButton = createButton("Fonál Vágás");
         cutButton.setIcon(new ImageIcon("cut.png"));
@@ -83,7 +82,6 @@ public class IOPanel extends JPanel {
             growMushroomBodyButton,
             eatInsectsButton,
             scatterSporesButton,
-            cutButton,
             endTurnButton
         ));
 
@@ -94,16 +92,7 @@ public class IOPanel extends JPanel {
             endTurnButton
         ));
 
-        add(growStringButton);
-        add(branchStringButton);
-        add(growMushroomBodyButton);
-        add(eatInsectsButton);
-        add(scatterSporesButton);
-
-        add(cutButton);
-        add(consumeButton);
-        add(moveButton);
-        add(endTurnButton);
+        add(ActionButtonContainer);
     }
 
     private JLabel createLabel(String text) {
@@ -129,14 +118,11 @@ public class IOPanel extends JPanel {
         roleLabel.setText("Szerep: " + role);
         statsLabel.setText("<html>Csapat statisztikák<br>Tápanyag pontok: " + nutrients + "<br>Gombatestek: " + bodies + "</html>");
     
+        ActionButtonContainer.removeAll();
         if(role.equals("Mushroomer")){
-            mushroomerActionButtons.forEach(btn -> btn.setVisible(true));
-            insecterActionButtons.forEach(btn -> btn.setVisible(false));
+            mushroomerActionButtons.forEach(btn -> ActionButtonContainer.add(btn));
         }else if(role.equals("Insecter")){
-            insecterActionButtons.forEach(btn -> btn.setVisible(true));
-            mushroomerActionButtons.forEach(btn -> btn.setVisible(false));
-        }else{
-            ActionButtonContainer.removeAll();
+            insecterActionButtons.forEach(btn -> ActionButtonContainer.add(btn));
         }
 
         repaint();
@@ -447,11 +433,11 @@ public class IOPanel extends JPanel {
             .getCurrentTeam()
             .getInsecter().getInsects()
             .forEach(ins -> {
-                JButton insBtn = new JButton(ins.getId());
+                JButton insBtn = createButton(ins.getId());
+                System.out.println("CutAdapter");
                 insBtn.setEnabled(!ins.getAbility().equals(Ability.PARALYZING));
                 insBtn.addMouseListener(new InsectSelectButtonAdapter(ins));
 
-                insBtn.setVisible(true);
                 ActionButtonContainer.add(insBtn);
                 repaint();
                 revalidate();
@@ -471,12 +457,14 @@ public class IOPanel extends JPanel {
         public void mouseClicked(MouseEvent e){
             ActionButtonContainer.removeAll();
 
+            System.out.println("InsectAdapter");
+
             Tecton srcTecton = insect.getTecton();
             List<Tecton> destTecton = srcTecton.getNeighbours().stream().filter(nTec ->srcTecton.canMoveTo(nTec)).toList();
 
             destTecton.forEach(tec -> {
                 StringBuilder strB = new StringBuilder();
-                JButton strRouteBtn = new JButton(
+                JButton strRouteBtn = createButton(
                     strB.append(srcTecton.getId())
                     .append(" -> ")
                     .append(tec.getId()).toString()
@@ -513,6 +501,7 @@ public class IOPanel extends JPanel {
         public void mouseClicked(MouseEvent e){
             try {
                 insect.sabotageString(str, insect.getTecton(), dest);
+                panel.getGuiGameManager().PlayerStep((IOPanel)ActionButtonContainer.getParent());
                 ActionButtonContainer.removeAll();
                 repaint();
                 revalidate();

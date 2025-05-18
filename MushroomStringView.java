@@ -13,6 +13,10 @@ public class MushroomStringView implements DrawableInterface{
         this.model = model;
     }
 
+    public MushroomString getModel(){
+        return model;
+    }
+
     public void draw(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         List<Tecton> tectons = model.getTectons();

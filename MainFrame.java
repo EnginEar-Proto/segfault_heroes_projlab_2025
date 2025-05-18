@@ -25,6 +25,9 @@ public class MainFrame extends JFrame {
         ioPanel.setScatterSporesAction(e -> {
             System.out.println(">> ScatterSpores");
         });
+        ioPanel.setCutAction(e -> {
+            System.out.println(">> CutString");
+        });
 
 
         setMinimumSize(new Dimension(width, height));
