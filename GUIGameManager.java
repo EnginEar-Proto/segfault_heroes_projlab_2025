@@ -272,7 +272,7 @@ public class GUIGameManager {
             usedTectons.add(rtecton);
 
             Tecton startTecton = rtecton;
-            Tecton destTecton = rtecton.getNeighbours().getFirst();
+            Tecton destTecton = rtecton.getNeighbours().get(0);
 
             MushroomString s = new MushroomString("str1", startTecton.getMushroomBody(), List.of(startTecton), null);
             s.growTo(startTecton, startTecton);

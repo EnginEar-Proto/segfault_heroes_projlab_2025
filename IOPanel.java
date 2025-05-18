@@ -455,9 +455,11 @@ public class IOPanel extends JPanel {
                                 System.out.println("Nincs spóra");
                                 return;
                             };
-                            System.out.println("Spore: " + targetTecton.getSpores().getLast());
+                            System.out.println("Spore: " + targetTecton.getSpores().get(targetTecton.getSpores().size() - 1));
                             try {
-                                GUIGameManager.modelViewers.add(new SporeView(targetTecton.getSpores().getLast(), gm.getCurrentTeam().getColor()));
+                                GUIGameManager.modelViewers.add(new SporeView(targetTecton.getSpores()
+                                .get(targetTecton.getSpores().size() - 1), 
+                                gm.getCurrentTeam().getColor()));
                                 panel.getGuiGameManager().PlayerStep(ioPanel);
                                 System.out.println("modelAdded");
 
