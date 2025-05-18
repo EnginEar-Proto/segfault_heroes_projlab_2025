@@ -340,7 +340,7 @@ public class GUIGameManager {
                 newTecton = tectons.get(tectonNumber - 1).Break(1);
                 System.out.println("\t ujtecton merete: "+newTecton.getSize());
                 TectonView tv_new = new TectonView(newTecton);
-                modelViewers.add(0, tv_new);
+                modelViewers.add(1, tv_new); //azert nem nulla mert az a board kell legyen
                 System.out.println("\t Regi tec merete"+oldTec.getModel().getSize());
                 oldTec.reSizedPic();
             }
