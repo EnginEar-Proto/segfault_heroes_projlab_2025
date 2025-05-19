@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class IOPanel extends JPanel {
@@ -129,10 +130,53 @@ public class IOPanel extends JPanel {
     }
 
     public void showResults() {
+        // Elüntetjük az előző GUI dolgait.
         removeAll();
+        setSize(600,600);
+
+        Comparator<Team> comp = new Comparator<Team>() {
+
+            @Override
+            public int compare(Team o1, Team o2) {
+               return o1.getScore() - o2.getScore();
+            }
+            
+        };
+
+        // Létrehozunk egy listát, amelyben pontszám alapján rendezve vannak a csapatok.
+        List<Team> sortedTeams = new ArrayList<Team>(List.of(panel.getGuiGameManager().getTeams()));
+        sortedTeams.sort(comp);
+        
+        // Végig megyünk a csapatokon és mindegyik kap egy JLabel-t ami szépen néz ki.
+        sortedTeams.forEach(t -> {
+            JPanel teamPanel = new JPanel();
+            JLabel teamLabel = createLabel("<html><div style='text-align: center; padding: 8px 16px;'>" 
+            + t.getName() + " " + t.getScore() + "pt"+ "</div></html>");
+
+            // Csapatok helyezetten alapuló színezése.
+            if(sortedTeams.indexOf(t) == 0){
+                teamPanel.setBackground(new Color(255, 204, 84));
+            }else if(sortedTeams.indexOf(t) == 1){
+                teamPanel.setBackground(new Color(155, 155, 155));
+            }else if(sortedTeams.indexOf(t) == 2){
+                teamPanel.setBackground(new Color(255, 127, 84));
+            }else{
+                teamPanel.setBackground(new Color(6, 182, 212));
+            }
+
+            teamPanel.setPreferredSize(new Dimension(283, 64));
+            teamPanel.setMaximumSize(new Dimension(283, 64));
+            teamLabel.setLayout(new BorderLayout());
+            teamLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+            teamLabel.setFont(new Font("SansSerif", Font.BOLD, 24));
+            
+            teamPanel.add(teamLabel, BorderLayout.CENTER);
+            add(teamPanel);
+        });
+
+        // Frissítjük a felületet.
         revalidate();
         repaint();
-        //TODO result kiírása szépen.
     }
 
     public void setCutAction(ActionListener l) { cutButton.addMouseListener(new CutButtonAdapter()); }
