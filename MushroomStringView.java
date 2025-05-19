@@ -28,7 +28,7 @@ public class MushroomStringView implements DrawableInterface{
         //System.out.print("mushroomstring rajzolva: ");
         for (int i = 0; i < tectons.size() - 1; i++) {
             g2d.drawLine(tectons.get(i).getPosition()[0] * Board.SQUARE_SIZE + Board.HALF_SIZE, tectons.get(i).getPosition()[1] * Board.SQUARE_SIZE + Board.HALF_SIZE, tectons.get(i + 1).getPosition()[0] * Board.SQUARE_SIZE + Board.HALF_SIZE, tectons.get(i + 1).getPosition()[1] * Board.SQUARE_SIZE + Board.HALF_SIZE);
-            //System.out.print(tectons.get(i).getId() + " " + tectons.get(i + 1).getId() + " ");
+            System.out.print(tectons.get(i).getId() + " " + tectons.get(i + 1).getId() + " ");
         }
         // A második vonal végpontjának kiszámítása
         int lastX = tectons.get(tectons.size() - 1).getPosition()[0] * Board.SQUARE_SIZE + Board.HALF_SIZE;
@@ -40,12 +40,12 @@ public class MushroomStringView implements DrawableInterface{
         // Eredeti végpont plusz a random eltolás, figyelve a pálya határain
         int newX;
         int newY;
-        if(last2_X<lastX){
+        if(last2_X<=lastX){
             newX = lastX + (int)(number1 * Board.HALF_SIZE);
         }else{
             newX = lastX - (int)(number2 * Board.HALF_SIZE);
         }
-        if(last2_Y<lastY){
+        if(last2_Y<=lastY){
             newY = lastY + (int)(number1 * Board.HALF_SIZE);
         }else {
             newY = lastY - (int)(number2 * Board.HALF_SIZE);

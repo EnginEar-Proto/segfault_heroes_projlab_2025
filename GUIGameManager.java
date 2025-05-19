@@ -223,7 +223,7 @@ public class GUIGameManager {
         tec8.initNeighbours(List.of(tec7, tec9));
         tec9.initNeighbours(List.of(tec8, tec10, tec25));
         tec10.initNeighbours(List.of(tec9, tec11, tec12));
-        tec11.initNeighbours(List.of(tec12, tec11));
+        tec11.initNeighbours(List.of(tec12, tec10));
         tec12.initNeighbours(List.of(tec11, tec13, tec10));
         tec13.initNeighbours(List.of(tec12, tec14));
         tec14.initNeighbours(List.of(tec13));
@@ -330,7 +330,7 @@ public class GUIGameManager {
 
     public void randomBreak()throws IOException{
         int number = (int)(Math.random() * 10) + 1; // 1-10 között
-        if (number == 2) {
+        if (number == -1) {
             int tectonNumber = (int)(Math.random() * 25) + 1;
             int oldSize = tectons.get(tectonNumber-1).getSize();
             System.out.println("\t" + "old size: " + oldSize + "  id: " + tectons.get(tectonNumber-1).getId());
