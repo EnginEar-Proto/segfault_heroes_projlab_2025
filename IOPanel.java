@@ -383,7 +383,7 @@ public class IOPanel extends JPanel {
                     GUIGameManager gm = panel.getGuiGameManager();
 
                     if (tec == null) {
-                        //TODO: kéne vmi visszajelzés
+
                         System.out.println("Nincs tecton");
                         return;
                     }
@@ -401,7 +401,7 @@ public class IOPanel extends JPanel {
 
                     //megnézi van e csapathoz tartozó string a tektonon
                     boolean isGrowable = tec.containsString(strings);
-                    //TODO: visszajelzés
+
                     if (!isGrowable) {
                         System.out.println("Nincs string");
                         return;

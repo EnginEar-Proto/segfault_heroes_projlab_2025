@@ -249,7 +249,7 @@ public class MushroomString {
      */
     public int growTo(Tecton from, Tecton toGrow) {
 
-        //TODO: grow on same tekton
+
         if(from.neighbourDistance(toGrow) != 1 && toGrow != from) {
             return -1;
         }

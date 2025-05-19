@@ -329,8 +329,8 @@ public class GUIGameManager {
     }
 
     public void randomBreak()throws IOException{
-        int number = (int)(Math.random() * 5) + 1; // 1-5 között
-        if (/*number == 2*/true) {
+        int number = (int)(Math.random() * 10) + 1; // 1-10 között
+        if (number == 2) {
             int tectonNumber = (int)(Math.random() * 25) + 1;
             int oldSize = tectons.get(tectonNumber-1).getSize();
             System.out.println("\t" + "old size: " + oldSize + "  id: " + tectons.get(tectonNumber-1).getId());

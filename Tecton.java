@@ -292,9 +292,7 @@ public class Tecton {
         else if(i != null){
             insects.add(i);
         }
-        /*TODO:Ellenőrizzük, hogy nem-e ugyanarra tektonra száll vissza a rovar.
-         * Csak ezt követően adjuk hozzá a listához.
-        */
+
     }
     /**
      * A paraméterül kapott gombatestet elhelyezi azon a tektonon amelyre a függvényt meghívták.
