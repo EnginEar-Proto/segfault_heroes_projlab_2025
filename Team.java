@@ -61,6 +61,11 @@ public class Team {
     }
 
     public int getScore() {
+        int res = 0;
+        for(int i=0; i<insecter.getInsects().size(); i++) {
+            res += insecter.getInsects().get(i).getSubstance();
+        }
+        score = res;
         return score;
     }
 

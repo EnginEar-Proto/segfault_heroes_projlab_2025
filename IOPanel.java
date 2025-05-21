@@ -134,14 +134,8 @@ public class IOPanel extends JPanel {
         removeAll();
         setSize(600,600);
 
-        Comparator<Team> comp = new Comparator<Team>() {
+        Comparator<Team> comp = Comparator.comparingInt(Team::getScore).reversed();
 
-            @Override
-            public int compare(Team o1, Team o2) {
-               return o1.getScore() - o2.getScore();
-            }
-            
-        };
 
         // Létrehozunk egy listát, amelyben pontszám alapján rendezve vannak a csapatok.
         List<Team> sortedTeams = new ArrayList<Team>(List.of(panel.getGuiGameManager().getTeams()));
